@@ -1,0 +1,23 @@
+<?php
+$emailId = $_COOKIE['XassureUser'];
+
+// echo "Original String: " . $simple_string;
+$ciphering = "AES-128-CTR";
+// $iv_length = openssl_cipher_iv_length($ciphering);
+$options = 0;
+// $encryption_iv = '1234567891021957';
+// $encryption_key = "xfassoKey";
+// $encryption = openssl_encrypt($simple_string, $ciphering, $encryption_key, $options, $encryption_iv);
+// echo "Encrypted String: " . $encryption . "\n";
+
+//decrypting
+$decryption_iv = 'adfrf54dmnlo09ax';
+$decryption_key = "xfassoKey";
+$decrypted_id = openssl_decrypt($emailId, $ciphering, $decryption_key, $options, $decryption_iv);
+echo $decrypted_id;
+?>
+
+
+
+
+otp hashing for tomorrow..... :)

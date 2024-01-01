@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
+
+    <style>
+        .new-menu-login a img {
+            width: 34px;
+            transition: 0.2s ease;
+        }
+        ._u2c {
+            padding: 2px 3px;
+            width: fit-content;
+        }
+        ._u2c:hover {
+            transform: scale(1.1);
+
+        }
+        .szakwm:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <title>DOCUMENT-TEST</title>
+</head>
+<body>
+    <div class="_45y"></div>
+    <div id="nav" class="nav">
+        <div class="checkbox">
+            <input type="checkbox" id="ham-menu">
+            <label class="ham" for="ham-menu">
+                <div class="hamburger">
+                    <span id="bar1" class="bar1"></span>
+                    <span id="bar2"  class="bar2"></span>
+                    <span id="bar3"  class="bar3"></span>
+                </div>
+            </label>
+        </div>
+        <div class="nav-logo primary">
+            LOGO
+        </div>
+        <ul class="nav-links">
+            <li class="secondary" onclick="menCookie()"><a class="_u2c" href="shop/shop.php">Men</a></li>
+            <li class="secondary" onclick="womenCookie()"><a class="_u2c" href="shop/shop.php">Women</a></li>
+            <li class="secondary"><a class="_u2c" href="about/about.html">About</a></li>
+        </ul>
+        <div class="nav-login-cart">
+            <ul class="login-cart">
+                <li class="login">
+
+                    <a href="./profile/profile.php" class="_u2c">Profile</a>
+                    <a onclick="logoutSignup()" class="_u2c logout">Sign Up</a>
+                </li>
+                <li class="primary">
+                    <a href="./cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
+                        <i class="fas fa-shopping-cart" style="color: #12263a;">
+                        </i>
+
+                        <style>
+                            #cart_num {
+                                background: rgba(239, 50, 50, 0.811);
+                                padding: 3px;
+                                height: 18px;
+                                display: flex;
+                                color: #fff;
+                                align-items: center;
+                                justify-content: center;
+                                width: 18px;
+                                border-radius: 100%;
+                                position: absolute;
+                                top: -40%;
+                                left: 75%;
+                            }
+                            #zIca {
+                                position: relative;
+                            }
+                        </style>
+                        <div id="cart_num">
+                            <div id="number"></div>
+                        </div>
+                        <script>
+                            var cart_num = document.getElementById('cart_num');
+                            var number = document.getElementById('number');
+                            fetch('./num/num.php')
+                                .then((result) => {
+                                    return result.json(); 
+                                })
+                                .then((outcome) => {
+                                    number.innerHTML = outcome.num;
+                                    if(outcome.num === 0) {
+                                        cart_num.style.display = 'none';
+                                    }
+
+                                    if(outcome.num < 100) {
+                                        cart_num.style.width = '18px';
+                                        cart_num.style.height = '18px';
+                                        cart_num.style.fontSize = '12px';
+                                    }else {
+                                        cart_num.style.fontSize = '7.4px';
+                                    }
+                                })
+                        </script>
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="new-nav-menu" class="new-nav-menu">
+        <div class="another">
+            <ul class="new-nav-links">
+                <li class="secondary" onclick="menCookie()"><a class="_u2c" href="shop/shop.php">Men</a></li>
+            <li class="secondary" onclick="womenCookie()"><a class="_u2c" href="shop/shop.php">Women</a></li>
+            <li class="secondary"><a class="_u2c" href="about/about.html">About</a></li>
+            </ul>
+            <div class="new-menu-login">
+                <style>
+                    .pqj2 {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
+                </style>
+                <a href="./profile/profile.php" class="_u2c pqj2">
+                    Profile
+                </a>
+                <a onclick="logoutSignup()" class="_u2c logout pqj2"></a>
+            </div>
+            <hr>
+            <ul class="new-nav-social-links">
+                <li>
+                    
+                    <a href="#" class="_u2c">
+                        <img src="./resources/socialmedia/icons8-instagram-48.png" width="24px" alt="instagram">
+                    </a>
+                </li>
+                <li><a href="#" class="_u2c">
+                    <img src="./resources/socialmedia/icons8-facebook-48.png" width="24px" alt="facebook">
+                </a></li>
+                <li><a href="#" class="_u2c">
+                    <img src="./resources/socialmedia/icons8-pinterest-48.png" width="24px" alt="pinterest">
+                </a></li>
+                <li><a href="#" class="_u2c">
+                    <img src="./resources/socialmedia/icons8-twitterx-50.png" width="24px" alt="twitter X">
+                </a></li>
+            </ul>
+        </div>
+    </div>
+            
+
+    <div id="main" class="main">
+        <div class="header">
+            <div class="header-desc">
+                <h1 class="primary">Hey, Welcome Text Goes here.</h1>
+                <p class="secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, consequatur fuga! </p>
+                <div class="_q18ha">
+                    <a href="./connections/deleteOtp.php">Shop All</a>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-desc">
+                <h1 class="primary">This is a heading. Welcome to content page.</h1>
+                <p class="secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat laborum voluptatibus, tenetur exercitationem.</p>
+            </div>
+            <iframe id="product-frame" src="./products/products.php" frameborder="0"></iframe>
+        </div>
+        <div class="men-women">
+            <h1 class="primary _2ya">Our collections</h1>
+            <div class="men">
+                <h1 class="primary phone-head">Men's Fashions</h1>
+                <div class="men-image">
+                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=" alt="image.png">
+                </div>
+                <div class="men-content">
+                    <div class="men-heading">
+                        <h1 class="primary">Men's Fashions</h1>
+                    </div>
+                    <div class="men-p">
+                        <p class="secondary">  
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel quasi voluptates nobis accusamus, ipsa unde magni mollitia labore voluptas ex praesentium amet laboriosam. 
+                        </p>
+                        <div onclick="menCookie()" class="men-button">
+                            <button><a class="button-primary" href="shop/shop.php">view</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="women">
+                <h1 class="primary phone-head-women">Women's Fashions</h1>
+                <div class="women-image">
+                    <img src="https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=" alt="image.png">
+                </div>    
+                <div class="women-content">
+                    <div class="women-heading">
+                        <h1 class="primary">Women's Fashions</h1>
+                    </div>
+                    <div class="women-p">
+                        <p class="secondary">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel quasi voluptates nobis accusamus, ipsa unde magni mollitia labore voluptas ex praesentium amet laboriosam. 
+                        </p>
+                        <div onclick="womenCookie()" class="women-button">
+                            <button><a class="button-primary" href="shop/shop.php">view</a></button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="team">
+            <div class="about-us">
+                <h1 class="primary">About Us.</h1>
+                <p class="secondary">"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore minima molestias saepe fugit! Dolor nemo officia voluptatum explicabo autem, corrupti dicta, libero quos, rerum vel soluta ratione harum praesentium inventore."</p>
+            </div>
+            <div class="contact-us">
+                <h1 class="primary">Contact us.</h1>
+                <p class="secondary" style="margin-top: 10px;">contact us through phone or email.</p>
+                <div class="phone">
+                    <h4>Phone: </h4>
+                    <a href="tel:+918089949054">+91 8089949054</a>
+                </div>
+                <div class="email">
+                    <h4>Email: </h4>
+                    <a href="mailto:ajinvarughese91@gmail.com">ajinvarughese91@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <hr class="_y72">
+        <div class="footer">
+            <div class="quick-link">
+                <h4 class="primary footer-head">Quick links</h4>
+                <ul>
+                    <li><a onclick="menCookie()" href="./shop/shop.php">Men</a></li>
+                    <li><a onclick="womenCookie()" href="./shop/shop.php">Women</a></li>
+                    <li><a href="./shop/shop.php">Shop All</a></li>
+                </ul>
+            </div>
+            <div class="info">
+                <h4 class="primary footer-head">Info</h4>
+                <ul>
+                    <li><a href="./about/">About</a></li>
+                    <li><a href="./policies/shipping/">Shipping policy</a></li>
+                    <li><a href="./policies/return/">Return policy</a></li>
+                    <li><a href="./policies/terms/">Terms and Conditions</a></li>
+                    <li><a href="./policies/privacy/">Privacy policy</a></li>
+                </ul>
+            </div>
+            <div class="our-mission">
+                <h4 class="primary footer-head">Our mission</h4>
+                <p class="secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quibusdam alias excepturi corporis fuga aut beatae amet repudiandae. Commodi, placeat earum</p>
+            </div>
+        </div>
+        <div id="email-us" class="email-us">
+            <h1 class="primary">Email Us.</h1>
+            <form action="./connections/mailto.php" method="post">
+                <input type="text" class="_i044d" name="email-text" value="" required placeholder="Your suggetions goes here">
+                <input type="submit" name="submit" onclick="emailSubmit()" id="email-submit">
+                <label for="email-submit" class="btn-email">
+                    <img src="./resources/icons8-arrow.gif" alt="->">
+                </label>
+                <p id="emailSending" class="emailSending secondary"></p>
+                <br>
+                <br><br>
+                <ul style="display: flex; justify-content: center;" class="new-nav-social-links">
+                    <li>
+                        <a href="#" class="_u2c">
+                            <img src="./resources/socialmedia/icons8-instagram-48.png" width="24px" alt="instagram">
+                        </a>
+                    </li>
+                    <li><a href="#" class="_u2c">
+                        <img src="./resources/socialmedia/icons8-facebook-48.png" width="24px" alt="facebook">
+                    </a></li>
+                    <li><a href="#" class="_u2c">
+                        <img src="./resources/socialmedia/icons8-pinterest-48.png" width="24px" alt="pinterest">
+                    </a></li>
+                    <li><a href="#" class="_u2c">
+                        <img src="./resources/socialmedia/icons8-twitterx-50.png" width="24px" alt="twitter X">
+                    </a></li>
+                </ul>
+            </form>
+
+            <p class="_c45 secondary">&copy; brand 2023</p>
+        </div>
+    </div>
+    <script>
+        function menCookie() {
+
+            var cookieExpires = new Date(Date.now() + 100 * 30).toUTCString();
+            document.cookie = "men-checked=menTrue; expires="+ cookieExpires +"; path=/";
+        }
+        function womenCookie() {
+            var cookieExpires = new Date(Date.now() + 100 * 30).toUTCString();
+            document.cookie = "women-checked=womenTrue; expires="+ cookieExpires +"; path=/";
+        }
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
