@@ -1,0 +1,263 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
+    color: #12263a;
+}
+html {
+    scroll-behavior: smooth;
+}
+.navCart {
+    height: 3.9rem;
+    border-bottom: 1px solid #d2d5d9;
+    display: flex;
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainCart {
+    min-height: 100vh;
+    
+}
+.cards-container-cart {
+    min-height: 80vh;
+    padding: 6.9rem 2.5rem 0 2.5rem;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.iaj{
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 4px 4px 9px #d2d5d998;
+    border: 1px solid #d2d5d9;
+    padding: 7px 12px;
+    max-width: 799px;
+    position: relative;
+    transition: 0.3s ease;
+    display: flex;
+    gap: 9.7px;
+    width: 100%;
+    border-radius: 3px;
+}
+._p2 {
+    display: flex;
+    gap: 2.1rem;
+}
+.total {
+    width: 100%;
+    max-width: 817px;
+    background: #fff;
+}
+.t {
+    display: flex;
+    justify-content: space-between;
+}
+._o1 {
+    opacity: 0.8;
+}
+._ip {
+    padding: 4.7px 0;
+    text-align: right;
+    opacity: 0.8;
+}
+._dtype span, .del3{
+    font-weight: 600;
+    color: rgb(3, 160, 3);
+}
+._j2k3 {
+    padding: 7px 12px;
+}
+._ij1, ._u21 {
+    font-weight: 600;
+}
+.dlt {
+    position: absolute;
+    left: 98%;
+    z-index: 1;
+    top: 4px;
+    transform: translate(-98%, 4px);
+}
+.title-dlt h1 {
+    font-size: 24px;
+}
+.size, .quantity {
+    opacity: 0.8;
+    margin-top: 2px;
+    font-size: 14px;
+}
+.price {
+    font-weight: 600;
+    font-size: 18px;
+}
+.delType {
+    margin-top: 5px;
+}
+.delType span {
+    font-weight: 600;
+    color: rgb(3, 160, 3);
+}
+
+._r-title {
+    font-weight: 600;
+    font-size: 21px;
+}
+.size {
+    margin-top: 10px;
+}
+.price {
+    margin-top: 10px;
+}
+
+.price span {
+    color: rgb(3, 160, 3);
+    font-weight: 500;
+}
+
+.fa-trash-o {
+    color: #12263a;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.fa-trash-o:hover{
+    transform: scale(1.1);
+}
+.buy {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    height: 6rem;
+    width: 100%;
+    z-index: 1;
+    border-top: 1px solid #d2d5d9;
+    border-bottom: 1px solid #d2d5d9;
+}
+.price-button input{
+    padding: 12px 31px;
+    cursor: pointer;
+    background: rgba(3, 160, 3, 0.87);
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+.price-button:hover {
+    opacity: 0.97;
+}
+._i21ns {
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-around;
+    height: 78%;
+    align-items: center;
+} 
+.price-navCart {
+    font-weight: 600;
+    font-size: 21px;
+}
+.order-now {
+    height: 22%;
+    width: 100%;
+    background: #12263a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.order-now p {
+    font-size: 11px;
+    color: #fff;
+}
+._X2s img {
+    max-width: 100%;
+    display: block;
+    max-height: 100%;
+}
+._X2s {
+    margin: 14px 0;
+    width: 72px;
+}
+.productImg {
+    flex-basis: 32%;
+    max-width: 167px;
+    min-width: 101px;
+} 
+
+.productImg img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.msgMain {
+    min-height: 50vh;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.msg {
+    margin-top: 10px;
+    opacity: 0.8;
+}
+.msgMain a{
+    text-decoration: none;
+    border: 1px solid;
+    padding: 9px 22px;
+    background: #12263a;
+    color: #fff;
+    margin-top: 10px;
+    transition: 0.2s ease;
+}
+.msgMain a:hover {
+    transform: scale(1.01);
+}
+.im img {
+    cursor: pointer;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.im {
+    width: 54px;
+}
+@media (min-width: 752px) {
+    .img {
+        flex-basis: 20%;
+    }
+}
+@media (max-width: 600px) {
+    ._p2 {
+        gap: 3px;
+    }
+}
+
+@media (max-width: 415px) {
+    ._r-title {
+        font-size: 17px;
+    }
+    ._X2s {
+        width: 64px;
+    }
+}
+@media (max-width: 351px) {
+    ._r-title {
+        font-size: 15px;
+    }
+    ._p2 {
+        flex-direction: column;
+    }
+    .size {
+        font-size: 12px;
+    }
+    .price, ._dtype, ._dtype span {
+        font-size: 13px;
+    }
+}

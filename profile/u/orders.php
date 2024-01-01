@@ -1,0 +1,23 @@
+<?php 
+    require_once '../../connections/productdb.php';
+    // for last day 
+    // orders.php
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    FOR THE LAST DAY.
+
+    congrats you are half way up there. I'm happy you stayed consistent.
+    I believe you bud. you've done great! Hope they are prouda ya.
+</body>
+</html>
+
+<?php 
+    mysqli_close($conn);
+?>

@@ -1,0 +1,235 @@
+*{
+    margin: 0;
+    padding: 0;
+    color: #12263a;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    position: relative;
+
+}
+._io {
+    position: absolute;
+    top: 0;
+    left: 48.5%;
+    z-index: 1;
+    font-size: 2.8vw;
+    transform: translate(-48.5%, 0);
+}
+._io .p {
+    color: #0062d1;
+}
+._io .s {
+    color: #fff;
+}
+.container {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.card-right {
+    flex: 1;
+    min-height: 100vh;
+}
+#i22 {
+    transition: 0.3s ease;
+}
+#i23 {
+    transition: 0.3s ease;
+}
+
+.card-right img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.card-left {
+    flex: 1;
+    min-height: 100vh;
+    position: relative;
+    padding: 2% 0;
+}
+.title {
+    text-align: center;
+    color: #12263a;
+    font-weight: 800;
+    font-size: 4.6vw;
+}
+.title span {
+    color: #12263a;
+    font-size: 4.9vw;
+}
+.p32k {
+    text-align: center;
+    color: #12263a;
+    margin-top: 1.3rem;
+    padding: 0 4.6%;
+}
+.card {
+    min-height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card form {
+    box-shadow: 0 0 8px 3px #101e2c25;
+    margin-top: 10px;
+    transition: 0.3s ease;
+    padding: 1.4rem 1rem 0 1rem;
+    background: #fff;
+    border-radius: 7px;
+    max-width: 478px;
+    width: 73% !important;
+    width: fit-content;
+}
+.card form:hover {
+   transform: scale(1.009);
+}
+.card h2 {
+    text-align: center;
+    margin-bottom: 13px;
+}
+.login {
+    height: 3.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 1.2rem;
+}
+.login a {
+    color: #0062d1;
+    font-size: 14px;
+}
+.login a:hover {
+    color: blue;
+}
+::placeholder {
+    font-weight: 400 !important;
+}
+.cpr {
+    width: fit-content;
+}
+.cpr p{
+    color: #fff;
+}
+.card form input {
+    border-radius: 3px;
+    width: 100%;
+    padding: 12px 10px;
+    margin: 0.4rem 0;
+    outline: none;
+    border: 1px solid #0f203076;
+}
+.email {
+    position: relative;
+}
+#showpass, #_aWaswf {
+    position: absolute;
+    left: 98%;
+    cursor: pointer;
+    top: 50%;
+    transform: translate(-98%, -50%);
+}
+
+.email input:focus {
+    border: 1px solid #12263a;
+}
+.getOtp input{
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    transition: 0.3s ease;
+    cursor: pointer;
+    background: rgba(17, 224, 17, 0.842);
+    border: 1px solid rgba(17, 224, 17, 0.842) !important;
+}
+
+.getOtp:hover {
+    opacity: 0.9;
+}
+@media (max-width: 1108px) {
+    .card-right{
+        display: none;
+    }
+    .title {
+        font-size: 48px;
+        color: inherit;
+    }
+    .title span {
+        color: inherit;
+    }
+    .p32k {
+        color: inherit;
+    }
+    .cpr p{
+        color: inherit;
+    }
+    .card form {
+        margin: 1.2rem auto;
+    }
+    .card {
+        min-height: 62vh;
+        background: none;
+    }
+    .card-left {
+        padding-top: 9.7%;
+    }
+}
+@media (max-height: 570px) {
+    .card-right{
+        display: none;
+    }
+    .card-left {
+        height: 100vh;
+    }
+    .title {
+        font-size: 48px;
+        color: inherit;
+    }
+    .title span {
+        color: inherit;
+    }
+    .p32k {
+        color: inherit;
+    }
+    .cpr p{
+        color: inherit;
+    }
+    .card {
+        min-height: 62vh;
+        background: none;
+      
+    }
+    .card-left {
+        padding-top: 23px;
+    }
+    .card form {
+        margin: 1.2rem auto;
+    }
+}
+
+@media (max-width:620px) {
+    .title {
+        font-size: 39px;
+        color: inherit;
+    }
+    .p32k {
+        color: inherit;
+    }
+    .cpr p{
+        color: inherit;
+    }
+    .card {
+        background: none;
+    }
+    .card-left {
+        padding-top: 9.7%;
+    }
+}

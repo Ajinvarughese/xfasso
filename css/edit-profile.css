@@ -1,0 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+.nav {
+    position: relative;
+    min-height: 3.7rem;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    box-shadow: 0 2px 10px #0f203076;
+    background: #12263a;
+}
+.back {
+    padding: 2px 8px;
+    transition: 0.3s ease;
+}
+.back:hover {
+    transform: scale(1.1);
+}
+.main {
+    min-height: 90vh;
+    padding: 19px 0;
+    display: flex;
+}
+.userDP {
+    min-height: 15.3rem;
+    align-items: center;
+    background: #12263a;
+    flex-basis: 33%;
+    display: flex;
+    justify-content: center;
+    
+}
+.updateName, .updateEmail {
+    height: 8.2rem;
+    position: relative;
+}
+.updateName form, .updateEmail form{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 2%;
+    transform: translate(-2%, -50%);
+}
+.res {
+    position: absolute;
+    top: 81%;
+    left: 0;
+    transform: translate(0, -50%);
+}
+.res a{
+    color: #0062d1;
+    text-decoration: none;
+}
+.res a:hover {
+    text-decoration: underline;
+}
+.updateEmail {
+    margin-top: 3rem;
+}
+.inp {
+    border: none;
+    border-bottom: 1px solid #0f203076;
+    padding: 11px 11px 1px 11px;
+    outline: none;
+    width: 50%;
+    font-weight: 500;
+    font-size: 16px;
+    transition: 0.1s ease;
+}
+.inp:focus {
+    border-bottom: 2px solid #12263a;
+}
+.bt {
+    font-size: 16px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    color: #0062d1;
+    cursor: pointer;
+    margin-left: 12px;
+}
+._ij3 {
+    flex: 1;
+    padding: 2.4% 4%;
+}
+.te {
+    font-weight: 600;
+    font-size: large;
+    opacity: 0.6;
+    text-align: center;
+}
+.userImg {
+    transition: 0.3s ease;
+}
+.userImg:hover {
+    transform: scale(1.1);
+}
+.userImg img {
+    width: 93px;
+}
+#yu2 {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+}
+#di {
+    display: none;
+}
+#_m1 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+@media (max-width: 1009px) {
+    .main {
+        flex-direction: column;
+        align-items: unset;
+        padding: 0;
+    }
+}
+@media (min-width: 1010px) {
+    .userDP {
+        background: #fff;
+    }
+    #_m1 {
+        color: inherit;
+    }
+}
+@media (max-width: 99px) {
+    .userImg img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+    }
+}        
+.otp {
+    margin-top: 18px;
+}
+.res {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translate(0, -100%);
+}

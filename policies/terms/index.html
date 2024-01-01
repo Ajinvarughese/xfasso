@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT US</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .h1u2 {
+            padding: 0 4%;
+        }
+        .h2u2 {
+            font-weight: 600;
+            margin: 2rem auto 1.5rem auto;
+            width: fit-content;
+        }
+        .cont {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .email-us {
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="h1u2">
+        <div class="h2u2">
+            <h1>TERMS AND CONDITIONS</h1>
+        </div>
+        <hr>
+        <div class="cont">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque esse error deserunt natus cupiditate eveniet ratione deleniti laborum, voluptatum assumenda delectus sit consequatur reprehenderit explicabo optio labore perferendis at sint?
+                Voluptate dolore quo distinctio atque velit unde totam autem corporis? Voluptate ratione fuga nisi odio cupiditate architecto aspernatur illum! Amet assumenda officiis neque saepe dolores, voluptatibus molestiae iste ut laboriosam.
+                Quod excepturi alias consequuntur, blanditiis soluta saepe nostrum? Quo nesciunt fugit iure, harum, maxime incidunt esse numquam optio iste possimus, ad ex? Eaque necessitatibus blanditiis, veritatis quidem eum ipsam illum?
+            </p>
+        </div>
+    </div>
+ 
+    <hr style="margin-top: 2rem;">
+
+    <div id="email-us" class="email-us">
+        <h1 class="primary">Email Us.</h1>
+        <form action="../../connections/mailto.php" method="post">
+            <input type="text" class="_i044d" name="email-text" value="" required placeholder="Your suggetions goes here">
+            <input type="submit" name="submit" onclick="emailSubmit()" id="email-submit">
+            <label for="email-submit" class="btn-email">
+                <img src="../../resources/icons8-arrow.gif" alt="->">
+            </label>
+            <p id="emailSending" class="emailSending secondary"></p>
+            <br>
+            <br><br>
+            <ul style="display: flex; justify-content: center;" class="new-nav-social-links">
+                <li>
+                    <a href="#" class="_u2c">
+                        <img src="../../resources/socialmedia/icons8-instagram-48.png" width="24px" alt="instagram">
+                    </a>
+                </li>
+                <li><a href="#" class="_u2c">
+                    <img src="../../resources/socialmedia/icons8-facebook-48.png" width="24px" alt="facebook">
+                </a></li>
+                <li><a href="#" class="_u2c">
+                    <img src="../../resources/socialmedia/icons8-pinterest-48.png" width="24px" alt="pinterest">
+                </a></li>
+                <li><a href="#" class="_u2c">
+                    <img src="../../resources/socialmedia/icons8-twitterx-50.png" width="24px" alt="twitter X">
+                </a></li>
+            </ul>
+        </form>
+
+        <p class="_c45 secondary">&copy; brand 2023</p>
+    </div>
+
+    <script src="../../about/main.js"></script>
+</body>
+</html>
