@@ -184,16 +184,14 @@ body {
 .header {
     position: relative;
     min-height: 569px;
-    max-height: 80vh;
     background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=');
+    width: 100%;
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-repeat:no-repeat;
-    width: 100%;
 }
 
-.header-desc {
-   
+.header-desc { 
     position: absolute;
     top: 50%;
     left: 50%;

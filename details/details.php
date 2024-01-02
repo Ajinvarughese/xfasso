@@ -114,17 +114,19 @@
                         position: relative;
                     }
                 </style>
+                
                 <div id="cart_num">
                     <div id="number"></div>
                 </div>
                 <script>
                     var cart_num = document.getElementById('cart_num');
                     var number = document.getElementById('number');
-                    fetch('../num/num.php')
+                    fetch('./num/num.php')
                         .then((result) => {
                             return result.json(); 
                         })
                         .then((outcome) => {
+
                             number.innerHTML = outcome.num;
                             if(outcome.num === 0) {
                                 cart_num.style.display = 'none';
@@ -137,6 +139,9 @@
                             }else {
                                 cart_num.style.fontSize = '7.4px';
                             }
+                        })
+                        .catch((error)=> {
+                            cart_num.style.display = 'none';  
                         })
                 </script>
 

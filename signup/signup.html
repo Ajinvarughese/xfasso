@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's sign up...</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
+    
+    
+    <link rel="stylesheet" href="../css/signup.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="card-right">
+            <img src="../resources/4957136_4957136.jpg" alt="signup">
+        </div>
+        <div class="card-left">
+            <div class="title">Sign Up<span>.</span></div>
+            <div class="p32k">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam corrupti beatae ex modi at?
+            </div>
+
+            <div class="card" id='i22'>
+            <form action="./signin.php" method="post" onsubmit="return validateForm()">
+                    <h2>Enter name and email</h2>
+                    <div class="email">
+                        <input type="text" name='username' id="username" placeholder="Enter your name">
+                        <p id="noName" style="color: red; font-size: 13px;"></p>
+                    </div>
+
+                    <div class="email">
+                        <input type="email" name='email' id="email" placeholder="Email address" value="">
+                        <p id="noEmail" style="color: red; font-size: 13px;"></p>
+                    </div>
+                    <div class="getOtp">
+                        <input id="getOtp" onclick="return validateForm()"  type="submit" name="getOtp" value="Get OTP">
+                    </div>
+                    <div class="login">
+                        <a href="../login/login.php">Alredy have an account? Log In</a>
+                    </div>
+                </form>
+
+                <div style="opacity: 0.8; font-size: 12px;" class="cpr">
+                    &copy; XFASSO 2023
+                </div>
+            </div>
+
+            <script>
+                function getCookie(name) {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                }
+                function validateForm() {
+                    var nameField = document.getElementById('username');
+                    var noNameWarning = document.getElementById('noName');
+                    var name = nameField.value.trim(); 
+
+                    var emailField =document.getElementById('email');
+                    var noEmailWarning =document.getElementById('noEmail');
+                    var email = emailField.value.trim();
+
+                    
+                    if (name === '') {
+                        noNameWarning.innerHTML = 'Please enter your name.';
+                        nameField.style.border = '1px solid red';
+                        return false;
+                    }
+                    if(email === '' || !/^.+@.+\..+$/.test(email)) {
+                        noEmailWarning.innerHTML = 'Please enter a valid email address';
+                        emailField.style.border = '1px solid red';
+                        return false;
+                        
+                    }
+                    
+
+                    noNameWarning.innerHTML = '';
+                    noEmailWarning.innerHTML = '';
+
+                    return true;
+                }
+                var nameField = document.getElementById('username');
+                var noNameWarning = document.getElementById('noName');
+
+                var emailField =document.getElementById('email');
+                var noEmailWarning =document.getElementById('noEmail');
+
+
+                if(getCookie('exists')) {
+                    noEmailWarning.innerHTML = 'Email alredy exists please log in';
+                    document.cookie = "exists=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
+
+                nameField.addEventListener('input', ()=> {
+                    noNameWarning.innerHTML = '';
+                    nameField.style.border = '1px solid #0f203076'
+                });
+
+                emailField.addEventListener('input', ()=> {
+                    noEmailWarning.innerHTML = '';
+                    emailField.style.border = '1px solid #0f203076';
+                });
+                if(getCookie('XassureUser')) {
+                    window.location.href = '../index.html';
+                }
+            </script>
+        </div>
+    </div>
+</body>
+</html>

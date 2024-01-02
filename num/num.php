@@ -28,11 +28,12 @@
         }else {
             $numOfProd = 0;
         }
-        $cartNum = ["num" => $numOfProd];
     }else {
         $numOfProd = 0;
         header('Location: ../');
     }
+
+    $cartNum = ["num" => $numOfProd];
 
     echo json_encode($cartNum);
 ?>

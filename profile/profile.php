@@ -64,7 +64,7 @@
                     <a href="../contact/contact.html" id="help">
                         Contact Us
                     </a>
-                    <a href="../index.html" id="Home">
+                    <a href="../" id="Home">
                         Home
                     </a>
                 </div>
