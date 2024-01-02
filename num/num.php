@@ -25,15 +25,13 @@
 
         if(mysqli_num_rows($runQ) > 0) {
             $numOfProd = mysqli_num_rows($runQ);
+            $cartNum = ["num" => $numOfProd];
+            echo json_encode($cartNum);
         }else {
-            $numOfProd = 0;
+            echo"<script>window.history.back()</script>";
         }
     }else {
         $numOfProd = 0;
         header('Location: ../');
     }
-
-    $cartNum = ["num" => $numOfProd];
-
-    echo json_encode($cartNum);
 ?>
