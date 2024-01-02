@@ -121,7 +121,7 @@
                 <script>
                     var cart_num = document.getElementById('cart_num');
                     var number = document.getElementById('number');
-                    fetch('./num/num.php')
+                    fetch('../num/num.php')
                         .then((result) => {
                             return result.json(); 
                         })
