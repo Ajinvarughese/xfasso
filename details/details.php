@@ -114,6 +114,7 @@
                         position: relative;
                     }
                 </style>
+                
                 <div id="cart_num">
                     <div id="number"></div>
                 </div>
@@ -125,6 +126,7 @@
                             return result.json(); 
                         })
                         .then((outcome) => {
+
                             number.innerHTML = outcome.num;
                             if(outcome.num === 0) {
                                 cart_num.style.display = 'none';
@@ -137,6 +139,9 @@
                             }else {
                                 cart_num.style.fontSize = '7.4px';
                             }
+                        })
+                        .catch((error)=> {
+                            cart_num.style.display = 'none';  
                         })
                 </script>
 
