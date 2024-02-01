@@ -406,7 +406,6 @@
                                             </div>
                                         </div>
                                         ";
-
                                         $totalPrice += $priceByQua;
                                     }
                                 }
@@ -425,7 +424,7 @@
                             TOTAL
                         </div>
                         <div class="qina">
-                            ₹<?php echo isset($_POST['isAddr'])? $totalPrice : 0 ?>
+                            ₹<?php echo isset($_SESSION['isAdd'])? $totalPrice : 0 ?>
                         </div>
                     </div>
                 </div>
