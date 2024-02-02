@@ -4,12 +4,10 @@
     class Ratings {
         public $starCount;
         public $userId;
-        public $productId;
         public $description;
 
-        public function __construct($starcount, $userId, $productId,$description) {
+        public function __construct($starcount, $userId,$description) {
             $this->starCount = $starcount;
-            $this->productId = $productId;
             $this->userId = $userId;
             $this->description = $description;
         }
@@ -33,13 +31,6 @@
         }
         public function setDesc($desc) {
             $this->description = $desc; 
-        }
-
-        public function getProduct() {
-            return $this->productId;
-        }
-        public function setProduct($product) {
-            $this->productId = $product; 
         }
     }
 ?>

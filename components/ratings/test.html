@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        fetch('./ratingAPI.php')
+            .then((result)=> {
+                return result.json();
+            })
+            .then((outcome)=> {
+                console.log(outcome);
+                document.body.innerHTML += outcome[0].starCount;
+            })
+    </script>
+
+    <form action="./rate.php" method="post">
+        <input type="text" name="starCount" placeholder="star rating">
+        <input type="text" name="description" placeholder="description">
+        <input type="text" value="4" name='productId' hidden>
+        <input type="text" value="159" name="userId" hidden>
+        <input type="submit" name="postRating">
+    </form>
+</body>
+</html>
