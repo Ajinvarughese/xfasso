@@ -1,7 +1,7 @@
 <?php 
     require '../../connections/productdb.php';
 
-    $q = "SELECT * FROM products WHERE product_id=4";
+    $q = "SELECT * FROM products";
     $r = mysqli_query($conn, $q);
 
 

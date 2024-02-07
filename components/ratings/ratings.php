@@ -6,10 +6,20 @@
         public $userId;
         public $description;
 
-        public function __construct($starcount, $userId,$description) {
+        public $product_id;
+
+        public function __construct($product_id, $starcount, $userId,$description) {
             $this->starCount = $starcount;
             $this->userId = $userId;
             $this->description = $description;
+            $this->product_id = $product_id;
+        }
+
+        public function getProductID() {
+            return $this->starCount;
+        }
+        public function setProductID($prodId) {
+            $this->product_id = $prodId; 
         }
 
         public function getCount() {
