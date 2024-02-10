@@ -28,12 +28,22 @@
     if(isset($_POST["postRating"])) {
         $starCount = filter_var($_POST['starCount'], FILTER_SANITIZE_NUMBER_INT);
         $desc = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS); 
-        $prodId = 5;
+        $prodId = 4;
     
         $rating = new Ratings($prodId, $starCount, $user_id, $desc);
 
         
-        $newRatingData = json_encode($rating);
+        $ratingObject = array(
+            array(
+                "productID" => $rating->getProductID(),
+                "userID" => $rating->getUser(),
+                "starCount" => $rating->getCount(),
+                "description" => $rating->getDesc()
+                
+            )
+        );
+        $ratingJSON = json_encode($ratingObject);
+
 
         $fetchQ = "SELECT rating FROM products WHERE product_id = {$prodId}";
         $result = mysqli_query($conn, $fetchQ);
@@ -41,16 +51,18 @@
         if (mysqli_num_rows($result)>0) {
             $row = mysqli_fetch_assoc($result);
 
-
             if($row['rating'] == NULL) {
-               $appendNewPost = "UPDATE products SET rating = '[$newRatingData]' WHERE product_id = $prodId";
+               $appendNewPost = "UPDATE products SET rating = '{$ratingJSON}' WHERE product_id = $prodId";
             }
             else {
                 $remContent = substr_replace($row['rating'] ,"", -1);
-                $exContent = $remContent.','.$newRatingData.']';
-             $appendNewPost = "UPDATE products SET rating = '{$exContent}' WHERE product_id = $prodId";
+                $ratingJSON = str_replace('[', " ",$ratingJSON); 
+                $ratingJSONUpdate = $remContent.','.$ratingJSON;
+                $appendNewPost = "UPDATE products SET rating = '{$ratingJSONUpdate}'  WHERE product_id = $prodId";
             }
             mysqli_query($conn, $appendNewPost);
         }
     }
+
+    mysqli_close($conn);
 ?>

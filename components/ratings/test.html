@@ -9,11 +9,11 @@
     <script>
         fetch('./ratingAPI.php')
             .then((result)=> {
-                return result.json();
+                return result.json;
             })
             .then((outcome)=> {
                 console.log(outcome);
-                document.body.innerHTML += outcome[0].starCount;
+                document.body.innerHTML += outcome;
             })
     </script>
 
