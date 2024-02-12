@@ -6,16 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        fetch('./ratingAPI.php')
-            .then((result)=> {
-                return result.json;
-            })
-            .then((outcome)=> {
-                console.log(outcome);
-                document.body.innerHTML += outcome;
-            })
-    </script>
 
     <form action="./rate.php" method="post">
         <input type="text" name="starCount" placeholder="star rating">
@@ -24,5 +14,25 @@
         <input type="text" value="159" name="userId" hidden>
         <input type="submit" name="postRating">
     </form>
+
+
+    <script src="rating.js"></script>
+
+
+    <div id="userId" style="line-height: 21px;">
+       <br>User ID: <br> 
+    </div>
+
+    <div id="prodID" style="line-height: 21px;">
+        <br>Product ID: <br>
+    </div>
+
+    <div id="rating" style="line-height: 21px;">
+        <br>Rating: <br>
+    </div>
+
+    <div id="desc" style="line-height: 21px;">
+        <br> Description: <br>
+    </div>
 </body>
 </html>

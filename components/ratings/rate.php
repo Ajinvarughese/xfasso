@@ -65,4 +65,10 @@
     }
 
     mysqli_close($conn);
+
+    echo "
+        <script>
+            window.history.back();
+        </script>
+    ";
 ?>

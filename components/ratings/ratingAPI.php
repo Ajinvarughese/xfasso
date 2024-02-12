@@ -1,17 +1,17 @@
 <?php
 require '../../connections/productdb.php';
 
-$q = "SELECT * FROM products WHERE product_id = 4";
+$q = "SELECT * FROM products";
 $r = mysqli_query($conn, $q);
 
 $rating = array();
 if(mysqli_num_rows($r) > 0) {
     while($res = mysqli_fetch_assoc($r)) {
         if($res['rating'] != NULL) {
-            $rating = json_decode($res['rating']);
+            $rating[] = json_decode($res['rating'], true);
         }
     }
 
-    print_r($rating);
+    echo json_encode($rating);
 }
 ?>
