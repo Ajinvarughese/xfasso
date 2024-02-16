@@ -2,21 +2,20 @@
     require '../../connections/productdb.php';
 
     class Ratings {
+        public $product_id;
         public $starCount;
         public $userId;
         public $description;
 
-        public $product_id;
-
         public function __construct($product_id, $starcount, $userId,$description) {
+            $this->product_id = $product_id;
             $this->starCount = $starcount;
             $this->userId = $userId;
             $this->description = $description;
-            $this->product_id = $product_id;
         }
 
         public function getProductID() {
-            return $this->starCount;
+            return $this->product_id;
         }
         public function setProductID($prodId) {
             $this->product_id = $prodId; 

@@ -28,7 +28,7 @@
     if(isset($_POST["postRating"])) {
         $starCount = filter_var($_POST['starCount'], FILTER_SANITIZE_NUMBER_INT);
         $desc = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS); 
-        $prodId = 4;
+        $prodId = 5;
     
         $rating = new Ratings($prodId, $starCount, $user_id, $desc);
 
@@ -42,10 +42,12 @@
                 
             )
         );
+        print_r($ratingObject);
         $ratingJSON = json_encode($ratingObject);
+        echo $ratingJSON;
 
-
-        $fetchQ = "SELECT rating FROM products WHERE product_id = {$prodId}";
+        
+        $fetchQ = "SELECT rating FROM products WHERE product_id = {$rating->product_id}";
         $result = mysqli_query($conn, $fetchQ);
 
         if (mysqli_num_rows($result)>0) {
