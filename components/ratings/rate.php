@@ -28,31 +28,29 @@
     if(isset($_POST["postRating"])) {
         $starCount = filter_var($_POST['starCount'], FILTER_SANITIZE_NUMBER_INT);
         $desc = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS); 
-        $prodId = 5;
+        $prodId = 6;
     
         $rating = new Ratings($prodId, $starCount, $user_id, $desc);
 
         
         $ratingObject = array(
-            array(
-                "productID" => $rating->getProductID(),
-                "userID" => $rating->getUser(),
-                "starCount" => $rating->getCount(),
-                "description" => $rating->getDesc()
+                array(
+                    "productID" => $rating->getProductID(),
+                    "userID" => $rating->getUser(),
+                    "starCount" => $rating->getCount(),
+                    "description" => $rating->getDesc()
                 
-            )
-        );
-        print_r($ratingObject);
+                )
+            );
         $ratingJSON = json_encode($ratingObject);
-        echo $ratingJSON;
 
         
         $fetchQ = "SELECT rating FROM products WHERE product_id = {$rating->product_id}";
         $result = mysqli_query($conn, $fetchQ);
 
+
         if (mysqli_num_rows($result)>0) {
             $row = mysqli_fetch_assoc($result);
-
             if($row['rating'] == NULL) {
                $appendNewPost = "UPDATE products SET rating = '{$ratingJSON}' WHERE product_id = $prodId";
             }
@@ -60,7 +58,9 @@
                 $remContent = substr_replace($row['rating'] ,"", -1);
                 $ratingJSON = str_replace('[', " ",$ratingJSON); 
                 $ratingJSONUpdate = $remContent.','.$ratingJSON;
+                echo $ratingJSONUpdate;
                 $appendNewPost = "UPDATE products SET rating = '{$ratingJSONUpdate}'  WHERE product_id = $prodId";
+                
             }
             mysqli_query($conn, $appendNewPost);
         }

@@ -1,5 +1,5 @@
 <?php
-require '../../connections/productdb.php';
+
 
 $q = "SELECT * FROM products";
 $r = mysqli_query($conn, $q);
@@ -12,6 +12,6 @@ if(mysqli_num_rows($r) > 0) {
         }
     }
 
-    echo json_encode($rating);
+    $ratingsOfProd = json_encode($rating);
 }
 ?>

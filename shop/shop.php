@@ -1,5 +1,6 @@
 <?php 
     require('../connections/productdb.php');
+    require('../components/ratings/ratingAPI.php');
     
     $productSqlQuery = "SELECT * FROM products";
     $productQueryResult = mysqli_query($conn, $productSqlQuery);
@@ -12,7 +13,12 @@
         $productSqlQuery = "SELECT * FROM products ORDER BY product_price DESC";
         $productQueryResult = mysqli_query($conn, $productSqlQuery);
     }
+
+    $ratingArray = array();
+    $ratingArray[] = json_decode($ratingsOfProd, true);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +41,6 @@
     <title>Document</title>
 </head>
 <body>
-
     <div class="_45y"></div>
     <div id="nav" class="nav">
         <div class="checkbox">
@@ -174,8 +179,6 @@
                         }else {
                             $numberOfProducts = mysqli_num_rows($productQueryResult);
                         }
-                        
-                        
 
                         echo "<div class='product-count secondary'>{$numberOfProducts} products</div>";
                     ?>
@@ -364,12 +367,34 @@
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
                     }
-                    
-                    
+
 
                     if(mysqli_num_rows($productQueryResult)>0) {
-                        while($productRow = mysqli_fetch_assoc($productQueryResult)) {
+                        $totalElements = 0;
+                        $totalStarCount = 0;
+                        while ($productRow = mysqli_fetch_assoc($productQueryResult)) {
+                            $productId = $productRow['product_id'];
+                            $totalStarCount = 0;
+                            $totalElements = 0;
 
+                            // Calculate total star count and total number of elements for the current product
+                            for ($i = 0; $i < count($ratingArray[0]); $i++) {
+                                for ($j = 0; $j < count($ratingArray[0][$i]); $j++) {
+                                    if ($ratingArray[0][$i][$j]['productID'] == $productId) {
+                                        $totalStarCount += $ratingArray[0][$i][$j]['starCount'];
+                                        $totalElements++;
+                                    }
+                                }
+                            }
+
+                            // Calculate average star count for the current product
+                            if ($totalElements > 0) {
+                                $averageStarCount = number_format($totalStarCount / $totalElements, 1);
+                            } else {
+                                $averageStarCount = "No ratings available.";
+                            }
+                            $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
+                            $querRUN = mysqli_query($conn, $quer);
                             $productId = "productIdOfXfassoYes {$productRow['product_id']}";
                             //encrypting
                             $ciphering = "AES-128-CTR";
@@ -392,6 +417,7 @@
                                             <h2 id='primary'>{$productRow['product_name']}</h2>
                                             <div class='price-button'>
                                                 <p class='secondary'>₹{$productRow['product_price']}</p>
+                                                <p class='secondary'>ratings: {$averageStarCount}</p>
                                                 <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
                                             </div>
                                         </div>
@@ -461,7 +487,16 @@
                     </a></li>
                 </ul>
             </form>
-
+                    <?php 
+        print_r($ratingArray[0][0][0]['productID']);
+        echo "<br>";
+        print_r($ratingArray);
+        echo "<br><br><br>";
+        echo json_encode($ratingArray);
+        echo "<br><br><br>";
+        echo "<br><br><br>";
+        echo "<br><br><br>";
+    ?>
             <p class="_c45 secondary">&copy; brand 2023</p>
         </div>
     </div>
