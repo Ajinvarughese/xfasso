@@ -368,7 +368,8 @@
                         }
                     }
 
-
+                    
+                    
                     if(mysqli_num_rows($productQueryResult)>0) {
                         $totalElements = 0;
                         $totalStarCount = 0;
@@ -391,8 +392,9 @@
                             if ($totalElements > 0) {
                                 $averageStarCount = number_format($totalStarCount / $totalElements, 1);
                             } else {
-                                $averageStarCount = "No ratings available.";
+                                $averageStarCount = 0;
                             }
+
                             $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
                             $querRUN = mysqli_query($conn, $quer);
                             $productId = "productIdOfXfassoYes {$productRow['product_id']}";
@@ -417,17 +419,27 @@
                                             <h2 id='primary'>{$productRow['product_name']}</h2>
                                             <div class='price-button'>
                                                 <p class='secondary'>₹{$productRow['product_price']}</p>
-                                                <p class='secondary'>ratings: {$averageStarCount}</p>
+                                                <p class='secondary'>ratings: "; 
+                                                if($averageStarCount > 0) {
+                                                    for($k=0; $k<$averageStarCount; $k++) {
+                                                        echo "&star;";
+                                                    }
+                                                }else {
+                                                    echo "";
+                                                }
+                                                echo " {$averageStarCount}";
+                                                echo "</p>
                                                 <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
                                             </div>
                                         </div>
                                     </a>
                                 </div>  
                             ";
-                
                         }
                     }
+
                 ?>
+
 
             </div>
         </div>
