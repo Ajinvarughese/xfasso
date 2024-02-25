@@ -23,7 +23,7 @@
         $decrypted_id = $splitId[1];
     
         //query
-        $detailsQuery = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$decrypted_id}";
+        $detailsQuery = "SELECT products.avg_star, products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$decrypted_id}";
         $deatilsResult = mysqli_query($conn, $detailsQuery);
 
         if(mysqli_num_rows($deatilsResult)>0) {
@@ -202,6 +202,39 @@
 
                     <div class = "product-price">
                         <h2 class = "new-price">₹<?php echo $details['product_price'] ?><span> &nbsp;SALE</span></h2>
+                        <div class="rate">
+                            <?php 
+                                function isInteger($value) {
+                                    // Check if the value is numeric and if its integer value is equal to itself
+                                    // This checks if the value is a numeric string or integer
+                                    return is_numeric($value) && intval($value) == $value;
+                                }
+                                $averageStarCount = $details['avg_star'];
+                                if($averageStarCount > 0) {
+                                    if(isInteger($averageStarCount)) {
+                                        for($k=0; $k<$averageStarCount; $k++) {
+                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                        }
+                                        for($k=0; $k<5-$averageStarCount; $k++) {
+                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                        }
+                                    }else {
+                                        for($k=0; $k<$averageStarCount-1; $k++) {
+                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                        }
+                                        echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                        for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                        }
+                                    }
+                                    echo "<p class='secondary'>&nbsp;{$averageStarCount} rating</p>";
+                                }else {
+                                    for($k=0; $k<5; $k++) {
+                                        echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                    }
+                                }
+                            ?>
+                        </div>
                     </div>
                     <div class="product-size">
                         <div class="size">

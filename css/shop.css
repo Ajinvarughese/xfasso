@@ -20,6 +20,15 @@ html {
     align-items: flex-end;
 }
 
+.rate {
+    font-size: 14.2px;
+    margin-top: 4px;
+}
+.star {
+    width: 14.2px;
+}
+                
+
 .emailSending {
     display: block;
 }
