@@ -1,5 +1,9 @@
 <?php
     require('../connections/productdb.php');
+    require('../components/ratings/ratingAPI.php');
+
+    $ratingArray = array();
+    $ratingArray[] = json_decode($ratingsOfProd, true);
 
     if(isset($_GET['productId'])) {
 
@@ -516,6 +520,21 @@
                             <li>Category: <span><?php echo $details['product_gender'] ?></span></li>
                             <li>Shipping Fee: <span>Free Shipping</span></li>
                         </ul>
+
+                        <div class="ratings">
+                            <?php 
+                                ratings('productID', $ratingArray);
+                                function ratings($key, $ratingArray) {
+                                    for($i=0; $i<count($ratingArray[0]);$i++) {
+                                        for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                            echo $ratingArray[0][$i][$j][$key];
+                                        }
+                                    }
+                                }
+                                
+
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
