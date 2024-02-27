@@ -523,16 +523,14 @@
 
                         <div class="ratings">
                             <?php 
-                                ratings('productID', $ratingArray);
-                                function ratings($key, $ratingArray) {
+                                getRating('productID', $ratingArray);
+                                function getRating($key, $ratingArray) {
                                     for($i=0; $i<count($ratingArray[0]);$i++) {
                                         for($j=0; $j<count($ratingArray[0][$i]); $j++) {
                                             echo $ratingArray[0][$i][$j][$key];
                                         }
                                     }
                                 }
-                                
-
                             ?>
                         </div>
                     </div>
