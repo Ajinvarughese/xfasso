@@ -483,7 +483,7 @@
                                 <label for="return">Returns<i id="_i7" class="fa fa-caret-down" aria-hidden="true"></i></label>
                             </div>
                             <div id="return-content" class=" shipping-content">
-                                <p> We do not accept any return of orders. our <a href="../policy/return.html">return policy</a></p>
+                                <p> We do not accept any return of orders. our <a href="../policies/return/">return policy</a></p>
                             </div>
                         </div>
                         <script>
@@ -522,15 +522,15 @@
                         </ul>
 
                         <div class="ratings">
+
+
                             <?php 
-                                getRating('productID', $ratingArray);
-                                function getRating($key, $ratingArray) {
-                                    for($i=0; $i<count($ratingArray[0]);$i++) {
-                                        for($j=0; $j<count($ratingArray[0][$i]); $j++) {
-                                            echo $ratingArray[0][$i][$j][$key];
-                                        }
+                                for($i=0; $i<count($ratingArray[0]); $i++) {
+                                    for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                        echo $ratingArray[0][$i][$j]['starCount'];
                                     }
                                 }
+                                
                             ?>
                         </div>
                     </div>

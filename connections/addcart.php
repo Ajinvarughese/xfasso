@@ -1,7 +1,7 @@
 <?php 
     session_start();
     require('../connections/productdb.php');
-
+    
     function product_to_cart() {
         require('../connections/productdb.php');
         if(isset($_COOKIE['XassureUser'])) {

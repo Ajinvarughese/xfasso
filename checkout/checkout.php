@@ -4,7 +4,7 @@
 
     if(isset($_COOKIE['XassureUser'])) {
         $emailId = $_COOKIE['XassureUser'];
-
+    
         //decrypting
         $ciphering = "AES-128-CTR";
         $options = 0;
@@ -282,7 +282,8 @@
                     <div class="content" style="margin-top: 10px;">
                     <?php 
                         if(isset($_POST['isAddr'])) {
-                            $_SESSION['isAdd'] = true;
+                            $_SESSION['isAddr'] = true;
+                            $totalPrice = 0;
                             echo "
                                 <script>
                                     var formContent = document.getElementById('formContentP');
@@ -317,7 +318,6 @@
                                 $_SESSION['setCart'] = false;
                                 
                             
-
                                 $detailsQ = "SELECT * FROM products WHERE product_id='$checkoutProduct'";
                                 $detailsR = mysqli_query($conn, $detailsQ);
                         
@@ -325,7 +325,7 @@
                                     $detailsRow = mysqli_fetch_assoc($detailsR);
 
                                     $priceProduct = $detailsRow['product_price'];
-                                    $priceByQua = $priceProduct * $quantityBuyNow;
+                                    $totalPrice = $priceProduct * $quantityBuyNow;
                                     
                                     echo "
                                         <div class='pCard'>
@@ -344,7 +344,7 @@
                                                         quantity: $quantityBuyNow
                                                     </div>
                                                     <div class='price'>
-                                                        ₹$priceByQua
+                                                        ₹$totalPrice
                                                     </div>
                                                 </div>
                                                 <div class='delType'>
@@ -357,7 +357,7 @@
                             }
                             
                             if($_SESSION['setCart']) {
-                            
+                               
                                 $totalPrice = 0;
                                 $cartUQ = "SELECT * FROM cart_user WHERE user_id='$user_id'";
                                 $cartUR = mysqli_query($conn, $cartUQ);
@@ -409,13 +409,16 @@
                                         $totalPrice += $priceByQua;
                                     }
                                 }
-                                
+                                $_SESSION['setCart'] = false;
                             }
 
                         }else {
-                            $_SESSION['isAdd'] = false;
+                           
+                            $_SESSION['isAddr'] = false;
 
                         }
+
+
                     ?>
                     </div>
 
@@ -424,7 +427,7 @@
                             TOTAL
                         </div>
                         <div class="qina">
-                            ₹<?php echo isset($_SESSION['isAdd'])? $totalPrice : 0 ?>
+                            ₹<?php echo isset($_SESSION['isAddr'])? $totalPrice : 0 ?>
                         </div>
                     </div>
                 </div>
@@ -433,7 +436,7 @@
                     <input type="submit" name='isOrder' class='changeUser'>
                 </form>
                 <?php 
-                    if(empty($_SESSION['isAdd'])) {
+                    if(empty($_SESSION['isAddr'])) {
                         echo "
                             <script>
                                 var orderSummary = document.getElementById('orderSummary');
@@ -540,6 +543,9 @@
                 </form>
                 <?php 
                     if(isset($_POST['isOrder'])) {
+                        if($totalPrice == 0.0) {
+                            echo "TRUE"; // solve this issue no $totalPrice foundd!
+                        }
                         $_SESSION['isAdd'] = true;
                         echo "
                             <script>
@@ -604,5 +610,3 @@
     </div>
 </body>
 </html>
-
-
