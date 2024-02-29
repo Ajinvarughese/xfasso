@@ -523,15 +523,63 @@
 
                         <div class="ratings">
 
-
                             <?php 
-                                for($i=0; $i<count($ratingArray[0]); $i++) {
-                                    for($j=0; $j<count($ratingArray[0][$i]); $j++) {
-                                        echo $ratingArray[0][$i][$j]['starCount'];
+                                if($ratingArray != NULL) {
+                                    echo "<h1 class='rnr'>Rating & Reviews</h1>";
+                                    $k=0;
+                                    for($i=0; $i<count($ratingArray[0]); $i++) {
+                                        for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                            if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
+                                                if($k>=4) {
+                                                    echo "
+                                                        <div class='all'>
+                                                            <button>
+                                                                <div>All Reviews</div>
+                                                                <div class='arrow'><img src='../resources/right-arrow.png' alt=''></div>
+                                                            </button>
+                                                        </div>
+                                                    ";
+                                                    break;
+                                                }else {
+                                                    echo "
+                                                        <div class='person'>
+                                                            <div class='ndsa'>
+                                                                <div class='us'>
+                                                                    <img src='../resources/account.png' alt='user'>
+                                                                </div>
+                                                                <div class='na'>
+                                                                    Ajin Varughese
+                                                                </div>
+                                                            </div>
+                                                            <div class='rdsa' >
+                                                                &star;&star;&star;&star;  <p>Great</p>
+                                                            </div>
+                                                            <div class='ddsa'>
+                                                                This is a good product I like it
+                                                            </div>
+                                                            <hr>
+                                                            <div class='foot'>
+                                                                by xfasso user ·  <b>[date]</b>
+                                                            </div>
+                                                        </div>
+                                                    ";
+                                                    $k++;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                                
+                                  
+                                // Give values to all the ratings from JSON 
+                                /*
+                                    Excellent
+                                    Great
+                                    Good
+                                    Average
+                                    Poor
+                                */
                             ?>
+                            
                         </div>
                     </div>
                 </div>

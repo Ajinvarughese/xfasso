@@ -407,6 +407,7 @@
                                         </div>
                                         ";
                                         $totalPrice += $priceByQua;
+                                        $_SESSION['price'] = $totalPrice;
                                     }
                                 }
                                 $_SESSION['setCart'] = false;
@@ -543,8 +544,9 @@
                 </form>
                 <?php 
                     if(isset($_POST['isOrder'])) {
+                        $totalPrice = $_SESSION['price'];
                         if($totalPrice == 0.0) {
-                            echo "TRUE"; // solve this issue no $totalPrice foundd!
+                            echo "<script>window.history.back();</script>"; // solve this issue no $totalPrice foundd!
                         }
                         $_SESSION['isAdd'] = true;
                         echo "

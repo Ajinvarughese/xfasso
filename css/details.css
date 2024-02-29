@@ -4,6 +4,7 @@
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
+    color: #12263a;
 }
 html {
     scroll-behavior: smooth;
@@ -18,6 +19,77 @@ body{
     min-height: 120vh;
 
 }
+
+.person{
+    border: 1px solid #ddd; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 5px;
+}
+.rnr {
+    font-size: larger;
+    margin-bottom: 1rem;
+}
+.us img {
+    width: 29px;
+}
+.ndsa {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0 0.6rem;
+}
+.na {
+    font-weight: 600;
+}
+
+.all button{
+    cursor: pointer;
+    width: 100%;
+    background: none;
+    outline: none;
+    border: none;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    padding: 0.7rem 0.7rem;
+    display: flex;
+    font-weight: 600;
+    justify-content: space-between;
+}
+.arrow img{
+    width: 19px;
+}
+.rdsa {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    padding: 0 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+}
+.rdsa p{
+    font-weight: 500;
+}
+.person {
+    padding: 0.5rem;
+}
+.ratings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.ddsa {
+    padding: 0 0.6rem;
+    padding-bottom: 4px;
+}
+.foot {
+    margin-top: 4px;
+    padding: 0 0.6rem;
+    font-size: 13px;
+    opacity: 0.6;
+    font-weight: 500;
+}
+
+
 .card {
   
     height: 100%;

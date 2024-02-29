@@ -6,13 +6,23 @@
         public $starCount;
         public $userId;
         public $description;
+        public $day;
 
-        public function __construct($product_id, $starcount, $userId,$description) {
+        public function __construct($product_id, $starcount, $userId, $description, $day) {
             $this->product_id = $product_id;
             $this->starCount = $starcount;
             $this->userId = $userId;
             $this->description = $description;
+            $this->day = $day;
         }
+
+        public function getDay() {
+            return $this->day;
+        }
+        public function setDay($day) {
+            $this->day = $day; 
+        }
+
 
         public function getProductID() {
             return $this->product_id;

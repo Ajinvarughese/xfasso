@@ -28,9 +28,9 @@
     if(isset($_POST["postRating"])) {
         $starCount = filter_var($_POST['starCount'], FILTER_SANITIZE_NUMBER_INT);
         $desc = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS); 
-        $prodId = 7;
-    
-        $rating = new Ratings($prodId, $starCount, $user_id, $desc);
+        $prodId = 5;
+        $day = date("F d Y");
+        $rating = new Ratings($prodId, $starCount, $user_id, $desc, $day);
 
         
         $ratingObject = array(
@@ -38,8 +38,8 @@
                     "productID" => $rating->getProductID(),
                     "userID" => $rating->getUser(),
                     "starCount" => $rating->getCount(),
-                    "description" => $rating->getDesc()
-                
+                    "description" => $rating->getDesc(),
+                    "day" => $rating->getDay()
                 )
             );
         $ratingJSON = json_encode($ratingObject);
