@@ -100,6 +100,7 @@
                 </i>
 
                 <style>
+                    
                     #cart_num {
                         background: rgba(239, 50, 50, 0.811);
                         padding: 3px;
@@ -117,10 +118,11 @@
                     #zIca {
                         position: relative;
                     }
+                       
                 </style>
                 
                 <div id="cart_num">
-                    <div id="number"></div>
+                    <div id="number" style="color: #fff; font-weight: 600;"></div>
                 </div>
                 <script>
                     var cart_num = document.getElementById('cart_num');
@@ -521,65 +523,103 @@
                             <li>Shipping Fee: <span>Free Shipping</span></li>
                         </ul>
 
+                        <h1 class='rnr'>Rating & Reviews</h1>
                         <div class="ratings">
+
+
 
                             <?php 
                                 if($ratingArray != NULL) {
-                                    echo "<h1 class='rnr'>Rating & Reviews</h1>";
-                                    $k=0;
+                                    
                                     for($i=0; $i<count($ratingArray[0]); $i++) {
                                         for($j=0; $j<count($ratingArray[0][$i]); $j++) {
                                             if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
-                                                if($k>=4) {
-                                                    echo "
-                                                        <div class='all'>
-                                                            <button>
-                                                                <div>All Reviews</div>
-                                                                <div class='arrow'><img src='../resources/right-arrow.png' alt=''></div>
-                                                            </button>
-                                                        </div>
-                                                    ";
-                                                    break;
-                                                }else {
-                                                    echo "
-                                                        <div class='person'>
-                                                            <div class='ndsa'>
-                                                                <div class='us'>
-                                                                    <img src='../resources/account.png' alt='user'>
-                                                                </div>
-                                                                <div class='na'>
-                                                                    Ajin Varughese
-                                                                </div>
+
+                                                //detalis
+
+                                                $jsonUserID = $ratingArray[0][$i][$j]['userID'];
+                                                $jsonStarCount = $ratingArray[0][$i][$j]['starCount'];
+                                                $jsonDesc = $ratingArray[0][$i][$j]['description'];
+                                                $day = $ratingArray[0][$i][$j]['day'];
+                                                
+                                                // get username
+                                                $getUserQ = "SELECT username FROM users WHERE user_id = $jsonUserID";
+                                                $res = mysqli_fetch_assoc(mysqli_query($conn, $getUserQ));
+
+                                                
+                                                echo "
+                                                    <div class='person'>
+                                                        <div class='ndsa'>
+                                                            <div class='us'>
+                                                                <img src='../resources/account.png' alt='user'>
                                                             </div>
-                                                            <div class='rdsa' >
-                                                                &star;&star;&star;&star;  <p>Great</p>
-                                                            </div>
-                                                            <div class='ddsa'>
-                                                                This is a good product I like it
-                                                            </div>
-                                                            <hr>
-                                                            <div class='foot'>
-                                                                by xfasso user ·  <b>[date]</b>
+                                                            <div class='na'>
+                                                                {$res['username']}
                                                             </div>
                                                         </div>
-                                                    ";
-                                                    $k++;
-                                                }
+                                                        <div class='rdsa' >";
+                                                        for($k=0; $k<$jsonStarCount; $k++) {
+                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                        }
+                                                        echo "
+                                                          <p>($jsonStarCount)</p> 
+                                                          <p>";
+                                                            switch($jsonStarCount) {
+                                                                case 1:
+                                                                    echo "Poor";
+                                                                    break;
+                                                                case 2:
+                                                                    echo "Average";
+                                                                    break;
+                                                                case 3:
+                                                                    echo "Good";
+                                                                    break;
+                                                                case 4: 
+                                                                    echo "Great";
+                                                                    break;
+                                                                case 5:
+                                                                    echo "Excellent";
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            }
+                                                        echo "
+                                                          </p>
+                                                        </div>
+                                                        <div class='ddsa'>
+                                                            $jsonDesc
+                                                        </div>
+                                                        <hr>
+                                                        <div class='foot'>
+                                                            by xfasso user ·  <b style='font-size: 11px;'>$day</b>
+                                                        </div>
+                                                    </div>
+                                                ";
+                                                
+                                                
                                             }
                                         }
                                     }
-                                }
-                                  
-                                // Give values to all the ratings from JSON 
-                                /*
-                                    Excellent
-                                    Great
-                                    Good
-                                    Average
-                                    Poor
-                                */
+
+
+                                } 
                             ?>
-                            
+                            <style>
+                                .ratings {
+                                    margin-top: 5px;
+                                    border-top: 1px solid #ddd;
+                                    border-bottom: 1px solid #ddd;
+                                    min-height: fit-content;
+                                    max-height: 567px;
+                                    overflow-y: auto;
+                                    padding: 13px 6px;
+                                }
+                                .ratings::-webkit-scrollbar {
+                                    display: none;
+                                }
+                                
+                            </style>
+                        
                         </div>
                     </div>
                 </div>
@@ -622,7 +662,7 @@
                         while($more = mysqli_fetch_assoc($moreSqlResult)) {
 
                             $productId = "productIdOfXfassoYes {$more['product_id']}";
-
+                            $averageStarCount = $more['avg_star'];
                         //encrypting
                     
                             $ciphering = "AES-128-CTR";
@@ -631,7 +671,7 @@
                             $encryption_iv = '1234567891021957';
                             $encryption_key = "xfassoKey";
                             $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
-
+                            
 
                             $imageMore = base64_encode($more['product_image']);
                             $imageTypeMore = "image/jpeg";
@@ -642,8 +682,37 @@
                                             <img src='data:$imageTypeMore;base64,$imageMore' alt=''>
                                         </div>
                                         <div class='content-more'>
-                                            <div style='padding: 5px 10px;' class='title'>{$more['product_name']}</div>
-                                            <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}</div>
+                                            <div style='padding: 5px 10px 0 10px;' class='title'>{$more['product_name']}</div>
+                                            <div style='padding: 0px 10px;'>
+                                                <p class='secondary rate'>"; 
+                                                if($averageStarCount > 0) {
+                                                    if(isInteger($averageStarCount)) {
+                                                        for($k=0; $k<$averageStarCount; $k++) {
+                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                        }
+                                                        for($k=0; $k<5-$averageStarCount; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }else {
+                                                        for($k=0; $k<$averageStarCount-1; $k++) {
+                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                        }
+                                                        echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                        for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }
+                                                    echo "&nbsp;{$averageStarCount}";
+                                                }else {
+                                                    for($k=0; $k<5; $k++) {
+                                                        echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                    }
+                                                }
+                                                echo "</p> 
+                                            </div>
+                                            <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}
+                                            
+                                            </div>
                                         </div>
                                     </div>
                                 </a>

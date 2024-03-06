@@ -372,6 +372,10 @@
                     
                     
                     if(mysqli_num_rows($productQueryResult)>0) {
+
+                        function isInteger($value) {
+                            return is_numeric($value) && intval($value) == $value;
+                        }
                         $totalElements = 0;
                         $totalStarCount = 0;
                         while ($productRow = mysqli_fetch_assoc($productQueryResult)) {
@@ -425,7 +429,7 @@
                                                 <p class='secondary'>₹{$productRow['product_price']}</p>
                                                 <p class='secondary rate'>"; 
                                                 if($averageStarCount > 0) {
-                                                    if(strpos(strval($averageStarCount), '.0') !== false) {
+                                                    if(isInteger($averageStarCount)) {
                                                         for($k=0; $k<$averageStarCount; $k++) {
                                                             echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
                                                         }

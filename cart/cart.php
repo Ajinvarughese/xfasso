@@ -274,8 +274,11 @@
                         $moreSqlResult = mysqli_query($conn, $moreSqlQuery);
 
                         if(mysqli_num_rows($moreSqlResult)>0) {
+                            function isInteger($value) {
+                                return is_numeric($value) && intval($value) == $value;
+                            }
                             while($more = mysqli_fetch_assoc($moreSqlResult)) {
-
+                                $averageStarCount = $more['avg_star'];
                                 $productId = "productIdOfXfassoYes {$more['product_id']}";
 
                             //encrypting
@@ -298,6 +301,33 @@
                                             </div>
                                             <div class='content-more'>
                                                 <div style='padding: 5px 10px;' class='title'>{$more['product_name']}</div>
+                                                <div style='padding: 0px 10px;'>
+                                                    <p class='secondary rate'>"; 
+                                                    if($averageStarCount > 0) {
+                                                        if(isInteger($averageStarCount)) {
+                                                            for($k=0; $k<$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            for($k=0; $k<5-$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }else {
+                                                            for($k=0; $k<$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                            for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }
+                                                        echo "&nbsp;{$averageStarCount}";
+                                                    }else {
+                                                        for($k=0; $k<5; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }
+                                                    echo "</p> 
+                                                </div>
                                                 <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}</div>
                                             </div>
                                         </div>

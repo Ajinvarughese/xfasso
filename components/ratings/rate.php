@@ -34,14 +34,14 @@
 
         
         $ratingObject = array(
-                array(
-                    "productID" => $rating->getProductID(),
-                    "userID" => $rating->getUser(),
-                    "starCount" => $rating->getCount(),
-                    "description" => $rating->getDesc(),
-                    "day" => $rating->getDay()
-                )
-            );
+            array(
+                "productID" => $rating->getProductID(),
+                "userID" => $rating->getUser(),
+                "starCount" => $rating->getCount(),
+                "description" => $rating->getDesc(),
+                "day" => $rating->getDay()
+            )
+        );
         $ratingJSON = json_encode($ratingObject);
 
         
