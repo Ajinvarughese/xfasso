@@ -481,11 +481,11 @@
             <div class="info">
                 <h4 class="primary footer-head">Info</h4>
                 <ul>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Shipping policy</a></li>
-                    <li><a href="#">Return policy</a></li>
-                    <li><a href="#">Terms and Conditions</a></li>
-                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="../about/">About</a></li>
+                    <li><a href="../policies/shipping/">Shipping policy</a></li>
+                    <li><a href="../policies/return/">Return policy</a></li>
+                    <li><a href="../policies/terms/">Terms and Conditions</a></li>
+                    <li><a href="../policies/privacy/">Privacy policy</a></li>
                 </ul>
             </div>
             <div class="our-mission">

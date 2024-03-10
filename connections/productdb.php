@@ -9,6 +9,6 @@
         $conn = new mysqli($server, $user, $password, $db);
     }
     catch(mysqli_sql_exception) {
-        die("Connection failed!");
+        die("Connection failed!"); // need to redirect to error part
     }
 ?>

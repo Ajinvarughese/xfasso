@@ -316,7 +316,10 @@
                             ";
                             if($_SESSION['newCheckoutProduct']) {
                                 $_SESSION['setCart'] = false;
-                                
+
+                                // to check user did buy now or add to cart
+                                $_SESSION['sProduct'] = true;
+                                $_SESSION['mProduct'] = false;
                             
                                 $detailsQ = "SELECT * FROM products WHERE product_id='$checkoutProduct'";
                                 $detailsR = mysqli_query($conn, $detailsQ);
@@ -326,11 +329,14 @@
 
                                     $priceProduct = $detailsRow['product_price'];
                                     $totalPrice = $priceProduct * $quantityBuyNow;
+
+                                    $imageBuyNow = base64_encode($detailsRow['product_image']);
+                                    $imageTypeBuyNow = "image/jpeg";
                                     
                                     echo "
                                         <div class='pCard'>
                                             <div class='prdImg'>
-                                                <img src='../download.jpeg' alt='product image' width='123px'>
+                                                <img src='data: $imageTypeBuyNow;base64,$imageBuyNow' alt='product image' width='123px'>
                                             </div>
                                             <div class='con'>
                                                 <div class='ainw'>
@@ -357,7 +363,12 @@
                             }
                             
                             if($_SESSION['setCart']) {
-                               
+
+                                // to check user ordered via add to cart or buy now
+                                $_SESSION['sProduct'] = false;
+                                $_SESSION['mProduct'] = true;
+
+
                                 $totalPrice = 0;
                                 $cartUQ = "SELECT * FROM cart_user WHERE user_id='$user_id'";
                                 $cartUR = mysqli_query($conn, $cartUQ);
@@ -546,7 +557,7 @@
                     if(isset($_POST['isOrder'])) {
                         $totalPrice = $_SESSION['price'];
                         if($totalPrice == 0.0) {
-                            echo "<script>window.history.back();</script>"; // solve this issue no $totalPrice foundd!
+                            echo "found the issue"; // solve this issue no $totalPrice foundd!
                         }
                         $_SESSION['isAdd'] = true;
                         echo "
