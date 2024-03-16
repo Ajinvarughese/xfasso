@@ -607,7 +607,6 @@
                                 while(payment.firstChild) {
                                     payment.removeChild(payment.firstChild);
                                 }
-
                                 payment.innerHTML = `
                                     <div class='hqi'>
                                         <div class='h'><span>4</span>PAYMENT</div>
