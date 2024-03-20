@@ -591,7 +591,6 @@
                                     </div>
                                 `;
 
-
                                 while (formContent.firstChild) {
                                     formContent.removeChild(formContent.firstChild);
                                 }
