@@ -17,12 +17,11 @@ body {
     min-height: 3.3rem;
 }
 ._u2c {
-    text-decoration: 1.5px underline #2b2a2a80;
+    text-decoration: none;
     color: #12263a;
-    transition: 0.3s ease;
 }
 ._u2c:hover {
-    text-decoration: 2px underline #12263a;
+    text-decoration: 1px underline #12263a;
 }
 .primary {
     font-weight: 600;
@@ -184,11 +183,11 @@ body {
 .header {
     position: relative;
     min-height: 569px;
-    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://media.istockphoto.com/id/1396814518/vector/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hnh2OZgQGhf0b46-J2z7aHbIWwq8HNlSDaNp2wn_iko=');
+    background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('../resources/couple-winter-cloths-studio.jpg');
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: top left;
 }
 
 .header-desc { 
@@ -598,5 +597,15 @@ body {
     }
     ._y72 {
         margin-top: 3rem;
+    }
+
+    .header {
+        position: relative;
+        min-height: 569px;
+        background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('../resources/full-shot-sad-teenagers-school.jpg');
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top left;
     }
 }
