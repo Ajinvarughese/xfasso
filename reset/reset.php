@@ -226,7 +226,7 @@
                     }
                 ?>
                 <div class="cpr">
-                    <p>&copy; XFASSO 2023</p>
+                    <p class="_c45 secondary">&copy; xfasso 2024</p>
                 </div>
             </div>
 

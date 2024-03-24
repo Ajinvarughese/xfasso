@@ -87,12 +87,13 @@
             width: 100%;
             background: rgb(255, 255, 255);
         }
+        
     </style>
 
 </head>
 <body>
     <div class="nav">
-        <a style="text-decoration: none; color: inherit;" href="../index.html"><h1>LOGO</h1></a>
+        <a style="text-decoration: none; color: inherit; font-size: 13px;" href="../"><h1>XFASSO</h1></a>
         <div class="cart">
                     
             <a href="../cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
@@ -767,7 +768,7 @@
                     }
                 </script>
 
-                <p class="_c45 secondary">&copy; brand 2023</p>
+                <p class="_c45 secondary">&copy; xfasso 2024</p>
             </div>
         </div>
     </div>

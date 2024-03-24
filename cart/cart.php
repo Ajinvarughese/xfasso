@@ -351,7 +351,7 @@
                     </label>
                     <p id="emailSending" class="emailSending secondary"></p>
                 </form>
-                <p class="_c45 secondary">&copy; brand 2023</p>
+                <p class="_c45 secondary">&copy; xfasso 2024</p>
             </div>
         </div>
     </div>

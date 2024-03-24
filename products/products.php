@@ -30,7 +30,6 @@
         ::-webkit-scrollbar{
             display: none;
         }
-        /* Give styles to card and remove scroll bar to adjust style of products page in home */
         .price-button {
             align-items: center;
         }

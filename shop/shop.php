@@ -54,9 +54,14 @@
                 </div>
             </label>
         </div>
-        <div class="nav-logo primary">
-            LOGO
+        <div id="_f3fs" style="cursor: pointer;" class="nav-logo primary">
+            XFASSO
         </div>
+        <script>
+            document.getElementById('_f3fs').addEventListener('click', ()=> {
+                window.location.href = '../';
+            })
+        </script>
         <ul class="nav-links">
             <li class="secondary"><a class="_u2c" href="../index.html">Home</a></li>
             <li class="secondary"><a class="_u2c" href="../about/about.html">About</a></li>
@@ -530,7 +535,7 @@
                     </a></li>
                 </ul>
             </form>
-            <p class="_c45 secondary">&copy; brand 2023</p>
+            <p class="_c45 secondary">&copy; xfasso 2024</p>
         </div>
     </div>
     <script>

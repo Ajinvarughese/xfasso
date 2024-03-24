@@ -64,7 +64,7 @@
                     <br>
                 </form>
                 <div style="opacity: 0.8; font-size: 12px;" class="cpr">
-                    &copy; XFASSO 2023
+                    <p class="_c45 secondary">&copy; xfasso 2024</p>
                 </div>
             </div>
 
