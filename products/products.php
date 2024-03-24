@@ -20,8 +20,42 @@
     <link rel="stylesheet" href="../css/shop.css">     
 
     <style>
+        *{
+            margin: 0;
+            padding: 2% 0.5%;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            color: #12263a;
+        }
+        ::-webkit-scrollbar{
+            display: none;
+        }
         /* Give styles to card and remove scroll bar to adjust style of products page in home */
-
+        .price-button {
+            align-items: center;
+        }
+        .inw{
+            margin: 0;
+            padding: 0;
+        }
+        .button-primary {
+            cursor: pointer;
+            transition: 0.3s ease;
+            background: #fff;
+            text-decoration: none;
+            border: 1px solid #12263a;
+            padding: 5px 20px;
+            color: #12263a;
+        }
+        .button-primary:hover {
+            background: #12263a;
+            color: #fff;
+        }
+        @media (max-width: 320px) {
+            .button-primary {
+                padding: 4px 12px;
+            }
+        }
     </style>
 </head>
 <body class="body-Content">
@@ -29,9 +63,14 @@
         <div class="card-container">
             <?php 
                  if(mysqli_num_rows($productQueryResult)>0) {
+                    function isInteger($value) {
+                            return is_numeric($value) && intval($value) == $value;
+                        }
                     while($productRow = mysqli_fetch_assoc($productQueryResult)) {
 
                         $productId = "productIdOfXfassoYes {$productRow['product_id']}";
+
+                        $averageStarCount = $productRow['avg_star'];
 
                         //encrypting
                     
@@ -53,8 +92,34 @@
                                         <img src='data:$imageType;base64,$imageData' alt='img'>
                                     </div>
                                     <div class='content-product'>
-                                        <h2 id='primary'>{$productRow['product_name']}</h2>
-                                        <div class='price-button'>
+                                        <h2 id='primary' class='inw'>{$productRow['product_name']}</h2>
+
+                                         <p  style='display:flex; align-items:center;' class='inw secondary rate'>"; 
+                                                if($averageStarCount > 0) {
+                                                    if(isInteger($averageStarCount)) {
+                                                        for($k=0; $k<$averageStarCount; $k++) {
+                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                        }
+                                                        for($k=0; $k<5-$averageStarCount; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }else {
+                                                        for($k=0; $k<$averageStarCount-1; $k++) {
+                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                        }
+                                                        echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                        for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }
+                                                    echo " {$averageStarCount}";
+                                                }else {
+                                                    for($k=0; $k<5; $k++) {
+                                                        echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                    }
+                                                }
+                                                echo "</p>
+                                        <div class='price-button inw'>
                                             <p class='secondary'>₹{$productRow['product_price']}</p>
                                             <a href='../details/details.php?productId={$encrypted_id}' target='_parent'><button class='button-primary'>view</button></a>
                                         </div>

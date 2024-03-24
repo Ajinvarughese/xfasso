@@ -373,6 +373,8 @@
                     
                     if(mysqli_num_rows($productQueryResult)>0) {
 
+                        //star rating pt1
+
                         function isInteger($value) {
                             return is_numeric($value) && intval($value) == $value;
                         }
@@ -405,6 +407,7 @@
                             
                             $productId = "productIdOfXfassoYes {$productRow['product_id']}";
 
+                            //star rate pt1 end
 
                             //encrypting
                             $ciphering = "AES-128-CTR";
@@ -427,7 +430,11 @@
                                             <h2 id='primary'>{$productRow['product_name']}</h2>
                                             <div class='price-button'>
                                                 <p class='secondary'>₹{$productRow['product_price']}</p>
+                                               
+
+
                                                 <p class='secondary rate'>"; 
+                                                // Star rating code pt2
                                                 if($averageStarCount > 0) {
                                                     if(isInteger($averageStarCount)) {
                                                         for($k=0; $k<$averageStarCount; $k++) {
@@ -451,6 +458,7 @@
                                                         echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                     }
                                                 }
+                                                //star rate pt2 end
                                                 echo "</p>
                                                 <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
                                             </div>

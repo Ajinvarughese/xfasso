@@ -211,8 +211,6 @@
                         <div class="rate">
                             <?php 
                                 function isInteger($value) {
-                                    // Check if the value is numeric and if its integer value is equal to itself
-                                    // This checks if the value is a numeric string or integer
                                     return is_numeric($value) && intval($value) == $value;
                                 }
                                 $averageStarCount = $details['avg_star'];
