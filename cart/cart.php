@@ -66,7 +66,14 @@
 <body>
     <div class="navCart">
         <div class="logo">
-            LOGO
+            <div style="cursor: pointer;" id="_f3fs" class="nav-logo primary">
+                XFASSO
+            </div>
+            <script>
+                document.getElementById('_f3fs').addEventListener('click', ()=> {
+                    window.location.href = '../';
+                })
+            </script>
         </div>
     </div>
     <div class="mainCart">

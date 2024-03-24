@@ -205,7 +205,7 @@
                     })
                 </script>
 
-                <p class="_c45 secondary">&copy; XFASSO 2023</p>
+                <p class="_c45 secondary">&copy; xfasso 2024</p>
             </div>
         </div>
     </div>
