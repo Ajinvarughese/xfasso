@@ -23,7 +23,6 @@
       "Error2" => 1056
    );
  
- 
  if(isset($_GET['errorID'])){
     
    $errorID = $_GET['errorID'];
