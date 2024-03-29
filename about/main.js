@@ -4,7 +4,6 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
-
 var emailSending = document.getElementById("emailSending");
 function emailSubmit() {
   emailSending.textContent = "Sending email...";
