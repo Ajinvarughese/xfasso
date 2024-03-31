@@ -94,22 +94,7 @@ window.addEventListener("resize", () => {
     document.getElementById("main").style.background = "";
   }
 });
-
-var emailSending = document.getElementById("emailSending");
-function emailSubmit() {
-  emailSending.textContent = "Sending email...";
-  emailSending.style.display = "block";
-}
-
-if (getCookie("message-sent")) {
-  emailSending.style.display = "block";
-  emailSending.textContent = "email send succesfully...";
-  setTimeout(() => {
-    emailSending.style.display = "none";
-    document.cookie =
-      "message-sent=messageSentTrue; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
-  }, 4000);
-}
+   
 
 var logoutBtn = document.getElementsByClassName("logout");
 

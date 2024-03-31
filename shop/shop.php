@@ -509,7 +509,7 @@
         <div class="email-us">
             <h1 class="primary">Email Us.</h1>
             <form action="../connections/mailto.php" method="post">
-                <input type="text" class="_i044d" name="email-text" value="" required placeholder="Your suggetions goes here">
+                <input type="text" id="sug" class="_i044d" name="email-text" value="" required placeholder="Your suggetions goes here">
                 <input type="submit" name="submit" onclick="emailSubmit()" id="email-submit">
                 <label for="email-submit" class="btn-email">
                     <img src="../resources/icons8-arrow.gif" alt="->">
@@ -538,6 +538,35 @@
             <p class="_c45 secondary">&copy; xfasso 2024</p>
         </div>
     </div>
+
+    <script>
+      function getCookie(name) {
+         const value = `; ${document.cookie}`;
+         const parts = value.split(`; ${name}=`);
+         if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+
+      var emailSending = document.getElementById("emailSending");
+      var sug =document.getElementById("sug");
+      function emailSubmit() {
+         emailSending.textContent = "Sending email...";
+         emailSending.style.display = "block";
+      }
+
+      if (getCookie("message-sent")) {
+         emailSending.style.display = "block";
+         emailSending.textContent = "email send succesfully...";
+         setTimeout(() => {
+               emailSending.style.display = "none";
+               sug.value = '';
+               document.cookie =
+               "message-sent=messageSentTrue; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+         }, 4000);
+      }
+
+   </script>
+
+
     <script>
         function menCookie() {
 
