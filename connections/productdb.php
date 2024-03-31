@@ -9,6 +9,11 @@
         $conn = new mysqli($server, $user, $password, $db);
     }
     catch(mysqli_sql_exception) {
-        die("Connection failed!"); // need to redirect to error part
+        echo "
+         <script>
+            window.location.href = '../errors/errors.php?errorID=1025';
+         </script>
+        ";
+        die(); // need to redirect to error part
     }
 ?>

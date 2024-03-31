@@ -2,10 +2,12 @@
    include './u/e.php';
 
    function title($errorID) {
-      if($errorID == 1052) {
-         return "This is a big error";
-      }else if($errorID == 1056) {
-         return "This is second small error";
+      if($errorID == 1001) {
+         echo "Can't find product";
+      }else if($errorID == 1015) {
+         echo "Email sending failed";
+      }else if($errorID == 1025) {
+         echo "Server Timeout";
       }
    }
    
@@ -35,7 +37,9 @@
    $existing_errors = 
    array(
       "product" => 1001,
-      "email" => 1015
+      "email" => 1015,
+      "dbFail" => 1025,
+      "noPage" => 404
    );
 
  
@@ -44,18 +48,23 @@
    $errorID = $_GET['errorID'];
    
    if(isExisting($existing_errors, $errorID)) {
-      $content = errorPage($errorID);
+      if($errorID == 1015 || $errorID == 404) {
+         $content = errorPage($errorID, true);
+      }
+      else {
+         $content = errorPage($errorID);
+      }
    }else {
       echo"
          <script>
-            window.location.href = '../404/'
+            window.location.href = './errors.php?errorID=404'
          </script>"
       ;
    }
  }else {
     echo"
       <script>
-        window.location.href = '../404/'
+        window.location.href = './errors.php?errorID=404'
       </script>"
     ;
  }
@@ -66,9 +75,10 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title><?php echo title($errorID); ?></title>
+   <title><?php title($errorID); ?></title>
 
    <link rel="stylesheet" href="../css/style.css">
+
    <style>
       .erroMain {
          min-height: 80vh;
@@ -88,8 +98,15 @@
          opacity: 0.7;
       }
       .image {
-         max-width: 262px;
+         max-width: 367px;
          margin: 0 auto;
+         display: block;
+      }
+      @media (max-width: 600px) {
+         .image {
+            max-width: 78%;
+            max-height: 78%;
+         }
       }
       .image img{
          max-width: 100%;

@@ -3,9 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>404. Page not found!</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+      .erroMain {
+         min-height: 80vh;
+      }
+      .errorBlock {
+         min-height: 60vh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         padding-bottom: 1rem;
+      }
+      .errorContent > div {
+         margin-top: 24px;
+         text-align: center;
+      }
+      .issue {
+         opacity: 0.7;
+      }
+      .image {
+         max-width: 78%;
+         margin: 0 auto;
+      }
+      .image img{
+         max-width: 100%;
+         max-height: 100%;
+         display: block;
+      }
+      .errorContent > p {
+         padding: 0 1.6rem;
+      }
+   </style>
+
 </head>
 <body>
-    There is a 404 error
+   <div class='errorMain'>
+        <div class='errorBlock'>
+            <div class='errorContent'>
+                <div class='image'>
+                    <img src='../resources/sammy-line-no-connection.gif' alt='no product found'>
+                </div>
+                <div class='issue'>
+                    <h1 style="font-size: 52px;">404</h1>
+                    <h3>PAGE NOT FOUND</h3>
+                    <br>
+                    <p style="letter-spacing: 2px;">
+                        Oops! can't find the page.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px 2%;
+        }
+        .enqz > a, .enqz {
+            color: #12263a;
+            text-decoration: none;
+            font-size: 8px;
+            opacity: 0.8;
+            text-align: center;
+        }
+    </style>
+    <footer>
+        <p class="enqz">
+            Illustration by <a href="https://icons8.com/illustrations/author/7WmtYU90j36d">Fruzka</a> from <a href="https://icons8.com/illustrations">Ouch!</a>
+        </p>
+    </footer>
 </body>
-</html>
+</html> 
+

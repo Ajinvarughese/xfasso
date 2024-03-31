@@ -77,6 +77,7 @@
                     overflow: auto hidden;
                     align-items: center;
                     gap: 1.2rem;
+                    padding-bottom: 1.5rem;
                     justify-content: flex-start;
                     
                 }
@@ -88,7 +89,12 @@
                     min-height: 180px;
                 }
                 .more::-webkit-scrollbar {
-                    display: none;
+                    height: 7px;
+                }
+                .more::-webkit-scrollbar-thumb {
+                    background: #12263a; 
+                    border-radius: 20px;
+                    visibility: visible;
                 }
             </style>
             <div class="_p1">

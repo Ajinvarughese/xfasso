@@ -28,7 +28,11 @@
     
         //query
         $detailsQuery = "SELECT products.avg_star, products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$decrypted_id}";
-        $deatilsResult = mysqli_query($conn, $detailsQuery);
+        try {
+            $deatilsResult = mysqli_query($conn, $detailsQuery);
+        }catch(mysqli_sql_exception) {
+            header('Location: ../errors/errors.php?errorID=1001');
+        }
 
         if(mysqli_num_rows($deatilsResult)>0) {
             $details = mysqli_fetch_assoc($deatilsResult);
@@ -52,7 +56,7 @@
             header('Location: ../errors/errors.php?errorID=1001');
         } 
     }else {
-        header('Location: ../shop/shop.php');
+        header('Location: ../errors/errors.php?errorID=404');
     }
 ?>
 
@@ -634,6 +638,7 @@
                 overflow: auto hidden;
                 align-items: center;
                 gap: 1.2rem;
+                padding-bottom: 1rem;
                 justify-content: flex-start;
                 
             }
@@ -645,7 +650,12 @@
                 min-height: 180px;
             }
             .more::-webkit-scrollbar {
-                display: none;
+                height: 7px;
+            }
+            .more::-webkit-scrollbar-thumb {
+                background: #12263a; 
+                border-radius: 20px;
+                visibility: visible;
             }
         </style>
     
