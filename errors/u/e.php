@@ -19,7 +19,7 @@
             </div>
         ");
     }
-    else if($errorID == 1015) {
+    else if($errorID == 1015 && $redirect) {
         return("
             <div class='errorMain'>
                 <div class='errorBlock'>
@@ -33,8 +33,31 @@
                                 Check your internet connection and try again.
                             </p>
                         </div>
+                        <div class='redirect'>
+                            <p>Redirecting to home page in: &nbsp;</p>
+                            <p id='r'>15 </p><p>s</p>
+                        </div>
+                        <div class='goHome'>
+                            <button onclick='home()'>Go Home</button>
+                        </div>
                     </div>
                 </div>
+                <script>
+                    let i = 15;
+                    let r =document.getElementById('r');
+                    let intervalId = setInterval(() => {
+                        r.innerHTML = i;
+                        i--;
+                        if (i < 0) {
+                            clearInterval(intervalId);
+                            home();
+                        }
+                    }, 1000);
+
+                    function home(){
+                        window.location.href='../';
+                    } 
+                </script>
             </div>
         ");
     }else if($errorID == 1025) {

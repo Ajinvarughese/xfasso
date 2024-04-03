@@ -39,6 +39,7 @@
       "product" => 1001,
       "email" => 1015,
       "dbFail" => 1025,
+      "payment" => 1067,
       "noPage" => 404
    );
 
@@ -115,6 +116,27 @@
       }
       .errorContent > p {
          padding: 0 1.6rem;
+      }
+      .redirect{
+         display: flex;
+         justify-content: center;
+      }
+      .redirect > p {
+         opacity: 0.7;
+      }
+      #r {
+         font-weight: 600;
+      }
+      .goHome button{
+         padding: 4px 17px;
+         background: none;
+         border: 1px solid #12263a;
+         transition: 0.3s ease;
+         cursor: pointer;
+      }
+      .goHome button:hover {
+         background: #12263a;
+         color: #fff;
       }
    </style>
 </head>

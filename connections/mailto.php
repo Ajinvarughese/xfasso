@@ -72,7 +72,11 @@
             ";
         }
         catch(Exception) {
-            echo "Try connecting to internet please!";
+            echo "
+                <script>
+                    window.location.href = '../errors/errors.php?errorID=1015';
+                </script>
+            ";
         }
 
     }
