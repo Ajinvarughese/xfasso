@@ -1,0 +1,1 @@
+DELETE FROM products WHERE user_id = 18
