@@ -1,1 +1,2 @@
-DELETE FROM products WHERE user_id = 18
+DROP DATABASE IF EXISTS xfasso;
+CREATE DATABASE xfasso;
