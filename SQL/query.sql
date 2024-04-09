@@ -1,11 +1,12 @@
+-- Database creation
 DROP DATABASE IF EXISTS xfasso;
 CREATE DATABASE xfasso;
 
 
 
-/* USER TABLE */
+-- USER TABLE 
 
-CREATE TABLE xfasso.user
+CREATE TABLE xfasso.users
 (
     user_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     username VARCHAR(75),
@@ -16,4 +17,12 @@ CREATE TABLE xfasso.user
     reg_time DATETIME NOT NULL DEFAULT current_timestamp()
 );
 
-SELECT * FROM xfasso.user
+-- CART_USER TABLE
+
+
+-- ONE TIME PASSWORD (OTP) TABLE
+
+SELECT * FROM xfasso.users
+
+
+   
