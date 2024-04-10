@@ -21,47 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
 
     <style>
-        body {
-            background: #F1EAFF;
-        }
-        .nav {
-            height: 59px;
-            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 3%;
-        }
-        .mainhead{
-            text-align: center;
-            margin-top: 2.5rem;
-        }
-        .head{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .fn213ns{
-            margin-top: 0.6rem;
-            max-width: 72%;
-            opacity: 0.7;
-            text-align: center;
-        }
-        .fn213ns span{
-            font-weight: 600;
-        }
-        .duties {
-            margin-top: 1.5rem;
-            height: 60vh;
-            min-height: 367px;
-            background: #E5D4FF;
-        }
-        @media (max-width: 720px) {
-            .fn213ns{
-                max-width: 100%;
-                padding: 0 5%;
-            }
-        }
+        
     </style>
 </head>
 <body>
@@ -76,9 +36,52 @@
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
             </div>
             <div class="duties">
-                ajasdn
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
+                <div class="work">
+                    <h3>TITLE</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="cp">
+        <p>&copy; xfasso 2024</p>
     </div>
 </body>
 </html>
