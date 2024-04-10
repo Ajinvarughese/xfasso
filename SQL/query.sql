@@ -49,6 +49,20 @@ CREATE TABLE xfasso.cart_user
     FOREIGN KEY (cart_product) REFERENCES xfasso.products(product_id)
 );
 
+-- PRODUCT_IMAGES TABLE
+
+CREATE TABLE xfasso.product_images
+(
+    product_id INT,
+    img_front LONGBLOB,
+    img_back LONGBLOB,
+    img_right LONGBLOB,
+    img_left LONGBLOB,
+    product_desc VARCHAR(755),
+    FOREIGN KEY(product_id) REFERENCES xfasso.products(product_id)
+);
+
+
 -- Show data from table
-SELECT * FROM xfasso.products;
+SELECT * FROM xfasso.product_images;
 
