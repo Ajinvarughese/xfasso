@@ -3,40 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
+
+    <link rel="stylesheet" href="../style.css">
+
     <title>Admin Login</title>
     <style>
-        .main{
-            min-height: 570px;
-            border: 1px solid;
+        *{
+            color: #121b12df;
+        }
+        .formLog{
+            min-height: 540px;
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-        form{
             border: 1px solid;
-            /* display: flex;
-            flex-direction: column;
-            max-width: 430px; */
+            justify-content: center;
+            width: 100%;
+            
+        }
+        .formLog form{
             width: 70%;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
             max-width: 440px;
+            gap: 0.5rem;
+            padding: 0 0.7rem;
+            min-height: 332px;
+            max-height: 340px;
+            border: 1px solid;
+            border-radius: 9px;
+
+            backdrop-filter: blur(10px);
         }
-        form > input{
-            width: 100%;
-            padding: 0;
+        .formLog form input{
+            padding: 11px 7px;
+            border-radius: 3px;
+            font-size: 14px;
+            border: 1px solid #cfcfcf;
+            outline: none;
+            
         }
+        .formLog form input:focus {
+            border: 1px solid #121b12ea !important;
+        }
+        .h {
+            text-align: center;
+            padding-bottom: 3rem;
+        }
+        .h p{
+            margin-top: 3px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        .cp{
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .button {
+            background: #121b12df;
+            color: #dcdada;
+            font-weight: 600;
+            font-size: 16px !important;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+        .button:hover {
+           
+            background: #121b12e5;
+        }
+        .password::placeholder{
+            font-weight: 400 !important;
+        }
+        .password{
+            font-weight: 900;
+        }
+      
     </style>
 </head>
 <body>
-    <div class="main">
-        <form action="./login.php">
-            <input type="text" name="id" placeholder="enter admin id">
-            <input type="password" name="password" placeholder="password">
-            <input type="submit" style="width: 100%;" name="submit" value="Log In"> 
-        </form>
+    <div class="mainLog">
+        <div class="formLog">
+            <form style="backdrop-filter: grayscale(20px);" action="./login.php">
+                <div class="h">
+                    <h1>ADMIN LOGIN</h1>
+                    <p>Gotta do some work. Let's Go!</p>
+                </div>
+
+                <input type="text" name="id" placeholder="Admin ID">
+                <input type="password" class="password" name="password" placeholder="Password">
+                <input type="submit" class="button" style="width: 100%;" name="submit" value="Log In"> 
+                <p class="cp">&copy;xfasso 2024</p>
+            </form>
+        </div>
     </div>
 </body>
 </html>
