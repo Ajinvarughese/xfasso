@@ -7,7 +7,7 @@
 }
 
 body {
-    background: #F1EAFF;
+    background: #ffffffff;
 }
 .nav {
     height: 59px;
@@ -38,7 +38,7 @@ body {
 .duties {
     margin-top: 1.5rem;
     min-height: 367px;
-    background: #E5D4FF;
+    background: #eeecf2b4;
     padding: 2%;
     display: grid;
     grid-template-columns: auto auto auto;

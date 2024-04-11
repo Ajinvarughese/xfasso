@@ -1,6 +1,8 @@
 <?php 
 
-
+if(empty($_SESSION['XQCLANG'])) {
+    header('location: ./admin-login/');
+}
 
 
 
@@ -34,7 +36,6 @@
             flex-basis: 50%;
         }
         .workerTitle h1{
-            color: #ffffff;
             font-size: 50px;
             text-shadow: rgba(0, 0, 0, 0.26) 3.95px 3.95px 7.6px;
         }
@@ -54,9 +55,11 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(../resources/attractive-brunet-man-stylish-white-shirt-trendy-sunglasses-poses-orange-background-holds-black-jacket.jpg);
                 background-position: top;
                 background-size: cover;
+            }
+            .workerTitle h1{
+                color: #fff;
             }
             .workerIllustrator{
                 display: none;
