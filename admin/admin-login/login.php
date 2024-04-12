@@ -8,35 +8,21 @@
         }            
         $_SESSION['tryCount']++;
 
-        if($_SESSION['tryCount']>3) {
+        if($_SESSION['tryCount']>=4) {
             echo "You've tried enough now wait in this page for 30seconds";
-        echo $_SESSION['tryCount'];
-            echo "
-                <script>
-                    function getCookie(name) {
-                        const value = '; \${document.cookie}';
-                        const parts = value.split('; \${name}=');
-                        if (parts.length === 2) return parts.pop().split(";").shift();
-                    }
-
-
-                    <div id='timer'></div>
-               
-                    window.onload = function() {
-                        var seconds = 30;
-                        var countdown = setInterval(function() {
-                            document.getElementById('timer').innerHTML = 'Seconds remaining: ' + seconds;
-                            seconds--;
-                            if (seconds < 0) {
-                                clearInterval(countdown);
-                                document.getElementById('timer').innerHTML = 'Countdown complete!';
-                            }
-                        }, 1000);
-                    }
-                    document.cookie = 'timerEnd=true';
-                </script>
-            ";
+            if(empty($_COOKIE['timerEnd'])) {
+                setcookie("startCount", "true", time()+3600, '/');
+            }
+        }else {
+            setcookie('wrong', 'true', time()+3600, '/');
+            header('location: ./');
         }
+    }
+
+    if(isset($_COOKIE['timerEnd'])) {
+        $_SESSION['tryCount'] = 0;
+        setcookie('timerEnd', NULL, time()-3600, '/');
+        header('location: ./');
     }
 
     if(isset($_POST['submit'])) {
@@ -48,18 +34,45 @@
 
         if(mysqli_num_rows($getIt)>0) {
             $row = mysqli_fetch_assoc($getIt);
-            if(password_verify($password, $row['password'])) {
-                
+            if($password == $row['password']) {
                 echo "YESSSSS";
+                //do the yes part for tomorrow!
             }else {
-               echo countSpy();
-
-                echo "sorry you've tried enough now wait in this page";
+               countSpy();
             }
         }else {
-            echo countSpy();
+            countSpy();
         }
     }
 
     mysqli_close($conn);
 ?>
+
+<div id='timer'></div>
+<script>        
+    function waiting() {
+        var seconds = 30;
+        var cookieExpires = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
+        var countdown = setInterval(function() {
+            document.getElementById('timer').innerHTML = 'Seconds remaining: ' + seconds;
+            seconds--;
+            if (seconds < 0) {
+                clearInterval(countdown);
+                document.getElementById('timer').innerHTML = 'Countdown complete!';
+                document.cookie = 'timerEnd=true; expires='+cookieExpires+'; path=/';
+                window.location.reload();
+            }
+        }, 1000);
+    }
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    if(getCookie('startCount')) {
+        document.cookie = 'startCount=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+        waiting();
+    }
+
+</script>
