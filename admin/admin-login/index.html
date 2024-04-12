@@ -77,30 +77,87 @@
            
             background: #121b12e5;
         }
+        input::placeholder{
+            opacity: 0.7;
+        }
         .password::placeholder{
             font-weight: 400 !important;
         }
         .password{
             font-weight: 900;
         }
-      
+        .pa{
+            position: relative;
+        }
+        #passj23 {
+            position: absolute;
+            top: 42px;
+            left: 99%;
+            cursor: pointer;
+            transform: translate(-99%, -38px);
+            transition: 0.2s ease;
+        }
+        #img {
+            width: 32px;
+        }
+        #showPass {
+            display: none;
+        }
+        .a {
+            color: red;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="mainLog">
         <div class="formLog">
-            <form style="backdrop-filter: grayscale(20px);" action="./login.php">
+            <form onsubmit="return validateForm()" action="./login.php" method="post">
                 <div class="h">
                     <h1>ADMIN LOGIN</h1>
                     <p>Gotta do some work. Let's Go!</p>
                 </div>
 
-                <input type="text" name="id" placeholder="Admin ID">
-                <input type="password" class="password" name="password" placeholder="Password">
+                <input type="text" id="id" name="id" placeholder="Admin ID">
+                <p id="warningAdm" class="a"></p>
+                <div class="pa">
+                    <input style="width: 100%;" type="password" id="pass" class="password" name="password" placeholder="Password">
+                    <p id="warningPass" class="a"></p>
+                    <input type="checkbox" id="showPass" name="showPass" checked>
+                    <label id="passj23" for="showPass">
+                        <img id="img" src="../../resources/hidden.png" alt="show password">
+                    </label>
+                </div>
                 <input type="submit" class="button" style="width: 100%;" name="submit" value="Log In"> 
                 <p class="cp">&copy;xfasso 2024</p>
             </form>
         </div>
     </div>
 </body>
+<script src="./main.js"></script>
+<script>
+    let id = document.getElementById('id');
+    let pass = document.getElementById('pass');
+    let warningAdm = document.getElementById('warningAdm');
+    let warningPass = document.getElementById('warningPass');
+
+    id.addEventListener('input', ()=> {
+        warningAdm.textContent = '';
+    });
+
+    pass.addEventListener('input', ()=> {
+        warningPass.textContent = '';
+    });
+    function validateForm() {        
+        if (id.value.length <= 6) {
+            warningAdm.textContent = 'enter a valid admin ID';
+            return false;
+        } else if (pass.value.length <= 6) {
+            warningPass.textContent = 'enter a valid password';
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 </html>
