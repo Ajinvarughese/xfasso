@@ -1,4 +1,5 @@
 <?php 
+    
     require_once('../../connections/productdb.php');
     session_start();
 
@@ -37,6 +38,12 @@
             if($password == $row['password']) {
                 echo "YESSSSS";
                 //do the yes part for tomorrow!
+                $_SESSION['XQCLANG'] = 'true';
+                echo "
+                    <script>
+                        window.location.href = '../admin.php';
+                    </script>
+                ";
             }else {
                countSpy();
             }

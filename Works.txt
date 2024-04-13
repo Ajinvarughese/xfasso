@@ -1,0 +1,23 @@
+Works
+
+* Deleting inappropriate comments : 4293
+* Adding products : 4294
+* Stock management : 4295
+* blackListed users : 4296
+* edit products : 4297
+
+Admin ID
+
+* deleting inappropriate comments:  jXwFHKBw4293
+* Adding products: OBw74GKw4294
+* Stock management: Ryzj66rw4295
+* blackListed users: Vro6GwBw4296
+* Edit products: P5PEbz1w4297
+
+Password
+
+* Deleting inappropriate comments : 9jQfcy
+* Adding products : xB2pxK
+* Stock management : KD@yNA
+* blackListed users : CyH@aR
+* edit products : JGVrwY
