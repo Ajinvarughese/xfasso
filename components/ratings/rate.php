@@ -58,7 +58,6 @@
                 $remContent = substr_replace($row['rating'] ,"", -1);
                 $ratingJSON = str_replace('[', " ",$ratingJSON); 
                 $ratingJSONUpdate = $remContent.','.$ratingJSON;
-                echo $ratingJSONUpdate;
                 $appendNewPost = "UPDATE products SET rating = '{$ratingJSONUpdate}'  WHERE product_id = $prodId";
                 
             }

@@ -36,8 +36,18 @@
         if(mysqli_num_rows($getIt)>0) {
             $row = mysqli_fetch_assoc($getIt);
             if($password == $row['password']) {
-                echo "YESSSSS";
-                //do the yes part for tomorrow!
+                date_default_timezone_set('Asia/Kolkata');
+                $time = date('m/d/Y h:i:s a', time());
+                $device = $_SERVER['HTTP_USER_AGENT'];
+                $logData  = array(
+                    array(
+                        'device' => $device,
+                        'time' => $time 
+                    )
+                );
+
+                $jsonLog = json_encode($logData);
+
                 $_SESSION['XQCLANG'] = 'true';
                 echo "
                     <script>
@@ -50,6 +60,12 @@
         }else {
             countSpy();
         }
+    }else {
+        echo "
+            <script>
+                window.location.href ='./';
+            </script>
+        ";
     }
 
     mysqli_close($conn);
