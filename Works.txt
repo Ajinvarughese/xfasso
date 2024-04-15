@@ -21,3 +21,6 @@ Password
 * Stock management : KD@yNA
 * blackListed users : CyH@aR
 * edit products : JGVrwY
+
+
+password must be 6 characters

@@ -30,12 +30,12 @@
         $adm_id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $setIt = "SELECT admin_id, password FROM admin WHERE admin_id = '$adm_id'";
+        $setIt = "SELECT admin_id, password, log_data FROM admin WHERE admin_id = '$adm_id'";
         $getIt = mysqli_query($conn, $setIt);
 
         if(mysqli_num_rows($getIt)>0) {
             $row = mysqli_fetch_assoc($getIt);
-            if($password == $row['password']) {
+            if(password_verify($password, $row['password'])) {
                 date_default_timezone_set('Asia/Kolkata');
                 $time = date('m/d/Y h:i:s a', time());
                 $device = $_SERVER['HTTP_USER_AGENT'];
@@ -45,10 +45,23 @@
                         'time' => $time 
                     )
                 );
-
                 $jsonLog = json_encode($logData);
 
-                $_SESSION['XQCLANG'] = 'true';
+                $jsonData = $row['log_data'];
+
+                if($jsonData) {
+                    $remContent = substr_replace($jsonData, "", -1);
+                    $jsonLog = str_replace(array('[',']'), '', $jsonLog); 
+                    $ratingJSONUpdate = $remContent . ',' . $jsonLog.']';
+                }
+                else {
+                    $ratingJSONUpdate = $jsonLog;
+                }
+
+                $updateQuery = "UPDATE admin SET log_data='$ratingJSONUpdate' WHERE admin_id='$adm_id'";
+                mysqli_query($conn, $updateQuery);
+
+                $_SESSION['XQCLANG'] = $adm_id;
                 echo "
                     <script>
                         window.location.href = '../admin.php';

@@ -2,6 +2,7 @@
 session_start();
 if(isset($_SESSION['XQCLANG'])){
     echo "You are signed in sire";
+    echo $_SESSION['XQCLANG'];
 }
 else if(empty($_SESSION['XQCLANG'])) {
     header('location: ./admin-login/');
