@@ -67,13 +67,31 @@ else if(empty($_SESSION['XQCLANG'])) {
                 display: none;
             }
         }
+        .admin {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .prof {
+            width: 34px;
+        }
+        .prof img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="main">
         <div class="nav">
             <div class="logo"><h2>XFASSO<h2></div>
-            <div class="admin">ADMIN</div>
+            <div class="admin">
+                <p>Logout</p>
+                <div class="prof">
+                    <img src="../resources/user.png" alt="user">
+                </div>
+            </div>
         </div>
         <div class="header">
             <div class="workerTitle">
