@@ -6,6 +6,124 @@
     font-family: 'Montserrat', sans-serif;
     color: #121b12df;
 }
+
+
+
+
+
+.gr{
+    background-color: #21eb21;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+}
+.dropDown p {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.dropDown{
+    border: 1px solid;
+    border-radius: 4px;
+}
+.admin{
+    position: relative;
+    cursor: pointer;
+    transition: 0.6s;
+}
+.dropDown {
+    position: absolute;
+    top: 106%;
+    display: none;
+    background: #ffffff;
+    padding: 0.5rem 1rem;
+    left: 100%;
+    transform: translate(-100%, 2%);
+}
+.dropDown span{
+    opacity: 0.5;
+    font-weight: 600;
+    font-size: 12px;
+    padding-right: 4px;
+}
+.dropDown p, .dropDown button{
+    padding: 13px 0 3px 0;
+}
+
+
+
+
+
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 2%;
+    border: 1px solid;
+    min-height: 570px;
+    gap: 1rem;
+}
+.workerTitle{
+    flex-basis: 50%;
+}
+.workerTitle h1{
+    font-size: 50px;
+    text-shadow: rgba(0, 0, 0, 0.26) 3.95px 3.95px 7.6px;
+}
+.workerIllustrator{
+    flex-basis: 50%;
+    max-width: 540px;
+    max-height: 540px;
+}
+.workerIllustrator img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+@media (max-width: 870px) {
+    .header{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-position: top;
+        background-size: cover;
+    }
+    .workerTitle h1{
+        color: #fff;
+    }
+    .workerIllustrator{
+        display: none;
+    }
+}
+.admin {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.prof {
+    width: 34px;
+}
+.prof img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.admin button {
+    border: none;
+    background: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+.admin button:hover {
+    text-decoration: underline;
+}
+
+
+
+
 .formLog{
     min-height: 540px;
     display: flex;
