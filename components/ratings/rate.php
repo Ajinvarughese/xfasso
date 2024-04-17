@@ -2,6 +2,7 @@
     require '../../connections/productdb.php';
     require './Ratings.php';
 
+
     if(isset($_COOKIE['XassureUser'])) {
         $emailId = $_COOKIE['XassureUser'];
 

@@ -1,5 +1,14 @@
 <?php 
+    if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
+        // Show 404 error
+        header("Location: ../../404/");
+        exit();
+    }
+    
+    
     require '../../connections/productdb.php';
+
+    
 
     class Ratings {
         public $product_id;

@@ -24,3 +24,4 @@ document.addEventListener('click', ()=> {
         setClicked = false;
     }
 });
+

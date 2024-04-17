@@ -1,0 +1,8 @@
+[
+  {"workerID": 4293, "workName": "comments"},
+  {"workerID": 4294, "workName": "product add"},
+  {"workerID": 4295, "workName": "stock"},
+  {"workerID": 4296, "workName": "blacklist"},
+  {"workerID": 4297, "workName": "product edit"}
+]
+
