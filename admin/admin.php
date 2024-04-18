@@ -1,12 +1,13 @@
 <?php 
 session_start();
 
+require_once './works/worker.php';
+
 
 
 if(isset($_SESSION['XQCLANG'])){
     if($_SESSION['XQCLANG'] != false) {
-        echo "You are signed in sire";
-        echo $_SESSION['XQCLANG'];
+        setWorkToJSON();
     }else {
         header('Location: ./admin-login/login.php');
     }   
@@ -59,53 +60,13 @@ if(isset($_SESSION['XQCLANG'])){
                 <img src="../resources/404.jpg" alt="worker.png">
             </div>
         </div>
+
         <div class="dutireMenu">
             <div class="head">
                 <h2 class='mainhead'>Choose Your Dutie</h2>
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
             </div>
-            <div class="duties">
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
-                <div class="work">
-                    <h3>TITLE</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                </div>
+            <div class="duties" id='duties'>  
             </div>
         </div>
     </div>
