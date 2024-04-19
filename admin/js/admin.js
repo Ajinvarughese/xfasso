@@ -1,7 +1,7 @@
 let logOut = document.getElementById('logOut');
 
 logOut.addEventListener("click", ()=> {
-    window.location.href = "./logout.php";
+    window.location.href = "./logout/logout.php";
 })
 
 let drop = document.getElementById('drop');
@@ -48,6 +48,9 @@ function displayWorkData() {
         let workDiv = document.createElement('div');
         workDiv.classList.add('work');
         workDiv.innerHTML = `
+            <div class='ic'>
+                <img src='./images/${work.workName}.png'>
+            </div>
             <h3>${work.workName}</h3>
             <p>Work ID: ${work.workID}</p>
             <p>

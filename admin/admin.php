@@ -66,13 +66,14 @@ if(isset($_SESSION['XQCLANG'])){
                 <h2 class='mainhead'>Choose Your Dutie</h2>
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
             </div>
-            <div class="duties" id='duties'>  
-            </div>
+           
+            <div class="duties" id='duties'></div>
+        
         </div>
     </div>
     <div class="cp">
         <p>&copy; xfasso 2024</p>
     </div>
 </body>
-<script src="admin.js"></script>
+<script src="./js/admin.js"></script>
 </html>

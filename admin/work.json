@@ -5,7 +5,7 @@
     },
     {
         "workID": "4294",
-        "workName": "product add"
+        "workName": "productAdd"
     },
     {
         "workID": "4295",
@@ -17,6 +17,6 @@
     },
     {
         "workID": "4297",
-        "workName": "product edit"
+        "workName": "productEdit"
     }
 ]
