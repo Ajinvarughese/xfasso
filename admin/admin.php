@@ -61,7 +61,7 @@ if(isset($_SESSION['XQCLANG'])){
             </div>
         </div>
 
-        <div class="dutireMenu">
+        <div class="dutieMenu">
             <div class="head">
                 <h2 class='mainhead'>Choose Your Dutie</h2>
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
