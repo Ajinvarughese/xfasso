@@ -49,73 +49,77 @@ function displayWorkData() {
         // Create a new div element for each work item
         let workDiv = document.createElement('div');
         workDiv.classList.add('work');
+        workDiv.setAttribute('onclick', `goWork(${work.workID})`);
         workDiv.innerHTML = `
             <div class='ic'>
                 <img src='./images/${work.workName}.png'>
             </div>
-            <h3>${setName(work.workName)}</h3>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing 
-            </p>
+           <div class='content'>
+                <h3>${setName(work.workName)}</h3>
+                <p>
+                    ${setComment(work.workName)}
+                </p>
+           </div>
         `;
         duties.appendChild(workDiv); 
     });
 }
 
+function goWork(workID) {
+    window.location.href = `./dutie/dutie.php?workID=${workID}`;
+}
+
 function setName(title) {
     switch (title) {
         case 'comments':
-            title = 'Check Spam';
+            newTitle = 'Check Spam';
             break;
         case 'productAdd':
-            title = 'Add Product';
+            newTitle = 'Add Product';
             break;
         case 'stock':
-            title = 'Stock Management';
+            newTitle = 'Stock Management';
             break;
         case 'blacklist':
-            title = 'Blacklist Users';
+            newTitle = 'Blacklist Users';
             break;
         case 'productEdit':
-            title = 'Edit Product';
+            newTitle = 'Edit Product';
             break
         default:
-            title = 'Work';
+            newTitle = 'Work';
             break;
     }
-    return title;
+    return newTitle;
+}
+function setComment(title) {
+    switch (title) {
+    case 'comments':
+        message = 'Delete any inappropriate comments given by users to products.';
+
+        break;
+    case 'productAdd':
+        message = 'Add new product into to the website with all it\'s details.';
+        break;
+    case 'stock':
+        message = 'Make a product available to the users or hide from the users.';
+        break;
+    case 'blacklist':
+        message = 'Block the suspecious users from the website.';
+        break;
+    case 'productEdit':
+        message = 'Edit the already created product details.';
+        break
+    default:
+        message = 'This is your new work it currently under construction.';
+        break;
+}
+return message;
 }
 
 
-
-
-
-function randomValues() {
-    anime({
-        targets: '.square, .circle, .triangle',
-        translateX: function() {
-        return anime.random(-500, 500);
-        },
-            translateY: function() {
-        return anime.random(-300, 300);
-        },
-            rotate: function() {
-                return anime.random(0, 360);
-            },
-            scale: function() {
-                return anime.random(.2, 2);
-            },
-        duration: 1000,
-            easing: 'easeInOutQuad',
-        complete: randomValues,
-    });
-}
-
-randomValues();
-    
 // <p>Work ID: ${work.workID}</p> 
 // do the card styling and  header page.
-
 
 
 

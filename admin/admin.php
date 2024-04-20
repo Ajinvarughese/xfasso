@@ -2,12 +2,20 @@
 session_start();
 
 require_once './works/worker.php';
-
+require_once '../connections/productdb.php';
 
 
 if(isset($_SESSION['XQCLANG'])){
     if($_SESSION['XQCLANG'] != false) {
         setWorkToJSON();
+        $id = $_SESSION['XQCLANG'];
+        $quer = "SELECT work FROM admin WHERE admin_id = '$id'";
+        $res = mysqli_query($conn, $quer);
+
+        if(mysqli_num_rows($res)>0) {
+            $row = mysqli_fetch_assoc($res);
+            $myTitle = getMyWork($row['work']);
+        }
     }else {
         header('Location: ./admin-login/login.php');
     }   
@@ -15,6 +23,55 @@ if(isset($_SESSION['XQCLANG'])){
     header('Location: ./admin-login/login.php');
 }
 
+
+
+function getMyWork($workID) {
+    $jsonWork = file_get_contents('./work.json', true);
+    $workObject = json_decode($jsonWork,true);
+    
+    for($i=0; $i<count($workObject); $i++) {
+        if($workID === $workObject[$i]['workID']) {
+            $workObject[$i]['workName'];
+            break;
+        }
+    }
+    switch($workObject[$i]['workName']) {
+        case 'comments':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>Let's check some spam messages!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to delete the spam messages.</p>
+            ";
+            break;
+        case 'productAdd':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>Yeah we need to add new products!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to add new products.</p>
+            ";
+            break;
+        case 'stock':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>We need to check the stocks!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to edit the availablity of the products.</p>
+            ";
+            break;
+        case 'blacklist':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>Let's block some unwanted users!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to block the users that have been found suspecious.</p>
+            ";
+            break;
+        case 'productEdit':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>Need some edit on current products?</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to edit the already created products.</p>
+            ";
+            break;
+        default:
+            $title = "We got works to do!";
+            break;
+    } 
+    return $title;
+}
 ?>
 
 
@@ -54,14 +111,15 @@ if(isset($_SESSION['XQCLANG'])){
                 </div>
             </div>
         </div>
-        
-        </style>
+
         <div class="header" >
             <div class="workerTitle">
-                <h1 id="workTitle" style="text-align: center;">This is your work!</h1>
+                <?php 
+                    echo $myTitle;
+                ?> 
             </div>
             <div class="workerIllustrator">
-                <img src="../resources/404.jpg" alt="worker.png">
+                <img src="./images/image_processing20200702-24592-2w0nhm.gif" alt="worker.png">
             </div>
         </div>
 
@@ -71,7 +129,7 @@ if(isset($_SESSION['XQCLANG'])){
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
             </div>
            
-            <a href="#"><div class="duties" id='duties'></div></a>
+            <div class="duties" id='duties'></div>
         
         </div>
     </div>
