@@ -31,6 +31,8 @@ if(isset($_SESSION['XQCLANG'])){
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
     
 </head>
 <body>
@@ -52,9 +54,11 @@ if(isset($_SESSION['XQCLANG'])){
                 </div>
             </div>
         </div>
-        <div class="header">
+        
+        </style>
+        <div class="header" >
             <div class="workerTitle">
-                <h1>This is your work!</h1>
+                <h1 id="workTitle" style="text-align: center;">This is your work!</h1>
             </div>
             <div class="workerIllustrator">
                 <img src="../resources/404.jpg" alt="worker.png">
@@ -67,7 +71,7 @@ if(isset($_SESSION['XQCLANG'])){
                 <p class='fn213ns'>Choose your dutie from the following options. Make sure all VPNs are turned off. <span>This page is highly confidential</span>. make sure about the safety. Any illegal things you do in this website will lead you to the law.</p>
             </div>
            
-            <div class="duties" id='duties'></div>
+            <a href="#"><div class="duties" id='duties'></div></a>
         
         </div>
     </div>
