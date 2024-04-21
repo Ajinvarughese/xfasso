@@ -1,0 +1,57 @@
+.main {
+    padding-top: 7rem;
+}
+.image {
+    width: 58px;
+    height: 58px;
+}
+.image img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+table {
+    margin:auto;
+}
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    
+}
+th, td {
+    padding: 10px 17px;
+}
+
+.sub { 
+    max-width: 412px;
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center;     
+    margin: 12px auto;
+}
+.sub p {
+    opacity: 0.8;
+}
+.sub input{
+    border: 1px solid #121b12df;
+    background: #ffff;
+    padding: 4px 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border-radius: 2px;
+}
+
+@media (max-width: 780px) {
+    th, td {
+        padding: 4px 9px;
+    }
+    .sub {
+        max-width: 312px;
+    }
+}
+.sub input:hover {
+    background: #121b12df;
+    color: #ffff;
+}
+
+
