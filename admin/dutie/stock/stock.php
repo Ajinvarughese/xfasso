@@ -55,6 +55,9 @@
 </head>
 <body>
     <div class="nav">
+        <div onclick="goBack()" class="back">
+            <img src="../../images/back.png" alt="back">
+        </div>
         <div class="logo"><h2>XFASSO<h2></div>
         <div id="drop" class="admin">
             <div class="prof">

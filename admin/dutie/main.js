@@ -24,3 +24,9 @@ document.addEventListener('click', ()=> {
         setClicked = false;
     }
 });
+
+function goBack() {
+    window.history.back();
+}
+
+
