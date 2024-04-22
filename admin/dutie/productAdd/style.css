@@ -1,5 +1,61 @@
 .main {
     padding-top: 5.6rem;
     min-height: 520px;
-    border: 1px solid;
+    color: #c2c2c2e6;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.7rem 8%;
+}
+.file-preview {
+    border: 1px solid #c2c2c2c2;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.prodImage {
+    display: flex;
+    border: 1px solid #c2c2c2c2;
+    padding: 0;
+    align-items: center;
+    justify-content: space-between;
+}
+.pq3{
+    opacity: 0.8;
+}
+#gender {
+    outline: none;
+    border: 1px solid #c2c2c2c2;
+    padding: 4px 12px;
+    cursor: pointer;
+}
+#gender option {
+    cursor: pointer;
+}
+.in {
+    padding: 7px;
+    border-radius: 2px;
+    outline: none;
+    border: 1px solid #c2c2c2c2;
+}
+.i {
+    width: 100%;
+    max-width: 322px;
+}
+#txt {
+    width: 100%;
+    max-width: 437px;
+}
+#txt::-webkit-scrollbar {
+    display: none;
+}
+
+input:focus, textarea:focus {
+    border: 1px solid #4a4949af;
 }

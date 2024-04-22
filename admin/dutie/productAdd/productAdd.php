@@ -35,11 +35,11 @@
             cursor: pointer;
             background-color: #f9f9f9;
             border-radius: 4px;
+            margin-right: 14px;
         }
         .file-preview {
-            margin-top: 20px;
-            width: 62px;
-            height: 62px;
+            width: 122px;
+            height: 122px;
         }
         .file-preview img {
             max-width: 100%;
@@ -76,20 +76,77 @@
             <h1 align='center'>Add new products from here</h1>
         </div>
         <div class="fjs">
+            <style>
+                
+            </style>
             <form action="" method="post">
-                <div class="prodImage">
-                    <input type="file" id="file-input" class="file-input" accept="image/*" onchange="displayImage(this)">
-                    <label for="file-input" class="custom-file-upload">Choose Image</label>
-                    <div id="file-preview" class="file-preview"></div>
+
+                <div class="pew">
+                    <input class="in i" type="text" placeholder="Name">
                 </div>
 
+                <div class="pew">
+                    <input class="in i" type="text" placeholder="Price">
+                </div>
+                
+                <div class="pew">
+                    <textarea style="resize: none;" class="in" name="description" id="txt" rows="6" placeholder="Description..." ></textarea>
+                </div>
+
+                <div class="pew">
+                    <select name="gender" id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+                <div class="pew">
+                    <p class='pq3'>Main image:</p>
+                    <div class="prodImage">
+                        <div id="file-preview1" class="file-preview">Image required</div>
+                        <input type="file" id="file-input1" class="file-input" accept="image/*" onchange="displayImage(this, 1)">
+                        <label for="file-input1" class="custom-file-upload">Choose Image</label>
+                    </div>
+                </div>
+
+                <div class="pew">
+                    <p class='pq3'>Right image:</p>
+                    <div class="prodImage">
+                        <div id="file-preview2" class="file-preview">Image required</div>
+                        <input type="file" id="file-input2" class="file-input" accept="image/*" onchange="displayImage(this, 2)">
+                        <label for="file-input2" class="custom-file-upload">Choose Image</label>
+                    </div>
+                </div>
+
+                <div class="pew">
+                    <p class='pq3'>Left image:</p>
+                    <div class="prodImage">
+                        <div id="file-preview3" class="file-preview">Image required</div>
+                        <input type="file" id="file-input3" class="file-input" accept="image/*" onchange="displayImage(this, 3)">
+                        <label for="file-input3" class="custom-file-upload">Choose Image</label>
+                    </div>
+                </div>
+
+                <div class="pew">
+                    <p class='pq3'>Back image:</p>
+                    <div class="prodImage">
+                        <div id="file-preview4" class="file-preview">Image required</div>
+                        <input type="file" id="file-input4" class="file-input" accept="image/*" onchange="displayImage(this, 4)">
+                        <label for="file-input4" class="custom-file-upload">Choose Image</label>
+                    </div>
+                </div>
+
+                <div class="pew"> 
+                    <input type="submit">
+                    <input type="reset">
+                </div>
             </form>
         </div>
     </div>
     <script>
-        function displayImage(input) {
-            const fileInput = document.getElementById('file-input');
-            const filePreview = document.getElementById('file-preview');
+        function displayImage(input, num) {
+            const fileInput = document.getElementById(`file-input${num}`);
+            const filePreview = document.getElementById(`file-preview${num}`);
 
             if (fileInput.files && fileInput.files.length > 0) {
                 const file = fileInput.files[0];
