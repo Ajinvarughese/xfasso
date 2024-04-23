@@ -24,30 +24,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../css/style.css">
 
-    <style>
-        .file-input {
-            display: none;
-        }
-        .custom-file-upload {
-            border: 1px solid #ccc;
-            display: inline-block;
-            padding: 6px 12px;
-            cursor: pointer;
-            background-color: #f9f9f9;
-            border-radius: 4px;
-            margin-right: 14px;
-        }
-        .file-preview {
-            width: 122px;
-            height: 122px;
-        }
-        .file-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-    </style>
-
 </head>
 <body>
     <div class="nav">
@@ -71,7 +47,7 @@
         </div>
     </div>
 
-    <div class="main">
+    <div id="main" class="main">
         <div class="header">
             <h1 align='center'>Add new products from here</h1>
         </div>
@@ -136,14 +112,79 @@
                     </div>
                 </div>
 
-                <div class="pew"> 
-                    <input type="submit">
-                    <input type="reset">
+                <div class="pw"> 
+                     <div onclick="reset()" class="btn sec">Reset</div>
+                    <div onclick="submit()" class="btn pri">Submit</div>
+                </div>
+
+                <div id="warningReset" class="warningReset">
+                    <div class="ask">
+                        <div class="imgDiv1">
+                            <div class="img">
+                                <img src="../../images/reset.png" alt="reset">
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h1>Do you want to reset?</h1>
+                            <p align='center'>Are you sure you want to reset all the input fields.</p>
+                            <br>
+                            <button id="conReset">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="warningSubmit" class="warningReset">
+                    <div class="ask">
+                        <div class="imgDiv2">
+                            <div class="img">
+                                <img src="../../images/tick.png" alt="reset">
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h1>Do you want to submit?</h1>
+                            <p align='center'>Are you sure you want to submit the new product to store.</p>
+                            <br>
+                            <input style="display: none;" type="submit" id='submit' name="submit">
+                            <label for="submit">
+                                <button id="conSubmit">Submit</button>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+    <style>
+        
+
+    </style>
     <script>
+        function reset() {
+            let warningReset = document.getElementById('warningReset');
+            if(warningReset.style.display == 'block'){
+                warningReset.style.display = 'none';
+            }else {
+                warningReset.style.display = 'block';
+                window.location.href = '#main';
+            }
+        }
+
+        function submit() {
+            let warningSubmit = document.getElementById('warningSubmit');
+            if(warningSubmit.style.display == 'block'){
+                warningSubmit.style.display = 'none';
+            }else {
+                warningSubmit.style.display = 'block';
+                window.location.href = '#main';
+            }
+        }
+
+        let confirmReset =document.getElementById('conReset');
+        confirmReset.addEventListener('click', ()=> {
+            window.location.reload();
+        })
+        
+
         function displayImage(input, num) {
             const fileInput = document.getElementById(`file-input${num}`);
             const filePreview = document.getElementById(`file-preview${num}`);
