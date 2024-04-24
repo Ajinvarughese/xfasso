@@ -2,15 +2,15 @@
     require('../connections/productdb.php');
     require('../components/ratings/ratingAPI.php');
     
-    $productSqlQuery = "SELECT * FROM products";
+    $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1";
     $productQueryResult = mysqli_query($conn, $productSqlQuery);
 
     if(isset($_COOKIE['lowToHigh'])) {
-        $productSqlQuery = "SELECT * FROM products ORDER BY product_price ASC";
+        $productSqlQuery = "SELECT * FROM products ORDER BY product_price ASC WHERE stock_status = 1";
         $queryLow = "ORDER BY product_price ASC";
         $productQueryResult = mysqli_query($conn, $productSqlQuery);
     }elseif(isset($_COOKIE['highToLow'])) {
-        $productSqlQuery = "SELECT * FROM products ORDER BY product_price DESC";
+        $productSqlQuery = "SELECT * FROM products ORDER BY product_price DESC WHERE stock_status = 1";
         $productQueryResult = mysqli_query($conn, $productSqlQuery);
     }
 
@@ -169,10 +169,10 @@
                     </div>
                     <?php 
 
-                        $productSqlQueryMen = "SELECT * FROM products WHERE product_gender = 'men'";
+                        $productSqlQueryMen = "SELECT * FROM products WHERE product_gender = 'men' AND stock_status = 1";
                         $productQueryResultMen = mysqli_query($conn, $productSqlQueryMen);
 
-                        $productSqlQueryWomen = "SELECT * FROM products WHERE product_gender = 'women'";
+                        $productSqlQueryWomen = "SELECT * FROM products WHERE product_gender = 'women' AND stock_status = 1";
                         $productQueryResultWomen = mysqli_query($conn, $productSqlQueryWomen);
 
                         if(isset($_COOKIE['men-checked'])&&isset($_COOKIE['women-checked'])){
@@ -386,91 +386,94 @@
                         $totalElements = 0;
                         $totalStarCount = 0;
                         while ($productRow = mysqli_fetch_assoc($productQueryResult)) {
-                            $productId = $productRow['product_id'];
-                            $totalStarCount = 0;
-                            $totalElements = 0;
 
-                            // Calculate total star count and total number of elements for the current product
-                            for ($i = 0; $i < count($ratingArray[0]); $i++) {
-                                for ($j = 0; $j < count($ratingArray[0][$i]); $j++) {
-                                    if ($ratingArray[0][$i][$j]['productID'] == $productId) {
-                                        $totalStarCount += $ratingArray[0][$i][$j]['starCount'];
-                                        $totalElements++;
+                            if($productRow['stock_status'] != 0) {
+                                $productId = $productRow['product_id'];
+                                $totalStarCount = 0;
+                                $totalElements = 0;
+
+                                // Calculate total star count and total number of elements for the current product
+                                for ($i = 0; $i < count($ratingArray[0]); $i++) {
+                                    for ($j = 0; $j < count($ratingArray[0][$i]); $j++) {
+                                        if ($ratingArray[0][$i][$j]['productID'] == $productId) {
+                                            $totalStarCount += $ratingArray[0][$i][$j]['starCount'];
+                                            $totalElements++;
+                                        }
                                     }
                                 }
-                            }
 
-                            // Calculate average star count for the current product
-                            if ($totalElements > 0) {
-                                $averageStarCount = number_format($totalStarCount / $totalElements, 1);
-                            } else {
-                                $averageStarCount = 0;
-                            }
-                            // set avg_star count to DB
-                            $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
-                            $querRUN = mysqli_query($conn, $quer);
-                            
-                            $productId = "productIdOfXfassoYes {$productRow['product_id']}";
+                                // Calculate average star count for the current product
+                                if ($totalElements > 0) {
+                                    $averageStarCount = number_format($totalStarCount / $totalElements, 1);
+                                } else {
+                                    $averageStarCount = 0;
+                                }
+                                // set avg_star count to DB
+                                $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
+                                $querRUN = mysqli_query($conn, $quer);
+                                
+                                $productId = "productIdOfXfassoYes {$productRow['product_id']}";
 
-                            //star rate pt1 end
+                                //star rate pt1 end
 
-                            //encrypting
-                            $ciphering = "AES-128-CTR";
-                            $iv_length = openssl_cipher_iv_length($ciphering);
-                            $options = 0;
-                            $encryption_iv = '1234567891021957';
-                            $encryption_key = "xfassoKey";
-                            $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
-
-
-                            $imageData = base64_encode($productRow['product_image']);
-                            $imageType = "image/jpeg";
-                            echo "
-                                <div id='{$encrypted_id}' class='card'>
-                                    <a style='color: inherit; text-decoration: none;' href='../details/details.php?productId={$encrypted_id}'>
-                                        <div class='product-img'>
-                                            <img src='data:$imageType;base64,$imageData' alt='img'>
-                                        </div>
-                                        <div class='content-product'>
-                                            <h2 id='primary'>{$productRow['product_name']}</h2>
-                                            <div class='price-button'>
-                                                <p class='secondary'>₹{$productRow['product_price']}</p>
-                                               
+                                //encrypting
+                                $ciphering = "AES-128-CTR";
+                                $iv_length = openssl_cipher_iv_length($ciphering);
+                                $options = 0;
+                                $encryption_iv = '1234567891021957';
+                                $encryption_key = "xfassoKey";
+                                $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
 
 
-                                                <p class='secondary rate'>"; 
-                                                // Star rating code pt2
-                                                if($averageStarCount > 0) {
-                                                    if(isInteger($averageStarCount)) {
-                                                        for($k=0; $k<$averageStarCount; $k++) {
-                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
-                                                        }
-                                                        for($k=0; $k<5-$averageStarCount; $k++) {
-                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
-                                                        }
-                                                    }else {
-                                                        for($k=0; $k<$averageStarCount-1; $k++) {
-                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
-                                                        }
-                                                        echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
-                                                        for($k=0; $k<5-$averageStarCount-1; $k++) {
-                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
-                                                        }
-                                                    }
-                                                    echo " {$averageStarCount}";
-                                                }else {
-                                                    for($k=0; $k<5; $k++) {
-                                                        echo "<span><img src='../resources/empty-star.png' class='star'></span>";
-                                                    }
-                                                }
-                                                //star rate pt2 end
-                                                echo "</p>
-                                                <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
+                                $imageData = base64_encode($productRow['product_image']);
+                                $imageType = "image/jpeg";
+                                echo "
+                                    <div id='{$encrypted_id}' class='card'>
+                                        <a style='color: inherit; text-decoration: none;' href='../details/details.php?productId={$encrypted_id}'>
+                                            <div class='product-img'>
+                                                <img src='data:$imageType;base64,$imageData' alt='img'>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>  
-                            ";
+                                            <div class='content-product'>
+                                                <h2 id='primary'>{$productRow['product_name']}</h2>
+                                                <div class='price-button'>
+                                                    <p class='secondary'>₹{$productRow['product_price']}</p>
+                                                
+
+
+                                                    <p class='secondary rate'>"; 
+                                                    // Star rating code pt2
+                                                    if($averageStarCount > 0) {
+                                                        if(isInteger($averageStarCount)) {
+                                                            for($k=0; $k<$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            for($k=0; $k<5-$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }else {
+                                                            for($k=0; $k<$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                            for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }
+                                                        echo " {$averageStarCount}";
+                                                    }else {
+                                                        for($k=0; $k<5; $k++) {
+                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                        }
+                                                    }
+                                                    //star rate pt2 end
+                                                    echo "</p>
+                                                    <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>  
+                                ";
+                            }
                         }
                         
                     }

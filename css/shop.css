@@ -141,8 +141,9 @@ html {
     gap: 5rem 2rem;
 }
 .card {
-    max-width: 490px;
+    max-width: 290px;
     transition: 0.2s ease;
+    max-height: 329px;
 }
 .product-img img {
     max-width: 100%;

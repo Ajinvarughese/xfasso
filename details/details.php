@@ -27,7 +27,7 @@
         $decrypted_id = $splitId[1];
     
         //query
-        $detailsQuery = "SELECT products.avg_star, products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$decrypted_id}";
+        $detailsQuery = "SELECT products.stock_status, products.avg_star, products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$decrypted_id}";
         try {
             $deatilsResult = mysqli_query($conn, $detailsQuery);
         }catch(mysqli_sql_exception) {
@@ -37,21 +37,25 @@
         if(mysqli_num_rows($deatilsResult)>0) {
             $details = mysqli_fetch_assoc($deatilsResult);
 
-            //front
-            $imageData1 = base64_encode($details['img_front']);
-            $imageType1 = "image/jpeg";
+            if($details['stock_status'] != 0) {
+                //front
+                $imageData1 = base64_encode($details['img_front']);
+                $imageType1 = "image/jpeg";
 
-            //back
-            $imageData2 = base64_encode($details['img_back']);
-            $imageType2 = "image/jpeg";
+                //back
+                $imageData2 = base64_encode($details['img_back']);
+                $imageType2 = "image/jpeg";
 
-            //left
-            $imageData3 = base64_encode($details['img_left']);
-            $imageType3 = "image/jpeg";
+                //left
+                $imageData3 = base64_encode($details['img_left']);
+                $imageType3 = "image/jpeg";
 
-            //right
-            $imageData4 = base64_encode($details['img_right']);
-            $imageType4 = "image/jpeg";
+                //right
+                $imageData4 = base64_encode($details['img_right']);
+                $imageType4 = "image/jpeg";
+            }else {
+                header('Location: ../errors/errors.php?errorID=1001');    
+            }
         }else {
             header('Location: ../errors/errors.php?errorID=1001');
         } 
@@ -647,7 +651,16 @@
                 flex-grow: calc(2rem);
                 min-width: 186px;
                 max-width: 330px;
+                max-height: 310px;
                 min-height: 180px;
+            }
+            .img-more {
+                height: 180px;
+            }
+            .img-more img {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
             }
             .more::-webkit-scrollbar {
                 height: 7px;
@@ -671,63 +684,64 @@
 
                     if(mysqli_num_rows($moreSqlResult)>0) {
                         while($more = mysqli_fetch_assoc($moreSqlResult)) {
+                            if($more['stock_status'] != 0) {
+                                $productId = "productIdOfXfassoYes {$more['product_id']}";
+                                $averageStarCount = $more['avg_star'];
+                            //encrypting
+                        
+                                $ciphering = "AES-128-CTR";
+                                $iv_length = openssl_cipher_iv_length($ciphering);
+                                $options = 0;
+                                $encryption_iv = '1234567891021957';
+                                $encryption_key = "xfassoKey";
+                                $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
+                                
 
-                            $productId = "productIdOfXfassoYes {$more['product_id']}";
-                            $averageStarCount = $more['avg_star'];
-                        //encrypting
-                    
-                            $ciphering = "AES-128-CTR";
-                            $iv_length = openssl_cipher_iv_length($ciphering);
-                            $options = 0;
-                            $encryption_iv = '1234567891021957';
-                            $encryption_key = "xfassoKey";
-                            $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
-                            
-
-                            $imageMore = base64_encode($more['product_image']);
-                            $imageTypeMore = "image/jpeg";
-                            echo "
-                                <a href='./details.php?productId={$encrypted_id}' style='color: inherit; text-decoration: none;'>
-                                    <div class='card-more'>
-                                        <div class='img-more'>
-                                            <img src='data:$imageTypeMore;base64,$imageMore' alt=''>
-                                        </div>
-                                        <div class='content-more'>
-                                            <div style='padding: 5px 10px 0 10px;' class='title'>{$more['product_name']}</div>
-                                            <div style='padding: 0px 10px;'>
-                                                <p class='secondary rate'>"; 
-                                                if($averageStarCount > 0) {
-                                                    if(isInteger($averageStarCount)) {
-                                                        for($k=0; $k<$averageStarCount; $k++) {
-                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                $imageMore = base64_encode($more['product_image']);
+                                $imageTypeMore = "image/jpeg";
+                                echo "
+                                    <a href='./details.php?productId={$encrypted_id}' style='color: inherit; text-decoration: none;'>
+                                        <div class='card-more'>
+                                            <div class='img-more'>
+                                                <img src='data:$imageTypeMore;base64,$imageMore' alt=''>
+                                            </div>
+                                            <div class='content-more'>
+                                                <div style='padding: 5px 10px 0 10px;' class='title'>{$more['product_name']}</div>
+                                                <div style='padding: 0px 10px;'>
+                                                    <p class='secondary rate'>"; 
+                                                    if($averageStarCount > 0) {
+                                                        if(isInteger($averageStarCount)) {
+                                                            for($k=0; $k<$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            for($k=0; $k<5-$averageStarCount; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }else {
+                                                            for($k=0; $k<$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
+                                                            }
+                                                            echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                            for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                                echo "<span><img src='../resources/empty-star.png' class='star'></span>";
+                                                            }
                                                         }
-                                                        for($k=0; $k<5-$averageStarCount; $k++) {
-                                                            echo "<span><img src='../resources/empty-star.png' class='star'></span>";
-                                                        }
+                                                        echo "&nbsp;{$averageStarCount}";
                                                     }else {
-                                                        for($k=0; $k<$averageStarCount-1; $k++) {
-                                                            echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
-                                                        }
-                                                        echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
-                                                        for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                        for($k=0; $k<5; $k++) {
                                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                         }
                                                     }
-                                                    echo "&nbsp;{$averageStarCount}";
-                                                }else {
-                                                    for($k=0; $k<5; $k++) {
-                                                        echo "<span><img src='../resources/empty-star.png' class='star'></span>";
-                                                    }
-                                                }
-                                                echo "</p> 
-                                            </div>
-                                            <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}
-                                            
+                                                    echo "</p> 
+                                                </div>
+                                                <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}
+                                                
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                            ";
+                                    </a>
+                                ";
+                            }
                         }
                     }
                 ?>
