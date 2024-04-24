@@ -27,8 +27,8 @@
     }
 
     if(isset($_POST['submit'])) {
-        $adm_id = filter_var($_POST['id'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $adm_id = mysqli_real_escape_string($conn, $_POST['id']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
 
         $setIt = "SELECT admin_id, password, log_data FROM admin WHERE admin_id = '$adm_id'";
         $getIt = mysqli_query($conn, $setIt);
