@@ -5,7 +5,7 @@
     if(empty($_SESSION['XQCLANG'])){
         header('Location: ../../admin-login/');
     }
-?>
+ ?>
 
 
 
@@ -50,19 +50,22 @@
     <div id="main" class="main">
         <div class="header">
             <h1 align='center'>Add new products from here</h1>
+            <p id="warning" align='center' style="margin-top: 10px; font-size: 12px; color: red;"></p>
         </div>
         <div class="fjs">
             <style>
                 
             </style>
-            <form action="" method="post">
+            <form action="send/send.php" method="post" enctype="multipart/form-data">
 
                 <div class="pew">
-                    <input class="in i" type="text" placeholder="Name">
+                    <input class="in i" name="prod_name" type="text" placeholder="Name">
                 </div>
-
                 <div class="pew">
-                    <input class="in i" type="text" placeholder="Price">
+                    <input class="in i" name="prod_id" type="text" placeholder="Product ID">
+                </div>
+                <div class="pew">
+                    <input class="in i" name="prod_price" type="text" placeholder="Price">
                 </div>
                 
                 <div class="pew">
@@ -71,8 +74,8 @@
 
                 <div class="pew">
                     <select name="gender" id="gender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
                     </select>
                 </div>
 
@@ -80,7 +83,7 @@
                     <p class='pq3'>Main image:</p>
                     <div class="prodImage">
                         <div id="file-preview1" class="file-preview">Image required</div>
-                        <input type="file" id="file-input1" class="file-input" accept="image/*" onchange="displayImage(this, 1)">
+                        <input name="img1" type="file" id="file-input1" class="file-input" accept="image/*" onchange="displayImage(this, 1)">
                         <label for="file-input1" class="custom-file-upload">Choose Image</label>
                     </div>
                 </div>
@@ -89,7 +92,7 @@
                     <p class='pq3'>Right image:</p>
                     <div class="prodImage">
                         <div id="file-preview2" class="file-preview">Image required</div>
-                        <input type="file" id="file-input2" class="file-input" accept="image/*" onchange="displayImage(this, 2)">
+                        <input name="img2" type="file" id="file-input2" class="file-input" accept="image/*" onchange="displayImage(this, 2)">
                         <label for="file-input2" class="custom-file-upload">Choose Image</label>
                     </div>
                 </div>
@@ -98,7 +101,7 @@
                     <p class='pq3'>Left image:</p>
                     <div class="prodImage">
                         <div id="file-preview3" class="file-preview">Image required</div>
-                        <input type="file" id="file-input3" class="file-input" accept="image/*" onchange="displayImage(this, 3)">
+                        <input name="img3" type="file" id="file-input3" class="file-input" accept="image/*" onchange="displayImage(this, 3)">
                         <label for="file-input3" class="custom-file-upload">Choose Image</label>
                     </div>
                 </div>
@@ -107,13 +110,13 @@
                     <p class='pq3'>Back image:</p>
                     <div class="prodImage">
                         <div id="file-preview4" class="file-preview">Image required</div>
-                        <input type="file" id="file-input4" class="file-input" accept="image/*" onchange="displayImage(this, 4)">
+                        <input name="img4" type="file" id="file-input4" class="file-input" accept="image/*" onchange="displayImage(this, 4)">
                         <label for="file-input4" class="custom-file-upload">Choose Image</label>
                     </div>
                 </div>
 
                 <div class="pw"> 
-                     <div onclick="reset()" class="btn sec">Reset</div>
+                    <div onclick="reset()" class="btn sec">Reset</div>
                     <div onclick="submit()" class="btn pri">Submit</div>
                 </div>
 
@@ -128,7 +131,7 @@
                             <h1>Do you want to reset?</h1>
                             <p align='center'>Are you sure you want to reset all the input fields.</p>
                             <br>
-                            <button id="conReset">Reset</button>
+                            <div class="btna" id="conReset">Reset</div>
                         </div>
                     </div>
                 </div>
@@ -144,21 +147,18 @@
                             <h1>Do you want to submit?</h1>
                             <p align='center'>Are you sure you want to submit the new product to store.</p>
                             <br>
-                            <input style="display: none;" type="submit" id='submit' name="submit">
-                            <label for="submit">
-                                <button id="conSubmit">Submit</button>
-                            </label>
+                            <button class="btna" name="submit" value="false" onclick="validForm(this)" id="conSubmit">Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <style>
-        
 
-    </style>
     <script>
+        function validForm(e) {
+            e.value = true;
+        }
         function reset() {
             let warningReset = document.getElementById('warningReset');
             if(warningReset.style.display == 'block'){
@@ -179,7 +179,7 @@
             }
         }
 
-        let confirmReset =document.getElementById('conReset');
+        let confirmReset = document.getElementById('conReset');
         confirmReset.addEventListener('click', ()=> {
             window.location.reload();
         })
@@ -203,6 +203,41 @@
             }
         }
     </script>
+    <?php 
+
+        if(isset($_SESSION['productAdded'])) {
+            if($_SESSION['productAdded'] != false) {
+                echo "
+                    <script>
+                        let warn = document.getElementById('warning');
+                        warn.innerHTML = 'Product added successfully.';
+                        warn.style.color = 'green';
+                        setTimeout(()=> {
+                            warn.innerHTML = '';
+                            warn.style.color = 'red';
+                        }, 7000)
+                    </script>
+                ";
+                $_SESSION['productAdded'] = false;
+            }
+        }
+
+        if(isset($_SESSION['noInput'])) {
+            if($_SESSION['noInput'] != false) {
+                echo "
+                    <script>
+                        let warn = document.getElementById('warning');
+                        warn.innerHTML = 'Failed adding product. Please fill out all input fields.';
+                        setTimeout(()=> {
+                            warn.innerHTML = '';
+                        }, 7000)
+                    </script>
+
+                ";
+                $_SESSION['noInput'] = false;
+            }
+        }
+    ?>
 </body>
 <script src="../main.js"></script>
 </html>

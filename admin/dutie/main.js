@@ -26,7 +26,7 @@ document.addEventListener('click', ()=> {
 });
 
 function goBack() {
-    window.history.back();
+    window.location.href = '../../admin.php';
 }
 
 
