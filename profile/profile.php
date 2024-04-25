@@ -17,6 +17,13 @@
         if(mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_array($res);
             $username = $row['username'];
+        }else {
+            setcookie('XassureUser', NULL, time()-3600, '/');
+            echo "
+                <script>
+                    window.location.href = '../';
+                </script>
+            ";
         }
     }else {
         header('Location: ../signup/signup.html');

@@ -1,6 +1,6 @@
 <?php 
     if(isset($_COOKIE['XassureUser'])) {
-        header('Location: ../index.html');
+        header('Location: ../');
     }
 ?>
 
@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Let's Sign in</title>
     <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>

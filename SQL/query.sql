@@ -63,6 +63,56 @@ CREATE TABLE xfasso.product_images
 );
 
 
+CREATE TABLE xfasso.admin
+(
+    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    admin_id VARCHAR(45) UNIQUE,
+    password VARCHAR(275),
+    work INT DEFAULT NULL,
+    reg_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    log_data LONGTEXT,
+    work_name VARCHAR(75)
+);
+
+
+INSERT INTO xfasso.admin(id, admin_id, password, work, work_name)
+VALUES(
+    505,
+    'jXwFHKBw4293',
+    '$2y$10$4bRguT6htqysJpM7FxSBieja8mgmsKZKDZH6Qt22kRsBqcoapqoiS',
+    4293,
+    'comments'
+);
+
+
+INSERT INTO xfasso.admin(admin_id, password, work, work_name) 
+VALUES 
+(
+    'OBw74GKw4294',
+    '$2y$10$5FaievEUr40AKQ1a46Ny9.n8JgugTnRTP.MUiRjagaYhRY0dkIKS6',
+    4294,
+    'productAdd'
+),
+(
+    'Ryzj66rw4295',
+    '$2y$10$9lZJZyVC8vHd2969yYJ1f.n0wB3vLSLoFbcAnj2THa7O/RIzd2nqK',
+    4295,
+    'stock'
+),
+(
+    'Vro6GwBw4296',
+    '$2y$10$CdxltoxxhvgbgOwhXroM9eRClyKGNU1OpNBhiJdj7.Zg0avG9l3SK',
+    4296,
+    'blacklist'
+),
+(
+    'P5PEbz1w4297',
+    '$2y$10$eqhpRP3z/180h50cZ2Ud7ONppWK8LtHkRItCbpOHMNAvERtQE7yma',
+    4297,
+    'productEdit'
+);
+
+
 -- Show data from table
-SELECT * FROM xfasso.product_images;
+SELECT * FROM xfasso.admin;
 

@@ -1,7 +1,7 @@
 <?php 
     session_start();
     if(isset($_COOKIE['XassureUser'])) {
-        header('Location: ../index.html');
+        header('Location: ../');
     }
 ?>
 

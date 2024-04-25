@@ -1,7 +1,7 @@
 <?php 
     require '../connections/productdb.php';
     if(isset($_COOKIE['XassureUser'])) {
-        header('Location: ../index.html');
+        header('Location: ../');
     }
 ?>
 
