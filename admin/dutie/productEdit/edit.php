@@ -8,29 +8,50 @@
 
     foreach($_POST as $p => $v) {
         if(isset($p)) {
-            $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$v}";
+            $prodID = $v;
             break;
         }
     }
+    if(isset($_SESSION['failureProdID'])) {
+        $prodID = $_SESSION['failureProdID'];
+    }
 
-    $run = mysqli_query($conn, $quer);
-    if(mysqli_num_rows($run)>0) {
-        $row=mysqli_fetch_assoc($run);  
-        
-        $productName = $row['product_name'];
-        $prodID = $row['product_id'];
-        $price = $row['product_price'];
-        $desc = $row['product_desc'];
-        $gender = $row['product_gender'];
+    
+    $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$prodID}";
+    if($run = mysqli_query($conn, $quer)) {
+        if(mysqli_num_rows($run)>0) {
+            $row=mysqli_fetch_assoc($run);  
+            
+            $productName = $row['product_name'];
+            $prodID = $row['product_id'];
+            $price = $row['product_price'];
+            $desc = $row['product_desc'];
+            $gender = $row['product_gender'];
+            
+            $imageMain = base64_encode($row['product_image']);
+            $imageBack = base64_encode($row['img_back']);
+            $imageRight = base64_encode($row['img_right']);
+            $imageLeft = base64_encode($row['img_left']);
 
-        $imageMain = base64_encode($row['product_image']);
-        $imageBack = base64_encode($row['img_back']);
-        $imageRight = base64_encode($row['img_right']);
-        $imageLeft = base64_encode($row['img_left']);
+            $imageType = "image/jpeg";
+        }else {
+            $quer = "SELECT * FROM products WHERE product_id = {$prodID}";
+            $run = mysqli_query($conn, $quer);
+            $row=mysqli_fetch_assoc($run);
 
-        $imageType = "image/jpeg";
-    }else {
-        header('Location: ./productEdit.php');
+            $imageType = "image/jpeg";
+            
+            $productName = isset($row['product_name'])?$row['product_name']: "";
+            $prodID = isset($row['product_id'])?$row['product_id']: "";
+            $price = isset($row['product_price'])?$row['product_price']: "";
+            $desc = isset($row['product_desc'])?$row['product_desc']: "";
+            $gender = isset($row['product_gender'])?$row['product_gender']: "";
+            
+            $imageMain = isset($row['product_image'])?base64_encode($row['product_image']): "";
+            $imageBack = isset($row['img_back'])?base64_encode($row['img_back']): "";
+            $imageRight = isset($row['img_right'])?base64_encode($row['img_right']): "";
+            $imageLeft = isset($row['img_left'])?base64_encode($row['img_left']): "";        
+        }
     }
  ?>
 
@@ -83,7 +104,7 @@
             <style>
                 
             </style>
-            <form action="send/send.php" method="post" enctype="multipart/form-data">
+            <form action="./send/send.php" method="post" enctype="multipart/form-data">
 
                 <div class="pew">
                     <input class="in i" name="prod_name" type="text" placeholder="Name" value="<?php echo $productName;?>">
@@ -129,7 +150,7 @@
                 <div class="pew">
                     <p class='pq3'>Right image:</p>
                     <div class="prodImage">
-                        <div id="file-preview2" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageRight'"; ?> alt="Uploaded Image" class="preview-image"></div>
+                        <div id="file-preview2" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageRight'"; ?> alt="Uploaded Image" class="preview-image" onerror="hide('file-preview2')"></div>
                         <input name="img2" type="file" id="file-input2" class="file-input" accept="image/*" onchange="displayImage(this, 2)">
                         <label for="file-input2" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -138,7 +159,7 @@
                 <div class="pew">
                     <p class='pq3'>Left image:</p>
                     <div class="prodImage">
-                        <div id="file-preview3" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageLeft'"; ?> alt="Uploaded Image" class="preview-image"></div>
+                        <div id="file-preview3" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageLeft'"; ?> onerror="hide('file-preview3')" alt="Uploaded Image" class="preview-image"></div>
                         <input name="img3" type="file" id="file-input3" class="file-input" accept="image/*" onchange="displayImage(this, 3)">
                         <label for="file-input3" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -147,7 +168,7 @@
                 <div class="pew">
                     <p class='pq3'>Back image:</p>
                     <div class="prodImage">
-                        <div id="file-preview4" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageBack'"; ?> alt="Uploaded Image" class="preview-image"></div>
+                        <div id="file-preview4" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageBack'"; ?> onerror="hide('file-preview4')" alt="Uploaded Image" class="preview-image"></div>
                         <input name="img4" type="file" id="file-input4" class="file-input" accept="image/*" onchange="displayImage(this, 4)">
                         <label for="file-input4" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -194,6 +215,10 @@
     </div>
 
     <script>
+        function hide(idInp) {
+            let id = document.getElementById(idInp);
+            id.innerHTML = "Image required";
+        }
         function validForm(e) {
             e.value = true;
         }

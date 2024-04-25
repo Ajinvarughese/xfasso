@@ -24,9 +24,11 @@
         }catch(Error) {
             mysqli_close($conn);
             $_SESSION['noInput']=true;
-            echo" <script>
-                window.location.href = '../edit.php';
-            </script>";
+            $_SESSION['failurerodID'] = $prodID;
+            echo "FALSEEE";
+            // echo" <script>
+            //     window.location.href = '../edit.php';
+            // </script>";
         }
        
         $imgFront = mysqli_real_escape_string($conn, $imgFront);
