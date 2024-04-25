@@ -6,15 +6,23 @@
         header('Location: ../../admin-login/');
     }
 
-    foreach($_POST as $p => $v) {
-        if(isset($p)) {
-            $prodID = $v;
-            break;
+    if(isset($_SESSION['failureprodID'])) {
+        $prodID = $_SESSION['failureprodID'];
+        $_SESSION['failureprodID'] == NULL;
+    }else if(isset($_SESSION['successedID'])){
+        $prodID = $_SESSION['successedID'];
+        $_SESSION['successedID'] = NULL;
+    }
+    else {
+        foreach($_POST as $p => $v) {
+            if(isset($p)) {
+                $prodID = $v;
+                break;
+            }
         }
     }
-    if(isset($_SESSION['failureProdID'])) {
-        $prodID = $_SESSION['failureProdID'];
-    }
+
+
 
     
     $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$prodID}";
@@ -249,21 +257,21 @@
         
 
         function displayImage(input, num) {
-            const fileInput = document.getElementById(`file-input${num}`);
-            const filePreview = document.getElementById(`file-preview${num}`);
+            // const fileInput = document.getElementById(`file-input${num}`);
+            // const filePreview = document.getElementById(`file-preview${num}`);
 
-            if (fileInput.files && fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const reader = new FileReader();
+            // if (fileInput.files && fileInput.files.length > 0) {
+            //     const file = fileInput.files[0];
+            //     const reader = new FileReader();
 
-                reader.onload = function(e) {
-                    filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
-                }
+            //     reader.onload = function(e) {
+            //         filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
+            //     }
 
-                reader.readAsDataURL(file);
-            } else {
-                filePreview.innerHTML = "";
-            }
+            //     reader.readAsDataURL(file);
+            // } else {
+            //     filePreview.innerHTML = "";
+            // }
         }
     </script>
     <?php 
@@ -273,7 +281,7 @@
                 echo "
                     <script>
                         let warn = document.getElementById('warning');
-                        warn.innerHTML = 'Product added successfully.';
+                        warn.innerHTML = 'Product edited successfully.';
                         warn.style.color = 'green';
                         setTimeout(()=> {
                             warn.innerHTML = '';
@@ -290,7 +298,7 @@
                 echo "
                     <script>
                         let warn = document.getElementById('warning');
-                        warn.innerHTML = 'Failed adding product. Please fill out all input fields.';
+                        warn.innerHTML = 'Product editing failed. Please contact the executer';
                         setTimeout(()=> {
                             warn.innerHTML = '';
                         }, 7000)
