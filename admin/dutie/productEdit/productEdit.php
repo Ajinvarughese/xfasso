@@ -23,7 +23,14 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../css/style.css">
-
+    <style>
+        body {
+            background: #f3f1f1f3;
+        }
+        .main {
+            margin-bottom: 3rem;
+        }
+    </style>
 </head>
 <body>
     <div class="nav">
@@ -60,21 +67,39 @@
             font-size: 14px;
             margin-right: 4px;
         }
-        .card {
-            border: 1px solid;
+        .a{
             display: flex;
-            width: 90%;
-            margin: 0 auto;  
-            cursor: pointer;
-            transition: 0.2s ease;          
+            border-radius: 4px;
+            gap: 1rem;
+            background: #fff;
+            width: 89%;
+            max-width: 830px;
+            margin: 0 auto;
+            transition: 0.2s ease;  
+            max-height: 180px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
         }
-        .card:hover {
+        .form {
+            padding: 0;
+            margin-top: 1.7rem;
+            cursor: pointer;
+        }
+        .form label {
+            cursor: pointer;
+        }
+        .form hr {
+            margin: 12px 0;
+        }
+        .form input {
+            display: none;
+        }
+        .a:hover {
             transform: scale(1.02);
         }
         .cardImg {
-            border-right: 1px solid;
-            max-width: 188px;
-            max-height: 188px;
+            max-width: 179px;
+            max-height: 179px;
+            padding: 4px;
         }
         .cardImg img {
             max-width: 100%;
@@ -84,7 +109,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-left: 1.8rem;
+            padding-left: 0.6rem;
             width: 100%;
         }
         .cardContents > div{
@@ -94,26 +119,82 @@
     <div class="main">
         <h2 align="center" class="head1">Product with every details available</h2>
         <?php 
-            $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id";
+            $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
             $res = mysqli_query($conn, $quer);
             if(mysqli_num_rows($res)>0) {
+                $i=0;
                 while($row=mysqli_fetch_assoc($res)) {
-                    $r = $row['product_name'];
-                    echo "<p>$r<p><br>"; 
+                    $id = $row['product_id'];
+                    $prodName = $row['product_name'];
+                    $price = $row['product_price'];
+                    $gender = $row['product_gender'];
+
+                    $imageData = base64_encode($row['product_image']);
+                    $imageType = "image/jpeg";
+                    echo "
+                        <form class='form' action='./edit.php' method='post' enctype='multipart/form-data'>
+                            <input type='password' name='product_id{$i}' value ='{$id}'>
+                            <input type='submit' name='submit{$i}' id='submit{$i}'>
+                            <label for='submit{$i}'>
+                                <div class='a'>
+                                    <div class='cardImg'>
+                                        <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                                    </div>
+                                    <hr>
+                                    <div class='cardContents'>
+                                        <div class='id'><span>product ID:</span> {$id}</div>
+                                        <div class='name'><span>name:</span> {$prodName}</div>
+                                        <div class='price'><span>price:</span> {$price}</div>
+                                        <div class='gender'><span>gender:</span> {$gender}</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </form>
+                    "; 
+                    $i++;
                 }
             }
         ?>
-        <div class="card" id="card">
-            <div class="cardImg">
-                <img src="../../images/image_processing20200702-24592-2w0nhm.gif">
-            </div>
-            <div class="cardContents">
-                <div class="id"><span>product ID:</span> 894</div>
-                <div class="name"><span>name:</span> Helix</div>
-                <div class="price"><span>price:</span> ₹2,999</div>
-                <div class="gender"><span>gender:</span> Men</div>
-            </div>
-        </div>
+
+
+        <h2 style="margin-top: 3rem;" align="center" class="head1">All products in the database</h2>
+        <?php 
+            $quer = "SELECT * FROM products ORDER BY product_date DESC";
+            $res = mysqli_query($conn, $quer);
+            if(mysqli_num_rows($res)>0) {
+                while($row=mysqli_fetch_assoc($res)) {
+                    $id = $row['product_id'];
+                    $prodName = $row['product_name'];
+                    $price = $row['product_price'];
+                    $gender = $row['product_gender'];
+
+                    $imageData = base64_encode($row['product_image']);
+                    $imageType = "image/jpeg";
+                    echo "
+                        <form class='form' action='./edit.php' method='post' enctype='multipart/form-data'>
+                            <input type='password' name='product_id{$i}' value ='{$id}'>
+                            <input type='submit' name='submit{$i}' id='submit{$i}'>
+                            <label for='submit{$i}'>
+                                <div class='a'>
+                                    <div class='cardImg'>
+                                        <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                                    </div>
+                                    <hr>
+                                    <div class='cardContents'>
+                                        <div class='id'><span>product ID:</span> {$id}</div>
+                                        <div class='name'><span>name:</span> {$prodName}</div>
+                                        <div class='price'><span>price:</span> {$price}</div>
+                                        <div class='gender'><span>gender:</span> {$gender}</div>
+                                    </div>
+                                </div>
+                            </label>
+                        </form>
+                    "; 
+                    $i++;
+                }
+            }
+        ?>
+        
     </div>
     
 </body>

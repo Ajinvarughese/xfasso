@@ -5,6 +5,33 @@
     if(empty($_SESSION['XQCLANG'])){
         header('Location: ../../admin-login/');
     }
+
+    foreach($_POST as $p => $v) {
+        if(isset($p)) {
+            $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$v}";
+            break;
+        }
+    }
+
+    $run = mysqli_query($conn, $quer);
+    if(mysqli_num_rows($run)>0) {
+        $row=mysqli_fetch_assoc($run);  
+        
+        $productName = $row['product_name'];
+        $prodID = $row['product_id'];
+        $price = $row['product_price'];
+        $desc = $row['product_desc'];
+        $gender = $row['product_gender'];
+
+        $imageMain = base64_encode($row['product_image']);
+        $imageBack = base64_encode($row['img_back']);
+        $imageRight = base64_encode($row['img_right']);
+        $imageLeft = base64_encode($row['img_left']);
+
+        $imageType = "image/jpeg";
+    }else {
+        header('Location: ./productEdit.php');
+    }
  ?>
 
 
@@ -59,30 +86,41 @@
             <form action="send/send.php" method="post" enctype="multipart/form-data">
 
                 <div class="pew">
-                    <input class="in i" name="prod_name" type="text" placeholder="Name">
+                    <input class="in i" name="prod_name" type="text" placeholder="Name" value="<?php echo $productName;?>">
                 </div>
                 <div class="pew">
-                    <input class="in i" name="prod_id" type="text" placeholder="Product ID">
+                    <input class="in i" name="prod_id" type="text" placeholder="Product ID" value="<?php echo $prodID;?>">
                 </div>
                 <div class="pew">
-                    <input class="in i" name="prod_price" type="text" placeholder="Price">
+                    <input class="in i" name="prod_price" type="text" placeholder="Price" value="<?php echo $price?>">
                 </div>
                 
                 <div class="pew">
-                    <textarea style="resize: none;" class="in" name="description" id="txt" rows="6" placeholder="Description..." ></textarea>
+                    <textarea style="resize: none;" class="in" name="description" id="txt" rows="6" placeholder="Description..."><?php echo $desc?></textarea>
                 </div>
 
                 <div class="pew">
                     <select name="gender" id="gender">
-                        <option value="men">Men</option>
-                        <option value="women">Women</option>
+                        <?php 
+                            if($gender =='men') {
+                                echo "
+                                    <option value='men'>Men</option>
+                                    <option value='women'>Women</option>
+                                ";
+                            }else {
+                                echo "
+                                    <option value='women'>Women</option>
+                                    <option value='men'>Men</option>
+                                ";
+                            }
+                        ?>
                     </select>
                 </div>
 
                 <div class="pew">
                     <p class='pq3'>Main image:</p>
                     <div class="prodImage">
-                        <div id="file-preview1" class="file-preview">Image required</div>
+                        <div id="file-preview1" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageMain'"; ?> alt="Uploaded Image" class="preview-image"></div>
                         <input name="img1" type="file" id="file-input1" class="file-input" accept="image/*" onchange="displayImage(this, 1)">
                         <label for="file-input1" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -91,7 +129,7 @@
                 <div class="pew">
                     <p class='pq3'>Right image:</p>
                     <div class="prodImage">
-                        <div id="file-preview2" class="file-preview">Image required</div>
+                        <div id="file-preview2" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageRight'"; ?> alt="Uploaded Image" class="preview-image"></div>
                         <input name="img2" type="file" id="file-input2" class="file-input" accept="image/*" onchange="displayImage(this, 2)">
                         <label for="file-input2" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -100,7 +138,7 @@
                 <div class="pew">
                     <p class='pq3'>Left image:</p>
                     <div class="prodImage">
-                        <div id="file-preview3" class="file-preview">Image required</div>
+                        <div id="file-preview3" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageLeft'"; ?> alt="Uploaded Image" class="preview-image"></div>
                         <input name="img3" type="file" id="file-input3" class="file-input" accept="image/*" onchange="displayImage(this, 3)">
                         <label for="file-input3" class="custom-file-upload">Choose Image</label>
                     </div>
@@ -109,7 +147,7 @@
                 <div class="pew">
                     <p class='pq3'>Back image:</p>
                     <div class="prodImage">
-                        <div id="file-preview4" class="file-preview">Image required</div>
+                        <div id="file-preview4" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageBack'"; ?> alt="Uploaded Image" class="preview-image"></div>
                         <input name="img4" type="file" id="file-input4" class="file-input" accept="image/*" onchange="displayImage(this, 4)">
                         <label for="file-input4" class="custom-file-upload">Choose Image</label>
                     </div>
