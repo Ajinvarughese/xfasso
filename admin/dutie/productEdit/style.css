@@ -64,8 +64,17 @@ input:focus, textarea:focus {
 
 
 
+
+.pla {
+    opacity: 0.6;
+    font-size: 14px;
+}
+
 .file-input {
     display: none;
+}
+.paw {
+    max-width: 830px;
 }
 .custom-file-upload {
     border: 1px solid #ccc;

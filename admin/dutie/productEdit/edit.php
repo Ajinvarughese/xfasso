@@ -22,10 +22,13 @@
         }
     }
 
+    if(empty($prodID)){
+        header('Location: ./productEdit.php');
+    }
 
-
+    $prodID = mysqli_escape_string($conn, $prodID);
     
-    $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$prodID}";
+    $quer = "SELECT * FROM products INNER JOIN product_images ON products.product_id = product_images.product_id WHERE products.product_id = {$prodID}";
     if($run = mysqli_query($conn, $quer)) {
         if(mysqli_num_rows($run)>0) {
             $row=mysqli_fetch_assoc($run);  
@@ -105,29 +108,45 @@
 
     <div id="main" class="main">
         <div class="header">
-            <h1 align='center'>Add new products from here</h1>
+            <h1 align='center'>Edit the products from here</h1>
             <p id="warning" align='center' style="margin-top: 10px; font-size: 12px; color: red;"></p>
         </div>
         <div class="fjs">
             <style>
-                
+                #prodID {
+                    cursor: default;
+                }
+                #prodID:focus {
+                    outline: none;
+                    border: 1px solid #c2c2c2c2;
+                    caret-color: transparent;
+                }
             </style>
             <form action="./send/send.php" method="post" enctype="multipart/form-data">
-
                 <div class="pew">
+                    <p class="pla">ID: </p>
+                    <input id="prodID" class="in i" name="prod_id" type="text" placeholder="Product ID">
+                    <script>
+                        let prodID = document.getElementById("prodID");
+                        prodID.value = `<?php echo $prodID;?>`;
+                        prodID.addEventListener('input', ()=> {
+                            prodID.value=`<?php echo $prodID?>`;
+                        });
+                    </script>
+                </div>
+                <div class="pew">
+                    <p class="pla">Name: </p>
                     <input class="in i" name="prod_name" type="text" placeholder="Name" value="<?php echo $productName;?>">
                 </div>
                 <div class="pew">
-                    <input class="in i" name="prod_id" type="text" placeholder="Product ID" value="<?php echo $prodID;?>">
-                </div>
-                <div class="pew">
+                    <p class="pla">Price: </p>
                     <input class="in i" name="prod_price" type="text" placeholder="Price" value="<?php echo $price?>">
                 </div>
                 
                 <div class="pew">
+                    <p class="pla">Description: </p>
                     <textarea style="resize: none;" class="in" name="description" id="txt" rows="6" placeholder="Description..."><?php echo $desc?></textarea>
                 </div>
-
                 <div class="pew">
                     <select name="gender" id="gender">
                         <?php 
@@ -146,7 +165,7 @@
                     </select>
                 </div>
 
-                <div class="pew">
+                <div class="paw pew">
                     <p class='pq3'>Main image:</p>
                     <div class="prodImage">
                         <div id="file-preview1" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageMain'"; ?> alt="Uploaded Image" class="preview-image"></div>
@@ -155,7 +174,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="paw pew">
                     <p class='pq3'>Right image:</p>
                     <div class="prodImage">
                         <div id="file-preview2" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageRight'"; ?> alt="Uploaded Image" class="preview-image" onerror="hide('file-preview2')"></div>
@@ -164,7 +183,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="paw pew">
                     <p class='pq3'>Left image:</p>
                     <div class="prodImage">
                         <div id="file-preview3" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageLeft'"; ?> onerror="hide('file-preview3')" alt="Uploaded Image" class="preview-image"></div>
@@ -173,7 +192,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="paw pew">
                     <p class='pq3'>Back image:</p>
                     <div class="prodImage">
                         <div id="file-preview4" class="file-preview"><img <?php echo "src='data:$imageType;base64,$imageBack'"; ?> onerror="hide('file-preview4')" alt="Uploaded Image" class="preview-image"></div>
@@ -257,21 +276,21 @@
         
 
         function displayImage(input, num) {
-            // const fileInput = document.getElementById(`file-input${num}`);
-            // const filePreview = document.getElementById(`file-preview${num}`);
+            const fileInput = document.getElementById(`file-input${num}`);
+            const filePreview = document.getElementById(`file-preview${num}`);
 
-            // if (fileInput.files && fileInput.files.length > 0) {
-            //     const file = fileInput.files[0];
-            //     const reader = new FileReader();
+            if (fileInput.files && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
 
-            //     reader.onload = function(e) {
-            //         filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
-            //     }
+                reader.onload = function(e) {
+                    filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
+                }
 
-            //     reader.readAsDataURL(file);
-            // } else {
-            //     filePreview.innerHTML = "";
-            // }
+                reader.readAsDataURL(file);
+            } else {
+                filePreview.innerHTML = "";
+            }
         }
     </script>
     <?php 
@@ -298,7 +317,7 @@
                 echo "
                     <script>
                         let warn = document.getElementById('warning');
-                        warn.innerHTML = 'Product editing failed. Please contact the executer';
+                        warn.innerHTML = 'Product editing failed. Please fill out all the fields or contact the executer';
                         setTimeout(()=> {
                             warn.innerHTML = '';
                         }, 7000)

@@ -112,14 +112,14 @@
             padding-left: 0.6rem;
             width: 100%;
         }
-        .cardContents > div{
+        .cardContents > div {
             margin-bottom: 7.2px;
         }
     </style>
     <div class="main">
         <h2 align="center" class="head1">Product with every details available</h2>
         <?php 
-            $quer = "SELECT products.product_id, products.product_name, products.product_price, products.product_image, products.product_gender, product_images.img_front, product_images.img_back, product_images.img_right, product_images.img_left, product_images.product_desc FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
+            $quer = "SELECT * FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
             $res = mysqli_query($conn, $quer);
             if(mysqli_num_rows($res)>0) {
                 $i=0;
@@ -157,7 +157,7 @@
         ?>
 
 
-        <h2 style="margin-top: 3rem;" align="center" class="head1">All products in the database</h2>
+        <h2 style="margin-top: 3rem;" align="center" class="head1">Delete Product</h2>
         <?php 
             $quer = "SELECT * FROM products ORDER BY product_date DESC";
             $res = mysqli_query($conn, $quer);

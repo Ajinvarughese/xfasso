@@ -185,23 +185,23 @@
         })
         
 
-        // function displayImage(input, num) {
-        //     const fileInput = document.getElementById(`file-input${num}`);
-        //     const filePreview = document.getElementById(`file-preview${num}`);
+        function displayImage(input, num) {
+            const fileInput = document.getElementById(`file-input${num}`);
+            const filePreview = document.getElementById(`file-preview${num}`);
 
-        //     if (fileInput.files && fileInput.files.length > 0) {
-        //         const file = fileInput.files[0];
-        //         const reader = new FileReader();
+            if (fileInput.files && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
 
-        //         reader.onload = function(e) {
-        //             filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
-        //         }
+                reader.onload = function(e) {
+                    filePreview.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="preview-image">`;
+                }
 
-        //         reader.readAsDataURL(file);
-        //     } else {
-        //         filePreview.innerHTML = "";
-        //     }
-        // }
+                reader.readAsDataURL(file);
+            } else {
+                filePreview.innerHTML = "";
+            }
+        }
     </script>
     <?php 
 
