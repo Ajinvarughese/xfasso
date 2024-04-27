@@ -201,7 +201,7 @@
                     </div>
                 </div>
 
-                <div class="pw"> 
+                <div class="pw paw"> 
                     <div onclick="reset()" class="btn sec">Reset</div>
                     <div onclick="submit()" class="btn pri">Submit</div>
                 </div>

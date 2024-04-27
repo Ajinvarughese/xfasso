@@ -79,7 +79,7 @@
                     </select>
                 </div>
 
-                <div class="pew">
+                <div class="pew paw">
                     <p class='pq3'>Main image:</p>
                     <div class="prodImage">
                         <div id="file-preview1" class="file-preview">Image required</div>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="pew paw">
                     <p class='pq3'>Right image:</p>
                     <div class="prodImage">
                         <div id="file-preview2" class="file-preview">Image required</div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="pew paw">
                     <p class='pq3'>Left image:</p>
                     <div class="prodImage">
                         <div id="file-preview3" class="file-preview">Image required</div>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                <div class="pew">
+                <div class="pew paw">
                     <p class='pq3'>Back image:</p>
                     <div class="prodImage">
                         <div id="file-preview4" class="file-preview">Image required</div>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="pw"> 
+                <div class="pw paw"> 
                     <div onclick="reset()" class="btn sec">Reset</div>
                     <div onclick="submit()" class="btn pri">Submit</div>
                 </div>

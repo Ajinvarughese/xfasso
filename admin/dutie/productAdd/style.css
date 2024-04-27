@@ -133,6 +133,9 @@ input:focus, textarea:focus {
 }
 
 
+.paw {
+    max-width: 830px;
+}
 
 .imgDiv1 {
     background: #c2c2c2c2;
@@ -142,7 +145,7 @@ input:focus, textarea:focus {
     justify-content: center;
 }
 .imgDiv2 {
-    background: #21eb21e5;
+    background: #43ef43;
     width: 100%;
     display: flex;
     align-items: center;

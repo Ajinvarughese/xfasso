@@ -1,0 +1,71 @@
+
+.cardContents span {
+    opacity: 0.7;
+    font-weight: 500;
+    font-size: 14px;
+    margin-right: 4px;
+}
+.a{
+    display: flex;
+    border-radius: 4px;
+    gap: 1rem;
+    background: #fff;
+    width: 89%;
+    max-width: 830px;
+    margin: 0 auto;
+    padding: 0.7rem;
+    transition: 0.2s ease;  
+    max-height: 180px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+}
+.form {
+    padding: 0;
+    margin-top: 1.7rem;
+    cursor: pointer;
+}
+.form label {
+    cursor: pointer;
+}
+.form hr {
+    margin: 12px 0;
+}
+.form input {
+    display: none;
+}
+.a:hover {
+    transform: scale(1.02);
+}
+.cardImg {
+    max-width: 179px;
+    max-height: 179px;
+    padding: 4px;
+}
+.cardImg img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.cardContents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 2rem;
+    width: 100%;
+}
+.cardContents > div {
+    margin-bottom: 7.2px;
+}
+
+
+
+.button:hover {
+    transform: scale(1.03);
+    border: 1px solid #b8b4b4;
+    background: #f9f6f6;
+}
+
+input[type=submit]:hover {
+    transform: scale(1.03);
+    border: 1px solid #101810;
+    background: #101810;
+}

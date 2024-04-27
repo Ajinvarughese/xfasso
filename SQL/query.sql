@@ -17,7 +17,8 @@ CREATE TABLE xfasso.users
 -- PRODUCTS TABLE
 CREATE TABLE xfasso.products
 (
-    product_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    product_id INT PRIMARY KEY NOT NULL,
     product_name VARCHAR(75),
     product_price INT,
     product_image LONGBLOB,
@@ -45,6 +46,8 @@ CREATE TABLE xfasso.cart_user
     SI_NO INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id INT,
     cart_product INT,
+    quantity INT,
+    size VARCHAR(4),
     FOREIGN KEY (user_id) REFERENCES xfasso.users(user_id),
     FOREIGN KEY (cart_product) REFERENCES xfasso.products(product_id)
 );
@@ -53,7 +56,8 @@ CREATE TABLE xfasso.cart_user
 
 CREATE TABLE xfasso.product_images
 (
-    product_id INT,
+    id INT UNIQUE NOT NULL AUTO_INCREMENT,
+    product_id INT PRIMARY KEY,
     img_front LONGBLOB,
     img_back LONGBLOB,
     img_right LONGBLOB,

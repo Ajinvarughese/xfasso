@@ -5,6 +5,7 @@
     if(empty($_SESSION['XQCLANG'])){
         header('Location: ../../admin-login/');
     }
+
 ?>
 
 
@@ -53,7 +54,67 @@
             </div>
         </div>
     </div>
+
+    <div id="success" class="awq2s">
+        <div class="success" >
+            <div class="ais">
+                <div class="imgasd">
+                    <img src="../../images/tick.png">
+                </div>
+            </div>
+            <div class="contentTick">
+                <p>product deleted succesfully.</p>
+            </div>
+        </div>
+    </div>
+
     <style> 
+        .awq2s {
+            display: none;
+        }
+        .success {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            max-width: 289px;
+            height: 229px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+        }
+        .ais {
+            background: #43ef43;
+            height: 134.5px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+        }
+        .imgasd {
+            width: 88px;
+            height: 88px;
+        }
+        .imgasd img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .contentTick {
+            background: #fff;
+            height: 94.5px;
+            width: 100%;
+        }
+        .contentTick p {
+            margin-top: 2rem;
+            font-size: 18px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+
         .head1 {
             border-bottom: 1px solid;
             width: fit-content;
@@ -171,8 +232,8 @@
                     $imageData = base64_encode($row['product_image']);
                     $imageType = "image/jpeg";
                     echo "
-                        <form class='form' action='./edit.php' method='post' enctype='multipart/form-data'>
-                            <input type='password' name='product_id{$i}' value ='{$id}'>
+                        <form class='form' action='./delete/delete.php' method='post' enctype='multipart/form-data'>
+                            <input type='password' name='product_id{$i}' value ={$id}>
                             <input type='submit' name='submit{$i}' id='submit{$i}'>
                             <label for='submit{$i}'>
                                 <div class='a'>
@@ -199,4 +260,25 @@
     
 </body>
 <script src="../main.js"></script>
+<script>
+    window.addEventListener('click', ()=> {
+        let success = document.getElementById('success');
+        success.style.display = 'none';
+    })
+</script>
+<?php 
+    if(isset($_SESSION['dltSuccess'])) {
+
+        $_SESSION['dltSuccess'] = NULL;
+        echo "
+        <script>
+            let success =document.getElementById('success');
+            success.style.display = 'block';
+            setTimeout(()=> {
+                success.style.display = 'none';
+            },3000)
+        </script>
+        ";
+    }
+?>
 </html>

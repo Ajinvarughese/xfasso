@@ -2,7 +2,7 @@
     $server = 'localhost';
     $user = 'root';
     $password = '';
-    $db = 'productsdb';
+    $db = 'xfasso';
     $conn = '';
 
     try {

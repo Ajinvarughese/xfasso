@@ -2,15 +2,15 @@
     require('../connections/productdb.php');
     require('../components/ratings/ratingAPI.php');
     
-    $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1";
+    $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY avg_star DESC";
     $productQueryResult = mysqli_query($conn, $productSqlQuery);
 
     if(isset($_COOKIE['lowToHigh'])) {
-        $productSqlQuery = "SELECT * FROM products ORDER BY product_price ASC WHERE stock_status = 1";
+        $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY product_price ASC";
         $queryLow = "ORDER BY product_price ASC";
         $productQueryResult = mysqli_query($conn, $productSqlQuery);
     }elseif(isset($_COOKIE['highToLow'])) {
-        $productSqlQuery = "SELECT * FROM products ORDER BY product_price DESC WHERE stock_status = 1";
+        $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY product_price DESC";
         $productQueryResult = mysqli_query($conn, $productSqlQuery);
     }
 

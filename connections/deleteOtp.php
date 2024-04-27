@@ -7,7 +7,6 @@
     $result = mysqli_query($conn, $countQuery);
         
     if(!$result) {
-        echo "<br>Nothing to delete Now!";
         header("Location: ../shop/shop.php");
     }else {
         header("Location: ../shop/shop.php");
