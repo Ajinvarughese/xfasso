@@ -119,7 +119,7 @@
                 <div class="more">
 
                     <?php 
-                        $moreSqlQuery = "SELECT * FROM products ORDER BY RAND()";
+                        $moreSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY RAND()";
                         $moreSqlResult = mysqli_query($conn, $moreSqlQuery);
 
                         if(mysqli_num_rows($moreSqlResult)>0) {

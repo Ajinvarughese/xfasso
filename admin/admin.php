@@ -39,7 +39,8 @@ function getMyWork($workID) {
         case 'comments':
             $title = "
                 <h1 id='workTitle' style='text-align: center;'>Let's check some spam messages!</h1>
-                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to delete the spam messages.</p>
+                <p style='opacity: 0.6; font-weight: 600; text-align:center; margin-top: 10px; font-size: 17px;'>Welcome Batman!</p>
+                <p style='opacity: 0.8; text-align:center; margin-top: 6px; font-size: 17px;'>Your job is to delete the spam messages.</p>
             ";
             break;
         case 'productAdd':

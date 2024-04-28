@@ -121,11 +121,18 @@
                     border: 1px solid #c2c2c2c2;
                     caret-color: transparent;
                 }
+                .waksn {
+                    display: none;
+                    margin-top: 2px;
+                    font-size: 12px; 
+                    color: red;
+                }
             </style>
             <form action="./send/send.php" method="post" enctype="multipart/form-data">
                 <div class="pew">
                     <p class="pla">ID: </p>
                     <input id="prodID" class="in i" name="prod_id" type="text" placeholder="Product ID">
+                    <p class="waksn" id="warning1">id cannot be empty</p>
                     <script>
                         let prodID = document.getElementById("prodID");
                         prodID.value = `<?php echo $prodID;?>`;
@@ -136,16 +143,19 @@
                 </div>
                 <div class="pew">
                     <p class="pla">Name: </p>
-                    <input class="in i" name="prod_name" type="text" placeholder="Name" value="<?php echo $productName;?>">
+                    <input id="prod_name" class="in i" name="prod_name" type="text" placeholder="Name" value="<?php echo $productName;?>">
+                    <p class="waksn" id="warning2">enter the name of the product</p>
                 </div>
                 <div class="pew">
                     <p class="pla">Price: </p>
-                    <input class="in i" name="prod_price" type="text" placeholder="Price" value="<?php echo $price?>">
+                    <input id="prod_price" class="in i" name="prod_price" type="text" placeholder="Price" value="<?php echo $price?>">
+                    <p class="waksn" id="warning3">enter the price of the product</p>
                 </div>
                 
                 <div class="pew">
                     <p class="pla">Description: </p>
                     <textarea style="resize: none;" class="in" name="description" id="txt" rows="6" placeholder="Description..."><?php echo $desc?></textarea>
+                    <p class="waksn" id="warning4">product should have a description</p>
                 </div>
                 <div class="pew">
                     <select name="gender" id="gender">
@@ -260,12 +270,44 @@
         }
 
         function submit() {
-            let warningSubmit = document.getElementById('warningSubmit');
-            if(warningSubmit.style.display == 'block'){
-                warningSubmit.style.display = 'none';
+            let idField = document.getElementById('prodID').value;
+            let idWarn =document.getElementById('warning1');
+
+            let nameField =document.getElementById('prod_name').value;
+            let nameWarn =document.getElementById('warning2');
+
+            let price = document.getElementById('prod_price').value;
+            let priceWarn = document.getElementById('warning3');
+            
+            let desc =document.getElementById('txt').value;
+            let descWarn =document.getElementById('warning4');
+
+            
+            if(idField == "" || nameField == "" || price == "" || desc == "") {
+                if(idField == "") {
+                    idWarn.style.display='block';
+                }
+
+                if(nameField == "") {
+                    nameWarn.style.display = 'block';
+                }
+
+                if(price == "") {
+                    priceWarn.style.display = 'block'; 
+                }
+
+                if(desc == "") {
+                    descWarn.style.display = 'block';
+                }
+                window.scrollTo({top: 0, behavior: 'smooth'});
             }else {
-                warningSubmit.style.display = 'block';
-                window.location.href = '#main';
+                let warningSubmit = document.getElementById('warningSubmit');
+                if(warningSubmit.style.display == 'block'){
+                    warningSubmit.style.display = 'none';
+                }else {
+                    warningSubmit.style.display = 'block';
+                    window.location.href = '#main';
+                }
             }
         }
 

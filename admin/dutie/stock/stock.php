@@ -25,16 +25,17 @@
             $updateProdID = $prod[$i];
             if($_POST["prod$i"] == 1) { 
                 $updateQuery = "UPDATE products SET stock_status = 1 WHERE product_id = $updateProdID";
-            }else {
-                $updateQuery = "UPDATE products SET stock_status = 0 WHERE product_id = $updateProdID";
-            }
-            try {
                 mysqli_query($conn, $updateQuery);
-                header('Location: ./stock.php');
-            }catch(mysqli_sql_exception) {
-                echo "Change was unsuccessful";
+            }else {
+                $pro = $updateProdID;
+                $updateQuery = "UPDATE products SET stock_status = 0 WHERE product_id = $updateProdID";
+                mysqli_query($conn, $updateQuery);
+                $dltFrmCart = "DELETE FROM cart_user WHERE cart_product = $pro";
+                mysqli_query($conn, $dltFrmCart);
             }
+            
         }
+        header("Location: ./stock.php");
     }
 ?>
 

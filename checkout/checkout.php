@@ -321,7 +321,7 @@
                                 $_SESSION['sProduct'] = true;
                                 $_SESSION['mProduct'] = false;
                             
-                                $detailsQ = "SELECT * FROM products WHERE product_id='$checkoutProduct'";
+                                $detailsQ = "SELECT * FROM products WHERE product_id='$checkoutProduct' AND stock_status = 1";
                                 $detailsR = mysqli_query($conn, $detailsQ);
                         
                                 if(mysqli_num_rows($detailsR)>0) {
@@ -373,10 +373,10 @@
                                 $cartUQ = "SELECT * FROM cart_user WHERE user_id='$user_id'";
                                 $cartUR = mysqli_query($conn, $cartUQ);
 
-                               
+                                $i = 0;
                                 while($resCart = mysqli_fetch_assoc($cartUR)) {
                                     $pIdCart = $resCart['cart_product'];
-                                    $getPQ = "SELECT * FROM products WHERE product_id='$pIdCart'";
+                                    $getPQ = "SELECT * FROM products WHERE product_id='$pIdCart' AND stock_status = 1";
                                     $getPR = mysqli_query($conn, $getPQ);
 
                                     if(mysqli_num_rows($getPR)>0) {
@@ -419,9 +419,18 @@
                                         ";
                                         $totalPrice += $priceByQua;
                                         $_SESSION['price'] = $totalPrice;
+                                        $i++;
                                     }
                                 }
                                 $_SESSION['setCart'] = false;
+                                if($i == 0) {
+                                    echo 
+                                    "
+                                        <script>
+                                            window.location.href ='../';
+                                        </script>
+                                    ";
+                                }
                             }
 
                         }else {

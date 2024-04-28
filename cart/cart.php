@@ -92,73 +92,75 @@
                         $resNew = mysqli_fetch_assoc($newRun);
 
                         $prodId = $rowCart['cart_product'];
-                        $getDetQ = "SELECT * FROM products WHERE product_id = '$prodId'";
+                        $getDetQ = "SELECT * FROM products WHERE product_id = '$prodId' AND stock_status = 1";
                         $resGetD = mysqli_query($conn, $getDetQ);
                         
-                        $rowGetD = mysqli_fetch_assoc($resGetD);
+                        if(mysqli_num_rows($resGetD)>0) {
+                            $rowGetD = mysqli_fetch_assoc($resGetD);
 
-                        $SI_NO = $rowCart['SI_NO'];
-                        // encryption of product ID
-                        $productId = "productIdOfXfassoYes $prodId";
-                        //encrypting
-                        $ciphering = "AES-128-CTR";
-                        $iv_length = openssl_cipher_iv_length($ciphering);
-                        $options = 0;
-                        $encryption_iv = '1234567891021957';
-                        $encryption_key = "xfassoKey";
-                        $encryptedProduct = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
+                            $SI_NO = $rowCart['SI_NO'];
+                            // encryption of product ID
+                            $productId = "productIdOfXfassoYes $prodId";
+                            //encrypting
+                            $ciphering = "AES-128-CTR";
+                            $iv_length = openssl_cipher_iv_length($ciphering);
+                            $options = 0;
+                            $encryption_iv = '1234567891021957';
+                            $encryption_key = "xfassoKey";
+                            $encryptedProduct = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
 
-                        $encryptedSI_NO = openssl_encrypt($SI_NO, $ciphering, $encryption_key, $options, $encryption_iv);
+                            $encryptedSI_NO = openssl_encrypt($SI_NO, $ciphering, $encryption_key, $options, $encryption_iv);
 
-                        $cartPrice = $rowGetD['product_price'] * $rowCart['quantity'];
+                            $cartPrice = $rowGetD['product_price'] * $rowCart['quantity'];
 
-                        $imageCart = base64_encode($rowGetD['product_image']);
-                        $imageTypeCart = "image/jpeg";
+                            $imageCart = base64_encode($rowGetD['product_image']);
+                            $imageTypeCart = "image/jpeg";
 
-                        echo "
-                            <div class='iaj'>
-                                <a href='../details/details.php?productId={$encryptedProduct}'>
-                                    <div class='productImg' id='{$encryptedProduct}'>
-                                        <img src='data:$imageTypeCart;base64,$imageCart' alt='product image'>
-                                    </div>
-                                </a>
-                                <div class='desc'>
-                                    <div class='title-dlt'>
-                                        <a style='text-decoration: none;' href='../details/details.php?productId={$encryptedProduct}'>
-                                            <h1>{$rowGetD['product_name']}</h1>
-                                        </a>
-                                        <div class='dlt' onclick='dlt{$numberOfItem}()'>
-                                            <i class='fa fa-trash-o fa-lg' aria-hidden='true'></i>
+                            echo "
+                                <div class='iaj'>
+                                    <a href='../details/details.php?productId={$encryptedProduct}'>
+                                        <div class='productImg' id='{$encryptedProduct}'>
+                                            <img src='data:$imageTypeCart;base64,$imageCart' alt='product image'>
+                                        </div>
+                                    </a>
+                                    <div class='desc'>
+                                        <div class='title-dlt'>
+                                            <a style='text-decoration: none;' href='../details/details.php?productId={$encryptedProduct}'>
+                                                <h1>{$rowGetD['product_name']}</h1>
+                                            </a>
+                                            <div class='dlt' onclick='dlt{$numberOfItem}()'>
+                                                <i class='fa fa-trash-o fa-lg' aria-hidden='true'></i>
+                                            </div>
+                                        </div>
+                                        <div class='contents'>
+                                            <div class='size'>
+                                                size: {$rowCart['size']}
+                                            </div>
+                                            <div class='quantity'>
+                                                Quantity: {$rowCart['quantity']}
+                                            </div>
+                                            <div class='price'>
+                                                ₹{$cartPrice}
+                                            </div>
+                                            <div class='delType'>
+                                                Delivery Type: <span>Free Delivery</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class='contents'>
-                                        <div class='size'>
-                                            size: {$rowCart['size']}
-                                        </div>
-                                        <div class='quantity'>
-                                            Quantity: {$rowCart['quantity']}
-                                        </div>
-                                        <div class='price'>
-                                            ₹{$cartPrice}
-                                        </div>
-                                        <div class='delType'>
-                                            Delivery Type: <span>Free Delivery</span>
-                                        </div>
-                                    </div>
+                                    <script>
+                        
+                                        function dlt{$numberOfItem}(){
+                                            var cookieExpires = new Date(Date.now() + (24 * 60 * 60 * 1000)).toUTCString();
+                                            document.cookie = 'product={$encryptedSI_NO}; expires='+ cookieExpires +'; path=/';
+                                            window.location.reload();
+                                        }
+                                    </script>
                                 </div>
-                                <script>
-                    
-                                    function dlt{$numberOfItem}(){
-                                        var cookieExpires = new Date(Date.now() + (24 * 60 * 60 * 1000)).toUTCString();
-                                        document.cookie = 'product={$encryptedSI_NO}; expires='+ cookieExpires +'; path=/';
-                                        window.location.reload();
-                                    }
-                                </script>
-                            </div>
-                        ";
-                        $numberOfItem += 1;
+                            ";
+                            $numberOfItem += 1;
 
-                        $total += $rowGetD['product_price'];
+                            $total += $rowGetD['product_price'];
+                        }
                     }
                 }else {
                     echo "
@@ -190,17 +192,20 @@
                                 if(mysqli_num_rows($cartT) > 0) {
                                     while($rowT = mysqli_fetch_assoc($cartT)) {
                                         $prodT_id = $rowT['cart_product'];
-                                        $getDetQT = "SELECT product_price FROM products WHERE product_id='$prodT_id'";
+                                        $getDetQT = "SELECT product_price FROM products WHERE product_id='$prodT_id' AND stock_status = 1";
                                         $resGetDT = mysqli_query($conn, $getDetQT);  
-                                        $rowGetDT = mysqli_fetch_assoc($resGetDT);
-                                        $eachPrice = $rowGetDT['product_price']* $rowT['quantity'];
-                                        echo 
-                                        "   <div class='_ip'>
-                                                ₹{$eachPrice} ({$rowT['quantity']})
-                                            </div>
-                                        ";
-                                        $total -= $rowGetDT['product_price'];
-                                        $total +=$eachPrice;
+
+                                        if(mysqli_num_rows($resGetDT)>0) {
+                                            $rowGetDT = mysqli_fetch_assoc($resGetDT);
+                                            $eachPrice = $rowGetDT['product_price']* $rowT['quantity'];
+                                            echo 
+                                            "   <div class='_ip'>
+                                                    ₹{$eachPrice} ({$rowT['quantity']})
+                                                </div>
+                                            ";
+                                            $total -= $rowGetDT['product_price'];
+                                            $total +=$eachPrice;
+                                        }
                                     }
                                 }
                             ?>
@@ -292,7 +297,7 @@
                 <div class="more">
 
                     <?php 
-                        $moreSqlQuery = "SELECT * FROM products ORDER BY RAND()";
+                        $moreSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY RAND()";
                         $moreSqlResult = mysqli_query($conn, $moreSqlQuery);
 
                         if(mysqli_num_rows($moreSqlResult)>0) {
