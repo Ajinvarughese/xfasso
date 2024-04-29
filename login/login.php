@@ -44,7 +44,7 @@
                         <p id="noEmail" style="color: red; font-size: 13px;"></p>
                     </div>
                     <div class="email">
-                        <input type="password" style="font-weight: 900;" name='password' id="password" placeholder="Enter your password" value="">
+                        <input type="password" style="font-weight: 900;" name='password' id="password" placeholder="Enter password" value="">
                         
                         <input type="checkbox" id="poqs" style="display: none;">
                         <label for="poqs" id="showPass">
@@ -80,7 +80,24 @@
                         <a href="../signup/signup.html">Create new account? Sign up</a>
                     </div>
                 </form>
-
+                <style>
+                    #awf {
+                        max-width: 192px;
+                        text-align: center;
+                        margin-bottom: 8px;
+                    }
+                    #awf img {
+                        max-width: 100%;
+                        max-height: 100%;
+                        display: block;
+                    }
+                    .egg {
+                        font-size: 12px;
+                        opacity: 0.6;
+                        margin-top: 10px;
+                    }
+                </style>
+                <div id="awf"></div>
                 <?php 
                     if(isset($_POST['logIn'])) {
                         $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -111,8 +128,9 @@
                                         var passField =document.getElementById('password');
                                         var noPassWarning =document.getElementById('noPass');
 
-                                        noPassWarning.innerHTML = 'Wrong password try again';
+                                        noPassWarning.innerHTML = 'username or password must be wrong';
                                         passField.style.border = '1px solid red';
+                                        emailField.style.border = '1px solid red';
                                     </script>
                                 ";
                             }
@@ -122,7 +140,7 @@
                                     var emailField = document.getElementById('email');
                                     var noEmailWarning = document.getElementById('noEmail');
 
-                                    noEmailWarning.innerHTML = 'User doesn\'t exists please sign up';
+                                    noEmailWarning.innerHTML = 'user doesn\'t exists please sign up';
                                     emailField.style.border = '1px solid red';
                                 </script>
                             ";
@@ -141,6 +159,8 @@
                     const parts = value.split(`; ${name}=`);
                     if (parts.length === 2) return parts.pop().split(';').shift();
                 }
+
+                let egg = 0;
                 function validateForm() {
                     var emailField = document.getElementById('email');
                     var noEmailWarning = document.getElementById('noEmail');
@@ -156,13 +176,56 @@
                         emailField.style.border = '1px solid red';
                         return false;
                     }
+
                     if (pass === '') {
                         noPassWarning.innerHTML = 'Please enter your password';
                         passField.style.border = '1px solid red';
                         return false;
                     }
-                    
 
+                    if(pass === 'password') {
+                        egg++;
+                        passField.value = "";
+                        noPassWarning.innerHTML = 'password is wrong';
+                        passField.style.border = '1px solid red';
+
+                        return false;
+                    }
+                    if(pass === 'wrong') {
+                        if(egg == 1) {
+                            egg++;
+                            passField.value = "";
+                            noPassWarning.innerHTML = 'wrong password, try again';
+                            passField.style.border = '1px solid red';
+
+                            return false;
+                        }
+                    }
+                    if(pass === 'try again') {
+                        if(egg == 2) {
+                            egg++;
+                            passField.value = "";
+                            noPassWarning.innerHTML = 'try again later';
+                            passField.style.border = '1px solid red';
+
+                            return false;
+                        }
+                    }
+                    if(pass === 'try again later') {
+                        if(egg == 3) {
+                            egg = 0;
+                            passField.value = "";
+                            let awf =document.getElementById('awf');
+                            noPassWarning.innerHTML = "";
+                            awf.innerHTML = `<img src='../resources/404.jpg'> <p class='egg'>you found a hidden feature.</p>`;
+                            passField.style.border = '1px solid #0f203076';
+
+                            return false;
+                        }
+                    }
+
+                    
+                    
                     noNameWarning.innerHTML = '';
                     noEmailWarning.innerHTML = '';
 
@@ -184,6 +247,9 @@
                     noPassWarning.innerHTML = '';
                     passField.style.border = '1px solid #0f203076'
                 });
+
+
+
             </script>
         </div>
     </div>

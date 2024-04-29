@@ -90,7 +90,10 @@
         if(isset($_POST['submitPass'])) {
             $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
             $conPass = filter_var($_POST['conPass'], FILTER_SANITIZE_SPECIAL_CHARS);
-    
+
+            $password = mysqli_real_escape_string($conn, $password);
+            $conPass = mysqli_real_escape_string($conn, $conPass);
+
             if(strlen($password)<=5) {
                 echo "
                 <script>
@@ -105,7 +108,24 @@
                         otpField.style.border ='1px solid #0f203076';
                     })
                 </script>";
-            }else {
+            }else if($password == 'password' && $conPass == 'password'){
+                
+                echo "
+                    <script>
+                        var conPassField =document.getElementById('conPass');
+                        var noConPassWarning =document.getElementById('noConPass');
+                
+                        noConPassWarning.innerHTML = 'the password cannot be \"passoword\".';
+                        conPassField.style.border ='1.4px solid red';
+                        
+                        conPassField.addEventListener('input', ()=> {
+                            noConPassWarning.innerHTML = '';
+                            conPassField.style.border ='1px solid #0f203076';
+                        })
+                    </script>
+                ";
+            }
+            else {
                 if($password == $conPass) {
                     if(isset($_SESSION['email']) && isset($_SESSION['username'])) {
                         $email = $_SESSION['email'];
@@ -157,6 +177,7 @@
                 }
             }
         }
+
     ?>
 
 

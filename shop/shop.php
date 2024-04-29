@@ -185,7 +185,6 @@
                         }else {
                             $numberOfProducts = mysqli_num_rows($productQueryResult);
                         }
-
                         echo "<div class='product-count secondary'>{$numberOfProducts} products</div>";
                     ?>
                 </div>
@@ -482,6 +481,37 @@
 
             </div>
         </div>
+        <style>
+            .iaej {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 65px;
+            }
+            .iaej img {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+            }
+            .iaej p {
+                opacity: 0.6;
+                margin-top: 8px;
+            }
+        </style>
+        <?php 
+            if($numberOfProducts <= 0) {
+                echo 
+                "
+                    <script>
+                        let products = document.getElementById('products');
+                        products.style = 'display: flex; align-items: center; justify-content: center;';
+                        const img = `<div class='iaej'><img src='../resources/noProduct.png'> <p>There is nothing to show here...</p></div>`;
+                        products.innerHTML = img;
+                    </script>
+                ";
+            }
+        ?>
         <br>
         <br>
         <hr>

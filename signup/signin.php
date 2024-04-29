@@ -62,6 +62,9 @@
             $username = filter_var($_POST['username'], FILTER_SANITIZE_SPECIAL_CHARS);
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
+            $username = mysqli_real_escape_string($conn, $username);
+            $email = mysqli_real_escape_string($conn, $email);
+
             $queryCheckEmail = "SELECT * FROM users WHERE email = '$email'";
             $result = mysqli_query($conn, $queryCheckEmail);
 
@@ -79,14 +82,15 @@
                     
                     $digits = 6;
                     $otpCode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-
+                    $hashedOTP = password_hash("$otpCode", PASSWORD_DEFAULT);
+                    
                     $deleteTable = "DELETE FROM otp WHERE email ='$email'";
 
                     
                     if(mysqli_query($conn, $deleteTable)) {
-                        $sqlOtpQuery = "INSERT INTO otp (email, otp) VALUES('$email', '$otpCode');";
+                        $sqlOtpQuery = "INSERT INTO otp (email, otp) VALUES('$email', '$hashedOTP');";
                     }else {
-                        $sqlOtpQuery = "INSERT INTO otp (email, otp) VALUES('$email', '$otpCode');";
+                        $sqlOtpQuery = "INSERT INTO otp (email, otp) VALUES('$email', '$hashedOTP');";
                     }
                     $queryOtpRun = mysqli_query($conn, $sqlOtpQuery);
 
@@ -131,11 +135,13 @@
                     $mail->send();
                             
                     $_POST['email'] = $email;
-                    echo "
-                    ";
                 }
                 catch(Exception) {
-                    echo "Try connecting to internet please!";
+                    echo "
+                        <script>
+                            window.location.href = '../errors/errors.php?errorID=1015';
+                        </script>
+                    ";
                 }
             }
         }        
@@ -147,7 +153,7 @@
 
         if(isset($_POST['conOtp'])) {
             $otpPass = filter_var($_POST['otpPass'], FILTER_VALIDATE_INT);
-            if($email == $otp['email'] && $otpPass == $otp['otp']){
+            if($email == $otp['email'] && password_verify($otpPass, $otp['otp'])){
                 header('Location: ./createPass.php');
             }else {
                 echo"

@@ -69,9 +69,15 @@
 </head>
 <body>
     <div class="nav">
-        <a href='../profile.php' class="back">
+        <div style="cursor: pointer;" id="back" class="back">
             <img src="../../resources/left-arrow.png" width="32px">
-        </a>
+        </div>
+        <script>
+            let back =document.getElementById('back');
+            back.addEventListener('click', ()=> {
+                window.history.back();
+            })
+        </script>
     </div>
     <div class="main">
         <div class="userDP" id="userDP">

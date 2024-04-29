@@ -157,13 +157,18 @@
 </head>
 <body>
     <div class="nav">
-        <a href='../profile.php' class="back">
+        <div style="cursor: pointer;" id="back" class="back">
             <img src="../../resources/left-arrow.png" width="32px">
-        </a>
+        </div>
+        <script>
+            let back =document.getElementById('back');
+            back.addEventListener('click', ()=> {
+                window.history.back();
+            })
+        </script>
         <a style="color: white;" href="./edit-profile.php">
             <img src="../../resources/user.png" alt="profile">
         </a>
-        
     </div>
     <div class="main">
         <h1 class='qo3ob'>Create address</h1>
