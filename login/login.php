@@ -201,11 +201,11 @@
                             return false;
                         }
                     }
-                    if(pass === 'try again') {
+                    if(pass === 'again') {
                         if(egg == 2) {
                             egg++;
                             passField.value = "";
-                            noPassWarning.innerHTML = 'try again later';
+                            noPassWarning.innerHTML = 'again later';
                             passField.style.border = '1px solid red';
 
                             return false;
