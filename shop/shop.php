@@ -279,9 +279,10 @@
 
             })
 
-            var cookieExpires = new Date(Date.now() + 100 * 130).toUTCString();
 
             apply.addEventListener('click', ()=> {
+                
+                var cookieExpires = new Date(Date.now() + (24 * 60 * 60 * 1000)).toUTCString();
                 
                 filterMenu.style.left = "-110%";
                 filter.checked = false;
@@ -344,12 +345,22 @@
                 <?php
 
                     if(isset($_COOKIE['men-checked'])) {
-                        
+                        $time = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
                         if(isset($_COOKIE['highToLow'])) {
+                            echo "
+                                <script>
+                                    document.cookie = `highToLow=; expires={$time}; path=/`;
+                                </script>
+                            ";
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'men' ORDER BY product_price DESC";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
                         elseif(isset($_COOKIE['lowToHigh'])) {
+                            echo "
+                                <script>
+                                    document.cookie = `lowToHigh=; expires={$time}; path=/`;
+                                </script>
+                            ";
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'men' ORDER BY product_price ASC";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
@@ -357,13 +368,29 @@
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'men'";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
+                        echo "
+                            <script>
+                                document.cookie = `men-checked=; expires={$time}; path=/`;
+                            </script>
+                        ";
                     }
                     else if(isset($_COOKIE['women-checked'])) {
+                        $time = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
                         if(isset($_COOKIE['highToLow'])) {
+                            echo "
+                                <script>
+                                    document.cookie = `highToLow=; expires={$time}; path=/`;
+                                </script>
+                            ";
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'women' ORDER BY product_price DESC";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
                         elseif(isset($_COOKIE['lowToHigh'])) {
+                            echo "
+                                <script>
+                                    document.cookie = `lowToHigh=; expires={$time}; path=/`;
+                                </script>
+                            ";
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'women' ORDER BY product_price ASC";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
@@ -371,6 +398,11 @@
                             $productSqlQuery = "SELECT * FROM products WHERE product_gender = 'women'";
                             $productQueryResult = mysqli_query($conn, $productSqlQuery);
                         }
+                        echo "
+                            <script>
+                                document.cookie = `women-checked=; expires={$time}; path=/`;
+                            </script>
+                        ";
                     }
 
                     

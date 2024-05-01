@@ -79,7 +79,7 @@
     </div>
     <script>
         document.getElementById('jkwnff').addEventListener('click', ()=> {
-            window.history.back();
+            window.location.href = '../cart/cart.php';
         })
     </script>
     <div class="_askjd">
@@ -329,6 +329,8 @@
 
                                     $priceProduct = $detailsRow['product_price'];
                                     $totalPrice = $priceProduct * $quantityBuyNow;
+
+                                    $_SESSION['price'] = $totalPrice;
 
                                     $imageBuyNow = base64_encode($detailsRow['product_image']);
                                     $imageTypeBuyNow = "image/jpeg";
