@@ -132,10 +132,11 @@
                                 $encryption_key = "xfassoKey";
                                 $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
                                 
-                                $time = time() + (365*24*60*60);
+
                                 echo "
                                     <script>
-                                        document.cookie = `XassureUser={$encrypted_id}; expires={$time}; path=/`;
+                                        var cookieExpires = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toUTCString();
+                                        document.cookie = `XassureUser={$encrypted_id}; expires=`+cookieExpires+`; path=/`;
                                         window.location.href ='../';
                                     </script>
                                  ";

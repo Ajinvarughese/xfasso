@@ -78,14 +78,7 @@
     <?php 
         require '../connections/productdb.php';
         
-        require '../phpmailer/src/Exception.php';
-        require '../phpmailer/src/PHPMailer.php';
-        require '../phpmailer/src/SMTP.php';
-        
-        
-        use PHPMailer\PHPMailer\PHPMailer;
-        use PHPMailer\PHPMailer\Exception;
-        use PHPMailer\PHPMailer\SMTP;
+
 
         if(isset($_POST['submitPass'])) {
             $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -139,7 +132,7 @@
                     $queryAlredy = "SELECT * FROM users WHERE email='$email'";
                     $result = mysqli_query($conn, $queryAlredy);
                     if(mysqli_num_rows($result)>0) {
-                        header('Location: ../index.html');
+                        header('Location: ../');
                     }else {
                         $result = mysqli_query($conn, $query);
                         
@@ -153,8 +146,13 @@
                         $encryption_key = "xfassoKey";
                         $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
 
-                        setcookie("XassureUser", $encrypted_id, time() + (365*24*60*60),"/");
-                        header('Location: ../index.html');
+                        echo "
+                            <script>
+                                var cookieExpires = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toUTCString();
+                                document.cookie = `XassureUser={$encrypted_id}; expires=`+cookieExpires+`; path=/`;
+                                window.location.href ='../';
+                            </script>
+                        ";
                         
                     }
                     

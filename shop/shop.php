@@ -472,7 +472,7 @@
 
 
                                                     <p class='secondary rate'>"; 
-                                                    // Star rating code pt2
+                                                    // Star rating code final pt
                                                     if($averageStarCount > 0) {
                                                         if(isInteger($averageStarCount)) {
                                                             for($k=0; $k<$averageStarCount; $k++) {
@@ -496,7 +496,7 @@
                                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                         }
                                                     }
-                                                    //star rate pt2 end
+                                                    //star rate final pt end
                                                     echo "</p>
                                                     <a href='../details/details.php?productId={$encrypted_id}'><button class='button-products'>view</button></a>
                                                 </div>

@@ -237,8 +237,10 @@ body {
 
 #product-frame{
     width: 98%;
+    margin: 0 auto;
+    display: block;
     min-height: 150vh;
-    padding: 3rem 0;
+    padding: 2rem 0;
 }
 
 
