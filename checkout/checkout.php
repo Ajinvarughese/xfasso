@@ -314,6 +314,7 @@
                                     }
                                 </script>
                             ";
+                            
                             if($_SESSION['newCheckoutProduct']) {
                                 $_SESSION['setCart'] = false;
 
@@ -568,7 +569,11 @@
                     if(isset($_POST['isOrder'])) {
                         $totalPrice = $_SESSION['price'];
                         if($totalPrice == 0.0) {
-                            echo "found the issue"; // solve this issue no $totalPrice foundd!
+                            echo "
+                                <script>
+                                    window.location.href = '../';
+                                </script>
+                            "; // solve this issue no $totalPrice foundd!
                         }
                         $_SESSION['isAdd'] = true;
                         echo "
