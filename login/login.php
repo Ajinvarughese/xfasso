@@ -233,11 +233,24 @@
                     }
                     if(pass === 'again later') {
                         if(egg == 3) {
+                            egg++;
+                            passField.value = "";
+                            noPassWarning.innerHTML = 'Seriously? password is wrong';
+                            passField.style.border = '1px solid red';
+
+                            let awf = document.getElementById('awf');
+                            awf.innerHTML = `<img src='../resources/404.jpg'>`;
+
+                            return false;
+                        }
+                    }
+                    if(pass === 'wrong') {
+                        if(egg == 4) {
                             egg = 0;
                             passField.value = "";
-                            let awf =document.getElementById('awf');
                             noPassWarning.innerHTML = "";
-                            awf.innerHTML = `<img src='../resources/404.jpg'> <p class='egg'>Congratulations! you found a hidden feature.</p>`;
+                            let awf = document.getElementById('awf');
+                            awf.innerHTML = `<img src='../resources/504.jpg'> <p class='egg'>Congratulations! you found a hidden feature.</p>`;
                             passField.style.border = '1px solid #0f203076';
 
                             return false;
