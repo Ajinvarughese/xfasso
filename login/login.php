@@ -1,7 +1,12 @@
 <?php 
     require '../connections/productdb.php';
     if(isset($_COOKIE['XassureUser'])) {
-        header('Location: ../');
+        
+        echo "
+            <script>
+                window.location.href = '../';
+            </script>
+        ";
     }
 ?>
 
@@ -81,14 +86,19 @@
                     </div>
                 </form>
                 <style>
+                    ._c45 {
+                        margin-top: 3rem;
+                        opacity: 0.8;
+                        font-size: 13px;
+                    }
                     #awf {
-                        max-width: 192px;
+                        max-width: 284px;
                         text-align: center;
                         margin-bottom: 8px;
                     }
                     #awf img {
-                        max-width: 100%;
-                        max-height: 100%;
+                        max-width: 82%;
+                        max-height: 82%;
                         display: block;
                     }
                     .egg {
@@ -102,6 +112,9 @@
                     if(isset($_POST['logIn'])) {
                         $password = filter_var($_POST['password'], FILTER_SANITIZE_SPECIAL_CHARS);
                         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+                        $password = mysqli_real_escape_string($conn, $password);
+                        $email = mysqli_real_escape_string($conn, $email);
 
                         $query = "SELECT * FROM users WHERE email='$email'";
                         $result = mysqli_query($conn, $query);
@@ -118,8 +131,14 @@
                                 $encryption_iv = '1234567891021957';
                                 $encryption_key = "xfassoKey";
                                 $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
-                                setcookie("XassureUser", $encrypted_id, time() + (365*24*60*60),"/");
-                                header('Location: ../index.html');
+                                
+                                $time = time() + (365*24*60*60);
+                                echo "
+                                    <script>
+                                        document.cookie = `XassureUser={$encrypted_id}; expires={$time}; path=/`;
+                                        window.location.href ='../';
+                                    </script>
+                                 ";
                             }else {
                                 echo "
                                     <script>
@@ -195,7 +214,7 @@
                         if(egg == 1) {
                             egg++;
                             passField.value = "";
-                            noPassWarning.innerHTML = 'wrong password, try again';
+                            noPassWarning.innerHTML = 'try again';
                             passField.style.border = '1px solid red';
 
                             return false;
@@ -205,19 +224,19 @@
                         if(egg == 2) {
                             egg++;
                             passField.value = "";
-                            noPassWarning.innerHTML = 'again later';
+                            noPassWarning.innerHTML = 'try again later';
                             passField.style.border = '1px solid red';
 
                             return false;
                         }
                     }
-                    if(pass === 'try again later') {
+                    if(pass === 'again later') {
                         if(egg == 3) {
                             egg = 0;
                             passField.value = "";
                             let awf =document.getElementById('awf');
                             noPassWarning.innerHTML = "";
-                            awf.innerHTML = `<img src='../resources/404.jpg'> <p class='egg'>you found a hidden feature.</p>`;
+                            awf.innerHTML = `<img src='../resources/404.jpg'> <p class='egg'>Congratulations! you found a hidden feature.</p>`;
                             passField.style.border = '1px solid #0f203076';
 
                             return false;
