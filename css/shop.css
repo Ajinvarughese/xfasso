@@ -55,7 +55,7 @@ html {
     padding-top: 0;
 }
 
-
+.shop-main
 
 .filter-options p, .sort-options p {
     color: #2d2c2ca9;
@@ -127,13 +127,21 @@ html {
     transform: scale(1.1);
 }
 
-.shop-main {
-    padding: 0 !important;
+.shopmain {
+    display: flex;
+    flex-direction: column;
+    padding: 0 5%;
+    gap: 2rem;
 }
 
 
 
-
+.products {
+    min-height: 64vh;
+    padding-top: 0;
+    width: fit-content;
+    margin: 0 auto;
+}
 .card-container {
     margin-top: 2rem;
     display: grid;
@@ -159,6 +167,9 @@ html {
 @media (max-width: 650px) {
     .card-container{
         grid-template-columns: auto auto;
+    }
+    .shopmain {
+        gap: 0.8rem;
     }
 }
 
