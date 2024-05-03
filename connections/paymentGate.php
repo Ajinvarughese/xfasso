@@ -1,8 +1,12 @@
 <?php 
+    session_start();
     if(isset($_POST['UPIpay'])) {
-        header('Location: ../checkout/u/upi.php');
+        $_SESSION['payment_method'] = 'UPI';
+        $_SESSION['ordered'] = true;
+        header('Location: ../checkout/u/upi/upi.php');
     }else if(isset($_POST['NETpay'])) {
-        // header('Location: ../checkout/u/netbanking.php');
+        // $_SESSION['payment_method'] = 'netbanking';
+        // header('Location: ../checkout/u/netbanking/netbanking.php');
         echo "
             <script>
                 window.history.back();

@@ -61,7 +61,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My cart</title>
 </head>
 <body>
     <div class="navCart">
@@ -197,10 +197,11 @@
 
                                         if(mysqli_num_rows($resGetDT)>0) {
                                             $rowGetDT = mysqli_fetch_assoc($resGetDT);
+                                            $showPrice = $rowGetDT['product_price'];
                                             $eachPrice = $rowGetDT['product_price']* $rowT['quantity'];
                                             echo 
                                             "   <div class='_ip'>
-                                                    ₹{$eachPrice} ({$rowT['quantity']})
+                                                    ₹{$showPrice} ({$rowT['quantity']})
                                                 </div>
                                             ";
                                             $total -= $rowGetDT['product_price'];

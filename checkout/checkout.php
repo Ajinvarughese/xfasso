@@ -174,11 +174,19 @@
                             $runAdd = mysqli_query($conn, $sqlAdd);
                             if(mysqli_num_rows($runAdd)>0) {
                                 $resAdd = mysqli_fetch_assoc($runAdd);
-                                
                                 if($resAdd['address']) {
                                 
                                     $addData = json_decode($resAdd['address']);
                                     
+                                    $_SESSION['user'] = array(
+                                        "user_id" => $resAdd['user_id'],
+                                        "user_name" => $resAdd['username'],
+                                        "email" => $resAdd['email'],
+                                        "user_address" => $addData
+                                    );
+
+                                    print
+
                                     $name = $addData->fullName;
                                     $mob = $addData->phone;
                                     $mob2 = $addData->altPhone;
@@ -362,10 +370,25 @@
                                             </div>
                                         </div> 
                                     ";
+
+                                    $_SESSION['products'] = array(
+                                        array(
+                                            "product_id" => $checkoutProduct,
+                                            "product_name" => $detailsRow['product_name'],
+                                            "product_price" => $totalPrice,
+                                            "quantity" => $quantityBuyNow,
+                                            "size" => $sizeBuyNow
+                                        )
+                                    );
+                                }else {
+                                    echo 
+                                    "
+                                        <script>
+                                            window.location.href ='../';
+                                        </script>
+                                    ";
                                 }
-                            }
-                            
-                            if($_SESSION['setCart']) {
+                            }elseif($_SESSION['setCart']) {
 
                                 // to check user ordered via add to cart or buy now
                                 $_SESSION['sProduct'] = false;
@@ -377,6 +400,8 @@
                                 $cartUR = mysqli_query($conn, $cartUQ);
 
                                 $i = 0;
+
+                                $_SESSION['products'] = array();
                                 while($resCart = mysqli_fetch_assoc($cartUR)) {
                                     $pIdCart = $resCart['cart_product'];
                                     $getPQ = "SELECT * FROM products WHERE product_id='$pIdCart' AND stock_status = 1";
@@ -423,6 +448,15 @@
                                         $totalPrice += $priceByQua;
                                         $_SESSION['price'] = $totalPrice;
                                         $i++;
+
+                                        $detailsJSON = array(
+                                            "product_id" => $pIdCart,
+                                            "product_name" => $pRow['product_name'],
+                                            "product_price" => $priceProduct,
+                                            "quantity" => $quantityProduct,
+                                            "size" => $resCart['size']
+                                        );
+                                        $_SESSION['products'][] = $detailsJSON;
                                     }
                                 }
                                 $_SESSION['setCart'] = false;
@@ -434,6 +468,13 @@
                                         </script>
                                     ";
                                 }
+                            }else {
+                                echo 
+                                    "
+                                        <script>
+                                            window.location.href ='../';
+                                        </script>
+                                    ";
                             }
 
                         }else {
@@ -441,6 +482,8 @@
                             $_SESSION['isAddr'] = false;
 
                         }
+
+                        
 
 
                     ?>
@@ -568,7 +611,8 @@
                 <?php 
                     if(isset($_POST['isOrder'])) {
                         $totalPrice = $_SESSION['price'];
-                        if($totalPrice == 0.0) {
+
+                        if($totalPrice == 0.0 || $totalPrice == 0) {
                             echo "
                                 <script>
                                     window.location.href = '../';
@@ -576,6 +620,7 @@
                             "; // solve this issue no $totalPrice foundd!
                         }
                         $_SESSION['isAdd'] = true;
+                        
                         echo "
                             <script>
                                 var formContent = document.getElementById('formContentP');
