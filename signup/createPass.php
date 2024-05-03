@@ -77,7 +77,7 @@
 
     <?php 
         require '../connections/productdb.php';
-        
+        require_once '../UUID/UUID.php';
 
 
         if(isset($_POST['submitPass'])) {
@@ -127,32 +127,46 @@
                         header('Location: ../signup/signup.html');
                     }
                     $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-                    $query = "INSERT INTO users (username, email, password, gender) VALUES('$username', '$email', '$hashedPass', 'male')";
                     
+
                     $queryAlredy = "SELECT * FROM users WHERE email='$email'";
                     $result = mysqli_query($conn, $queryAlredy);
                     if(mysqli_num_rows($result)>0) {
                         header('Location: ../');
                     }else {
-                        $result = mysqli_query($conn, $query);
-                        
-                        //encrypt
-                        $text = $email;
-                        //encrypting
-                        $ciphering = "AES-128-CTR";
-                        $iv_length = openssl_cipher_iv_length($ciphering);
-                        $options = 0;
-                        $encryption_iv = '1234567891021957';
-                        $encryption_key = "xfassoKey";
-                        $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
+                        $success = false;
+                        while($success == false) {
+                            try {
+                                $id = new UUID;
+                                $uuid = $id->userID($conn);
+                                $query = "INSERT INTO users (user_id, username, email, password, gender) VALUES('$uuid', '$username', '$email', '$hashedPass', 'male')";
+                                
+                                $result = mysqli_query($conn, $query);
+                                $success = true;
+                            }catch(mysqli_sql_exception) {
+                                $success = false;
+                            }
+                        }
 
-                        echo "
-                            <script>
-                                var cookieExpires = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toUTCString();
-                                document.cookie = `XassureUser={$encrypted_id}; expires=`+cookieExpires+`; path=/`;
-                                window.location.href ='../';
-                            </script>
-                        ";
+                        if($success) {
+                            //encrypt
+                            $text = $email;
+                            //encrypting
+                            $ciphering = "AES-128-CTR";
+                            $iv_length = openssl_cipher_iv_length($ciphering);
+                            $options = 0;
+                            $encryption_iv = '1234567891021957';
+                            $encryption_key = "xfassoKey";
+                            $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
+
+                            echo "
+                                <script>
+                                    var cookieExpires = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toUTCString();
+                                    document.cookie = `XassureUser={$encrypted_id}; expires=`+cookieExpires+`; path=/`;
+                                    window.location.href ='../';
+                                </script>
+                            ";
+                        }
                         
                     }
                     

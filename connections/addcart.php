@@ -60,11 +60,11 @@
         $quantity = $_COOKIE['quantity']; 
 
         
-        $checkInCart = "SELECT * FROM cart_user WHERE cart_product= $decrypted_id AND user_id=$userId";
+        $checkInCart = "SELECT * FROM cart_user WHERE cart_product= $decrypted_id AND user_id='$userId'";
         $runCheckQ = mysqli_query($conn, $checkInCart);
 
         if(mysqli_num_rows($runCheckQ) > 0) {
-            $newQuery = "SELECT * FROM cart_user WHERE cart_product=$decrypted_id AND user_id=$userId AND size='$size'";
+            $newQuery = "SELECT * FROM cart_user WHERE cart_product=$decrypted_id AND user_id='$userId' AND size='$size'";
             $newRun = mysqli_query($conn, $newQuery);
             if(mysqli_num_rows($newRun) > 0) {
                 $getDetails = mysqli_fetch_assoc($newRun);
@@ -106,7 +106,7 @@
 
                 $decrypted_id = $splitId[1]; 
 
-                $q = "INSERT INTO cart_user(user_id, cart_product, quantity, size) VALUES($userId, $decrypted_id, $quantity, '$size')";
+                $q = "INSERT INTO cart_user(user_id, cart_product, quantity, size) VALUES('$userId', '$decrypted_id', '$quantity', '$size')";
                 mysqli_query($conn, $q);
             }   
 
@@ -124,7 +124,7 @@
             $splitId = explode(' ', $decrypted_id);
 
             $decrypted_id = $splitId[1]; 
-            $q = "INSERT INTO cart_user(user_id, cart_product, quantity, size) VALUES($userId, $decrypted_id, $quantity, '$size')";
+            $q = "INSERT INTO cart_user(user_id, cart_product, quantity, size) VALUES('$userId', '$decrypted_id', '$quantity', '$size')";
             $r = mysqli_query($conn, $q);
         }
     }
