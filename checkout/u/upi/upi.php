@@ -41,8 +41,8 @@
             $user_ID = $user['user_id'];
 
 
-            // $success = false;
-            // while($success == false) {
+            $success = false;
+            while($success == false) {
                 try {
                     $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, status) VALUES('{$user_ID}', '{$orderID}', '{$json}', $status)";
                     $run = mysqli_query($conn, $updateOrder);
@@ -52,7 +52,7 @@
                     $orderID = uniqid("hzW3Kn");
                     $success = false;
                 }
-            //}
+            }
             $_SESSION['ordered'] = false;
 
             if($success == true) {

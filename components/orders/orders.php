@@ -1,5 +1,11 @@
 <?php 
 
+if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
+    // Show 404 error
+    header("Location: ../../errors/errors.php?errorID=404");
+    exit();
+}
+
 class Orders {
     private $order_id; 
     private $user_id;
@@ -28,15 +34,44 @@ class Orders {
     }
 
     public function getProduct($orderProduct) {
-        foreach($orderProduct['products'] as $p => $c) {
-            foreach($c as $k => $s) {
-                echo " $k => $s<br>";
-            }
-            // send this value to orders html page;
-            echo "<br><br>";
-        }
+        return $orderProduct['products'];
+    }
+    public function getUserDetails($orderProduct) {
+
+        return $orderProduct['user'];
     }
 
 }
 
+
+// {
+//     "product_id": "556"
+//   },
+//   {
+//     "product_name": "Louis"
+//   },
+//   {
+//     "product_price": "599"
+//   },
+//   {
+//     "quantity": "1"
+//   },
+//   {
+//     "size": "XL"
+//   },
+//   {
+//     "product_id": "555"
+//   },
+//   {
+//     "product_name": "Mule"
+//   },
+//   {
+//     "product_price": "899"
+//   },
+//   {
+//     "quantity": "2"
+//   },
+//   {
+//     "size": "L"
+//   }
 ?>
