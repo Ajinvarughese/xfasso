@@ -11,11 +11,6 @@ class Orders {
     private $user_id;
     private $orderProduct;
 
-    public $product_image;
-    public $product_name;
-    public $prize;
-    public $quntity;
-    public $size;
 
     public function __construct($order_id, $user_id, $orderProduct) {
         $this->order_id = $order_id;
@@ -37,41 +32,10 @@ class Orders {
         return $orderProduct['products'];
     }
     public function getUserDetails($orderProduct) {
-
         return $orderProduct['user'];
     }
 
 }
 
 
-// {
-//     "product_id": "556"
-//   },
-//   {
-//     "product_name": "Louis"
-//   },
-//   {
-//     "product_price": "599"
-//   },
-//   {
-//     "quantity": "1"
-//   },
-//   {
-//     "size": "XL"
-//   },
-//   {
-//     "product_id": "555"
-//   },
-//   {
-//     "product_name": "Mule"
-//   },
-//   {
-//     "product_price": "899"
-//   },
-//   {
-//     "quantity": "2"
-//   },
-//   {
-//     "size": "L"
-//   }
 ?>
