@@ -105,13 +105,19 @@
     <div class="nav">
         <a style="text-decoration: none; color: inherit; font-size: 13px;" href="../"><h1>XFASSO</h1></a>
         <div class="cart">
-                    
             <a href="../cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
-                <i class="fas fa-shopping-cart" style="color: #12263a;">
-                </i>
-
+                <img id="cartImage" src="../resources/cart.png" alt="cart">
                 <style>
-                    
+                    #cartImage {
+                        max-width: 100%;
+                        max-height: 100%;
+                        display: block;
+                    }
+                    .cart {
+                        width: 24px;
+                        height: 24px;
+                        position: relative;
+                    }
                     #cart_num {
                         background: rgba(239, 50, 50, 0.811);
                         padding: 3px;
@@ -123,17 +129,19 @@
                         width: 18px;
                         border-radius: 100%;
                         position: absolute;
-                        top: -40%;
-                        left: 75%;
+                        top: -28%;
+                        left: 68%;
                     }
                     #zIca {
                         position: relative;
                     }
-                       
+                    #number {
+                        color: #fff;
+                        font-weight: 700;
+                    }
                 </style>
-                
                 <div id="cart_num">
-                    <div id="number" style="color: #fff; font-weight: 600;"></div>
+                    <div id="number"></div>
                 </div>
                 <script>
                     var cart_num = document.getElementById('cart_num');
@@ -143,7 +151,6 @@
                             return result.json(); 
                         })
                         .then((outcome) => {
-
                             number.innerHTML = outcome.num;
                             if(outcome.num === 0) {
                                 cart_num.style.display = 'none';

@@ -69,60 +69,69 @@
         <div class="nav-login-cart">
             <ul class="login-cart">
                 <li class="primary">
-                    <a href="../cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
-                        <i class="fas fa-shopping-cart" style="color: #12263a;">
-                        </i>
+                    <div class="cart">
+                        <a href="../cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
+                            <img id="cartImage" src="../resources/cart.png" alt="cart">
+                            <style>
+                                #cartImage {
+                                    max-width: 100%;
+                                    max-height: 100%;
+                                    display: block;
+                                }
+                                .cart {
+                                    width: 24px;
+                                    height: 24px;
+                                    position: relative;
+                                }
+                                #cart_num {
+                                    background: rgba(239, 50, 50, 0.811);
+                                    padding: 3px;
+                                    height: 18px;
+                                    display: flex;
+                                    color: #fff;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 18px;
+                                    border-radius: 100%;
+                                    position: absolute;
+                                    top: -28%;
+                                    left: 68%;
+                                }
+                                #zIca {
+                                    position: relative;
+                                }
+                            </style>
+                            <div id="cart_num">
+                                <div id="number"></div>
+                            </div>
+                            <script>
+                                var cart_num = document.getElementById('cart_num');
+                                var number = document.getElementById('number');
+                                fetch('../num/num.php')
+                                    .then((result) => {
+                                        return result.json(); 
+                                    })
+                                    .then((outcome) => {
+                                        number.innerHTML = outcome.num;
+                                        if(outcome.num === 0) {
+                                            cart_num.style.display = 'none';
+                                        }
 
-                        <style>
-                            #cart_num {
-                                background: rgba(239, 50, 50, 0.811);
-                                padding: 3px;
-                                height: 18px;
-                                display: flex;
-                                color: #fff;
-                                align-items: center;
-                                justify-content: center;
-                                width: 18px;
-                                border-radius: 100%;
-                                position: absolute;
-                                top: -40%;
-                                left: 75%;
-                            }
-                            #zIca {
-                                position: relative;
-                            }
-                        </style>
-                        <div id="cart_num">
-                            <div id="number"></div>
-                        </div>
-                        <script>
-                            var cart_num = document.getElementById('cart_num');
-                            var number = document.getElementById('number');
-                            fetch('../num/num.php')
-                                .then((result) => {
-                                    return result.json(); 
-                                })
-                                .then((outcome) => {
+                                        if(outcome.num < 100) {
+                                            cart_num.style.width = '18px';
+                                            cart_num.style.height = '18px';
+                                            cart_num.style.fontSize = '12px';
+                                        }else {
+                                            cart_num.style.fontSize = '7.4px';
+                                        }
+                                    })
+                                    .catch((error)=> {
+                                        cart_num.style.display = 'none';  
+                                    })
+                            </script>
 
-                                    number.innerHTML = outcome.num;
-                                    if(outcome.num === 0) {
-                                        cart_num.style.display = 'none';
-                                    }
-
-                                    if(outcome.num < 100) {
-                                        cart_num.style.width = '18px';
-                                        cart_num.style.height = '18px';
-                                        cart_num.style.fontSize = '12px';
-                                    }else {
-                                        cart_num.style.fontSize = '7.4px';
-                                    }
-                                })
-                                .catch((error)=> {
-                                    cart_num.style.display = 'none';  
-                                })
-                        </script>
-
-                    </a>
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -443,9 +452,10 @@
                                 $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
                                 $querRUN = mysqli_query($conn, $quer);
                                 
+                                //star rate pt1 end
+                                
                                 $productId = "productIdOfXfassoYes {$productRow['product_id']}";
 
-                                //star rate pt1 end
 
                                 //encrypting
                                 $ciphering = "AES-128-CTR";

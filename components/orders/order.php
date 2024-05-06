@@ -36,18 +36,37 @@
         
             $jsonData = $res['order_json'];
             $phpObj = json_decode($jsonData, true);
-
+            $orderID = $res['order_id'];
             $i=0;
+            
             while(isset($phpObj['products'][$i]['product_id'])) {
                 $prodID = $phpObj['products'][$i]['product_id'];
+
+                //encrypting product ID:
+                $productId = "productIdOfXfassoYes {$prodID}";
+                $ciphering = "AES-128-CTR";
+                $iv_length = openssl_cipher_iv_length($ciphering);
+                $options = 0;
+                $encryption_iv = '1234567891021957';
+                $encryption_key = "xfassoKey";
+                $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
+                
+
+
+
+                $phpObj['products'][$i]['product_id'] = $encrypted_id;
+               
                 $quer = "SELECT product_image FROM products WHERE product_id = {$prodID}";
-                $res = mysqli_query($conn, $quer);
-                $row = mysqli_fetch_assoc($res);
+                $resImage = mysqli_query($conn, $quer);
+                $row = mysqli_fetch_assoc($resImage);
                 $imageData = base64_encode($row['product_image']);
                 $phpObj['products'][$i]['product_image'] = $imageData;
+                
+                $phpObj['products'][$i]['order_id'] = $orderID;
+                $phpObj['products'][$i]['date'] = $phpObj['payment']['date'];
                 $i++;
             }
-
+            
 
             $order = new Orders($orderID, $userID, $phpObj);
 
@@ -55,7 +74,7 @@
             $arrayJSONproducts['products'][] = $json;
             $json = $order->getUserDetails($order->getOrderProduct());
             $arrayJSONUser['user'] = $json;
-            $arrayJSONUser['user']["order_id"] = "$orderID";
+
         }
 
         $new_JSON = array();

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
@@ -12,14 +16,70 @@
 </head>
 <body>
     <style>
-        #img {
-            max-width: 230px;
-            max-height: 230px;
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
         }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            width: 100%;
+            color: #12263a;
+            background: #faf9f9;
+        }
+
+
         #i {
             max-width: 100%;
             max-height: 100%;
             display: block;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            justify-content: space-between;
+            padding: 0.8rem 5.7%;
+            background: #12263a;
+        }
+        .user {
+            width: 24px;
+            height: 24px;
+        }
+        .user img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .back {
+            transition: 0.3s ease;
+        }
+        .back:hover {
+            transform: scale(1.1);
+        }
+        .prof {
+            display: flex;
+            gap: 1.1rem;
+        }
+        .orderMain {
+            padding: 1.8rem 5%;
+        }
+        .title h1{
+            font-size: clamp(1.7rem, 3vw, 2rem);
+        }
+        .title {
+            width: fit-content;
+        }
+        #user {
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        #user:hover {
+            transform: scale(1.1);
         }
     </style>
    <div class="nav">
@@ -29,11 +89,136 @@
         <div class="logo">
             <h2>XFASSO</h2>
         </div>
-        <div id="img">
+        <div class="prof">
+            <div id="user" class="user">
+                <img src="../../../resources/user.png" alt="user image">
+            </div>
             
+            <div class="cart">
+                <a href="../../../cart/cart.php" id="zIca" style="text-decoration: none; color: inherit;">
+                    <img id="cartImage" src="../../../resources/cart-white.png" alt="cart">
+                    <style>
+                        #cartImage {
+                            max-width: 100%;
+                            max-height: 100%;
+                            display: block;
+                        }
+                        .cart {
+                            width: 24px;
+                            height: 24px;
+                            position: relative;
+                        }
+                        #cart_num {
+                            background: rgba(239, 50, 50, 0.811);
+                            padding: 3px;
+                            height: 18px;
+                            display: flex;
+                            color: #fff;
+                            align-items: center;
+                            justify-content: center;
+                            width: 18px;
+                            border-radius: 100%;
+                            position: absolute;
+                            top: -28%;
+                            left: 68%;
+                        }
+                        #zIca {
+                            position: relative;
+                        }
+                    </style>
+                    <div id="cart_num">
+                        <div id="number"></div>
+                    </div>
+                    <script>
+                        var cart_num = document.getElementById('cart_num');
+                        var number = document.getElementById('number');
+                        fetch('../../../num/num.php')
+                            .then((result) => {
+                                return result.json(); 
+                            })
+                            .then((outcome) => {
+                                number.innerHTML = outcome.num;
+                                if(outcome.num === 0) {
+                                    cart_num.style.display = 'none';
+                                }
+
+                                if(outcome.num < 100) {
+                                    cart_num.style.width = '18px';
+                                    cart_num.style.height = '18px';
+                                    cart_num.style.fontSize = '12px';
+                                }else {
+                                    cart_num.style.fontSize = '7.4px';
+                                }
+                            })
+                            .catch((error)=> {
+                                cart_num.style.display = 'none';  
+                            })
+                    </script>
+
+                </a>
+            </div>
+
+
         </div>
-   </div>
-    <div class="orderMain"></div>
+    </div>
+    <div class="orderMain">
+        <div class="title">
+            <h1>My orders</h1>
+            <hr>
+        </div>
+        <style>
+            .orders {
+                margin-top: 2rem;
+                display: grid;
+                grid-template-columns: auto;
+                gap: 0.9rem;
+            }
+            .card {
+                display: flex;
+                background: #fff;
+                cursor: pointer;
+                transition: 0.3s ease;
+                border-radius: 6px;
+                box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            }
+            .cardimg {
+                max-width: 178px;
+            }
+            .cardimg img{
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+                border-radius: 6px 0 0 6px;
+            }
+            .cardContent {
+                padding: 17px;
+                padding-bottom: 0;
+                width: 55%;
+            }
+            .cardContent > div {
+                width: 100%;
+            }
+            .p{
+                margin-top: 17px;
+                font-weight: 600;
+            }
+            .contentHead {
+                font-weight: 600;
+            }
+            .p, .client, .size {
+                margin-bottom: 4px;
+                opacity: 0.8;
+            }
+            .card:hover {
+                transform: scale(1.03);
+            }
+            .orders > a {
+                text-decoration: none;
+                color: inherit;
+            }
+        </style>
+        <div id="orders" class="orders"></div>
+    </div>
 
 </body>
 <script src="main.js"></script>

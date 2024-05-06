@@ -4,7 +4,6 @@
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     scroll-behavior: smooth;
-    color: #12263a;
 }
 html {
     scroll-behavior: smooth;
@@ -12,6 +11,7 @@ html {
 body{
     line-height: 1.5;
     min-height: 100vh;
+    color: #12263a;
 }
 .card-wrapper{
     max-width: 1100px;
