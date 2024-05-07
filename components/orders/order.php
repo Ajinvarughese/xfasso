@@ -21,13 +21,13 @@
     
 
     
-    $querOrder = "SELECT * FROM orders WHERE user_id='$userID'";
+    $querOrder = "SELECT * FROM orders WHERE user_id='$userID' AND status = 200";
     $runOrder = mysqli_query($conn, $querOrder);
     $res = mysqli_fetch_assoc($runOrder);
     $orderID = $res['order_id'];
     
     
-    $get = "SELECT * FROM orders WHERE user_id = '{$userID}'";
+    $get = "SELECT * FROM orders WHERE user_id = '{$userID}' AND status = 200";
     $run = mysqli_query($conn, $get);
 
     if(mysqli_num_rows($run)>0) {

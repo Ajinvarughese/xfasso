@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    min-height: 100vh;
+    width: 100%;
+    color: #12263a;
+    background: #faf9f9;
+}
+
+
+#i {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    justify-content: space-between;
+    padding: 0.8rem 5.7%;
+    background: #12263a;
+}
+.user {
+    width: 24px;
+    height: 24px;
+}
+.user img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.back {
+    transition: 0.3s ease;
+}
+.back:hover {
+    transform: scale(1.1);
+}
+.prof {
+    display: flex;
+    gap: 1.1rem;
+}
+.orderMain {
+    padding: 1.8rem 5%;
+}
+.title h1{
+    font-size: clamp(1.7rem, 3vw, 2rem);
+}
+.title {
+    width: fit-content;
+}
+#user {
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+#user:hover {
+    transform: scale(1.1);
+}
+
+
+
+#cartImage {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+.cart {
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+#cart_num {
+    background: rgba(239, 50, 50, 0.811);
+    padding: 3px;
+    height: 18px;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    border-radius: 100%;
+    position: absolute;
+    top: -28%;
+    left: 68%;
+}
+#zIca {
+    position: relative;
+}
+
+
+
+.orders {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 0.9rem;
+    max-width: 690px;
+}
+.card {
+    display: flex;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.cardimg {
+    max-width: 178px;
+}
+.cardimg img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    border-radius: 6px 0 0 6px;
+}
+.cardContent {
+    padding: 17px;
+    padding-bottom: 0;
+    width: 55%;
+}
+.cardContent > div {
+    width: 100%;
+}
+.p{
+    margin-top: 17px;
+    font-weight: 600;
+}
+.contentHead {
+    font-weight: 600;
+}
+.p, .client, .size {
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+.card:hover {
+    transform: scale(1.03);
+}
+.orders > a {
+    text-decoration: none;
+    color: inherit;
+}

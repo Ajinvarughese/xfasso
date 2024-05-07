@@ -1,15 +1,31 @@
 <?php 
 class UUID {
+
+    private function generateUniqueID($code, $num) {
+        $characters = str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $id = '';
+        $length = strlen($characters);
+
+        // Append characters until the ID is at least 8 characters long
+        while(strlen($id) < $num) {
+            $id .= $characters[mt_rand(0, $length - 1)];
+        }
+        $finalID = $code.$id;
+        return $finalID;
+    }
+
+
+
     public function userID($conn) {  
         $quer = "SELECT user_id FROM users";
         $run = mysqli_query($conn, $quer);
         
         if(mysqli_num_rows($run) > 0) {
-            $id = uniqid("jiK");
+            $id = $this->generateUniqueID("xuser", 18);
             $i=2292;
             while($res = mysqli_fetch_assoc($run)) {
                 if($res['user_id'] === $id) {
-                    $id = uniqid("a4m{$i}");
+                    $id = $this->generateUniqueID("xuser{$i}", 18);
                     mysqli_data_seek($run, 0);
                     $i += rand(17, 423);
                     continue;
@@ -18,7 +34,7 @@ class UUID {
             
             return $id;
         } else {
-            return uniqid("kWa");
+            return $this->generateUniqueID("xuser", 18);
         }
     }
 
@@ -31,11 +47,11 @@ class UUID {
         $run = mysqli_query($conn, $quer);
         
         if(mysqli_num_rows($run) > 0) {
-            $id = uniqid("gkq");
+            $id = $this->generateUniqueID("PN", 18);
             $i=2292;
             while($res = mysqli_fetch_assoc($run)) {
                 if($res['user_id'] === $id) {
-                    $id = uniqid("qzW{$i}");
+                    $id = $this->generateUniqueID("PN{$i}", 18);
                     mysqli_data_seek($run, 0);
                     $i += rand(17, 423);
                     continue;
@@ -44,7 +60,7 @@ class UUID {
             
             return $id;
         } else {
-            return uniqid("mAjn");
+            return $this->generateUniqueID("PN", 18);
         }
     }
 

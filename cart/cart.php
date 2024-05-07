@@ -19,6 +19,8 @@
             $row = mysqli_fetch_array($res);
             $user_id = $row["user_id"];
             $username = $row["username"];
+        }else {
+            header('Location: ../signup/signup.html');
         }
 
     }else {
