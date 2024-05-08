@@ -1,16 +1,17 @@
 <?php 
     require_once '../../../connections/productdb.php';
+    require_once '../../../UUID/UUID.php';
     session_start();
 
     //data from payment page so these are temporary variables and values:
    
     $status = 200;
-    $payment_id = uniqid('iaen');
-    $orderID = uniqid("wuba"); 
+    $UUID = new UUID();
+    $payment_id = $UUID->paymentID($conn, "PN", 18);
+    $orderID = $UUID->orderID($conn, "OD", 18); 
 
 
     $user = $_SESSION['user'];
-
 
     date_default_timezone_set("Asia/Calcutta");
     $date = date("Y-m-d");
@@ -40,7 +41,6 @@
             $json = json_encode($phpObj, JSON_PRETTY_PRINT);
             $user_ID = $user['user_id'];
 
-
             $success = false;
             while($success == false) {
                 try {
@@ -58,7 +58,7 @@
             if($success == true) {
                 echo "
                     <script>
-                        window.location.href = '../../../';            
+                        window.location.href = '../../../profile/u/orders/';            
                     </script>
                 ";        
             }
@@ -67,7 +67,7 @@
     }else {
         echo "
             <script>
-                window.location.href = '../../../';            
+                window.location.href = '../../../cart/cart.php';            
             </script>
         ";
     }

@@ -39,7 +39,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/shop.css">
-    <title>Document</title>
+    <title>Xfasso Shop</title>
 </head>
 <body>
     <div class="_45y"></div>

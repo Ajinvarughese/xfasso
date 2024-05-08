@@ -400,7 +400,7 @@
                                 $cartUR = mysqli_query($conn, $cartUQ);
 
                                 $i = 0;
-
+                                $_SESSION['user'];
                                 $_SESSION['products'] = array();
                                 while($resCart = mysqli_fetch_assoc($cartUR)) {
                                     $pIdCart = $resCart['cart_product'];

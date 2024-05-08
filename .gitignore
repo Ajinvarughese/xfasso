@@ -1,2 +1,6 @@
 #file of test programs
 test/
+
+
+#.env file
+.env

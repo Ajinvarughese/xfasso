@@ -1,6 +1,6 @@
 <?php 
 class UUID {
-
+    public function __construct() {}
     private function generateUniqueID($code, $num) {
         $characters = str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         $id = '';
@@ -38,20 +38,16 @@ class UUID {
         }
     }
 
-
-
-
-
-    public function paymentID() {
+    public function paymentID($conn, $code, $num) {
         $quer = "SELECT payment_id FROM payments";
         $run = mysqli_query($conn, $quer);
         
         if(mysqli_num_rows($run) > 0) {
-            $id = $this->generateUniqueID("PN", 18);
+            $id = $this->generateUniqueID($code, $num);
             $i=2292;
             while($res = mysqli_fetch_assoc($run)) {
-                if($res['user_id'] === $id) {
-                    $id = $this->generateUniqueID("PN{$i}", 18);
+                if($res['payment_id'] === $id) {
+                    $id = $this->generateUniqueID($code."{$i}", $num);
                     mysqli_data_seek($run, 0);
                     $i += rand(17, 423);
                     continue;
@@ -60,7 +56,30 @@ class UUID {
             
             return $id;
         } else {
-            return $this->generateUniqueID("PN", 18);
+            return $this->generateUniqueID($code, $num);
+        }
+    }
+
+
+    public function orderID($conn, $code, $num) {
+        $quer = "SELECT order_id FROM orders";
+        $run = mysqli_query($conn, $quer);
+        
+        if(mysqli_num_rows($run) > 0) {
+            $id = $this->generateUniqueID($code, $num);
+            $i=2292;
+            while($res = mysqli_fetch_assoc($run)) {
+                if($res['order_id'] === $id) {
+                    $id = $this->generateUniqueID($code."{$i}", $num);
+                    mysqli_data_seek($run, 0);
+                    $i += rand(17, 423);
+                    continue;
+                }
+            }
+            
+            return $id;
+        } else {
+            return $this->generateUniqueID($code, $num);
         }
     }
 
