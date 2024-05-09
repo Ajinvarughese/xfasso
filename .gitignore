@@ -5,10 +5,4 @@ test/
 #.env file
 .env
 
-#vendor files
-.phpunit.result.cache
-composer.lock
-phpstan.neon
-phpstan.tests.neon
-phpunit.xml
-vendor
+
