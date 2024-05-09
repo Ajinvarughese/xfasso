@@ -4,3 +4,11 @@ test/
 
 #.env file
 .env
+
+
+.phpunit.result.cache
+composer.lock
+phpstan.neon
+phpstan.tests.neon
+phpunit.xml
+vendor
