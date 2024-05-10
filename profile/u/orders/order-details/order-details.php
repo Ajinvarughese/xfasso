@@ -91,6 +91,9 @@
     <link rel="stylesheet" href="../css/order-details.css">
 
     <style>
+        *{
+            font-size: clamp(9px, 2.5vw, 18px);
+        }
         .id {
             opacity: 0.9;
             font-size: 14px;
@@ -150,13 +153,52 @@
             </div>
         </div>
     </div>
+    <style>
+        .main {
+            max-width: 940px;
+            border: 1px solid;
+        }        
+        .prodImg {
+            max-width: 120px;
+            max-height: 140px;
+        }
+        .prodImg img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .orderID {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .card {
+            display: flex;
+            border: 1px solid;
+            
+        }
+    </style>
     <div class="main">
         <div class="imp">
+            <p>order is made for AJIN VARUGHESE</p>
+            <p>ordered on 29-10-2005</p>
+        </div>
+        <div class="orderDetails">
             <div class="orderID">
-                <p class="id"><span>order id:</span> <?php echo $orderID;?></p>
+                <span>order id:</span><p><?php echo $orderID;?></p>
             </div>
-            <div class="paymentID">
-                <p class="id"><span>payment id:</span> <?php echo $paymentID;?></p>
+            <div class="card">
+                <div class="content">
+                    <div class="tit">HELIX</div>
+
+                    <div class="size">size: M</div>
+                    <div class="quantity">quantity: 4</div>
+                    <div class="price">₹599</div>
+                    
+                </div>
+                <div class="prodImg">
+                    <img src="../../../../resources/504.jpg" alt="">
+                </div>
             </div>
         </div>
     </div>
