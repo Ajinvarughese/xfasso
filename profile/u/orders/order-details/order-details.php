@@ -19,7 +19,10 @@
             $user_id = $row["user_id"];
             $username = $row["username"];
         }else {
-            header('Location: ../signup/signup.html');
+            echo "<script>
+                document.cookie='XassureUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = '../../../../signup/signup.html';
+                </script>";
         }
 
         if(isset($_GET['orderID']) && isset($_GET['productID'])) {
@@ -52,6 +55,10 @@
                         break;
                     }
                 }
+
+                $orderID = $phpObj['payment']['order_id'];
+                $paymentID = $phpObj['payment']['payment_id'];
+                $userDetails = $phpObj['user'];
             }
         }else {
             echo "
@@ -62,9 +69,8 @@
         }
 
     }else {
-        header('Location: ../signup/signup.html');
+        header('Location: ../../../../signup/signup.html');
     }  
-
 
 ?>
 
@@ -83,6 +89,17 @@
 
 
     <link rel="stylesheet" href="../css/order-details.css">
+
+    <style>
+        .id {
+            opacity: 0.9;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        .id span {
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
     <div class="nav">
@@ -93,7 +110,7 @@
             <h2>XFASSO</h2>
         </div>
         <div class="prof">
-            <div id="user" class="user">
+            <div onclick="user()" id="user" class="user">
                 <img src="../../../../resources/user.png" alt="user image">
             </div>
             
@@ -129,7 +146,6 @@
                                 cart_num.style.display = 'none';  
                             })
                     </script>
-
                 </a>
             </div>
         </div>
@@ -137,13 +153,18 @@
     <div class="main">
         <div class="imp">
             <div class="orderID">
-                Order ID: 
+                <p class="id"><span>order id:</span> <?php echo $orderID;?></p>
             </div>
             <div class="paymentID">
-                Payment ID: 
+                <p class="id"><span>payment id:</span> <?php echo $paymentID;?></p>
             </div>
         </div>
     </div>
 </body>
+<script>
+    function user() {
+        window.location.href = '../../edit-profile.php';
+    }
+</script>
 <script src='../main.js'></script>
 </html>

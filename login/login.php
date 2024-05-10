@@ -106,6 +106,9 @@
                         opacity: 0.6;
                         margin-top: 10px;
                     }
+                    #awf video {
+                        width: 100%;
+                    }
                 </style>
                 <div id="awf"></div>
                 <?php 
@@ -174,6 +177,11 @@
             </div>
 
             <script>
+                function xfassomeme() {
+                    setTimeout(()=> {
+                        document.getElementById("awf").innerHTML = "";
+                    }, 500)
+                }
                 function getCookie(name) {
                     const value = `; ${document.cookie}`;
                     const parts = value.split(`; ${name}=`);
@@ -239,7 +247,7 @@
                             passField.style.border = '1px solid red';
 
                             let awf = document.getElementById('awf');
-                            awf.innerHTML = `<img src='../resources/404.jpg'>`;
+                            awf.innerHTML = `<img src='../resources/meme.jpg'>`;
 
                             return false;
                         }
@@ -250,9 +258,17 @@
                             passField.value = "";
                             noPassWarning.innerHTML = "";
                             let awf = document.getElementById('awf');
-                            awf.innerHTML = `<img src='../resources/504.jpg'> <p class='egg'>Congratulations! you found a hidden feature.</p>`;
+                            let meme = `
+                                <video id="memeVideo" onended="xfassomeme()" autoplay controls>
+                                    <source src="../resources/video/hidden.mp4" type="video/mp4">
+                                </video>
+                            `;
+                            awf.innerHTML = `${meme} <p class='egg'>Congratulations! you found a hidden feature.</p>`;
                             passField.style.border = '1px solid #0f203076';
-
+                            setTimeout(()=> {
+                                awf.innerHTML = '';
+                                window.location.reload();
+                            },9600);
                             return false;
                         }
                     }
@@ -261,7 +277,6 @@
                     
                     noNameWarning.innerHTML = '';
                     noEmailWarning.innerHTML = '';
-
                     return true;
                 }
 
