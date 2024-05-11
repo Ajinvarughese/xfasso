@@ -24,3 +24,13 @@ Password
 
 
 password must be 6 characters
+
+
+
+order status are defined as 
+
+0 - succesfull payment
+1 - order is being processed
+2 - order succesfull
+3 - delivered
+9 - order failed

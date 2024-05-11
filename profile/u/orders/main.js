@@ -1,6 +1,7 @@
 function showContent(imageData, product_name, product_size, date, orderID, prodID) {
     let orders = document.getElementById("orders");
     let imageType = "image/jpeg";
+    
     orders.innerHTML += 
     `
         <a href='order-details/order-details.php?orderID="${orderID}"&productID="${prodID}"'>
@@ -57,7 +58,8 @@ fetch('../../../components/orders/order.php')
         return result.json();
     })
     .then((outcome) => {
-        outcome.products.sort((a, b) => new Date(b.date) - new Date(a.date));        
+        outcome.products.sort((a, b) => new Date(b.date) - new Date(a.date));  
+        outcome.products.reverse();    
         orderProducts(outcome, true);
     })
     .catch((error) => {

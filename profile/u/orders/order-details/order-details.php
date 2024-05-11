@@ -40,7 +40,7 @@
 
             $decrypted_id = $splitId[1];
 
-            $quer = "SELECT * FROM orders WHERE order_id ={$orderID} AND user_id='{$user_id}' AND status = 200";
+            $quer = "SELECT * FROM orders WHERE order_id ={$orderID} AND user_id='{$user_id}'";
             $runQ = mysqli_query($conn, $quer);
             if(mysqli_num_rows($runQ)>0) {
                 $res = mysqli_fetch_assoc($runQ);
@@ -59,6 +59,8 @@
                 $orderID = $phpObj['payment']['order_id'];
                 $paymentID = $phpObj['payment']['payment_id'];
                 $userDetails = $phpObj['user'];
+                $deliveryDate = $res['delivery'];
+
             }
         }else {
             echo "
@@ -106,14 +108,14 @@
 </head>
 <body>
     <div class="nav">
-        <div style="cursor: pointer;" id="back" class="back">
+        <div style="cursor: pointer;" onclick="user(false)" id="back" class="back">
             <img src="../../../../resources/left-arrow.png" width="32px">
         </div>
         <div class="logo">
             <h2>XFASSO</h2>
         </div>
         <div class="prof">
-            <div onclick="user()" id="user" class="user">
+            <div onclick="user(true)" id="user" class="user">
                 <img src="../../../../resources/user.png" alt="user image">
             </div>
             
@@ -199,13 +201,19 @@
                 <div class="prodImg">
                     <img src="../../../../resources/504.jpg" alt="">
                 </div>
+                <?php echo $deliveryDate; ?>
             </div>
         </div>
     </div>
 </body>
 <script>
-    function user() {
-        window.location.href = '../../edit-profile.php';
+    function user(x) {
+        if(x === true) { 
+            window.location.href = '../../edit-profile.php';
+        }
+        else {
+            window.history.back();
+        }
     }
 </script>
 <script src='../main.js'></script>

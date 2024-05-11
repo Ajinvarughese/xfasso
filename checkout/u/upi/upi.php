@@ -16,6 +16,7 @@
     date_default_timezone_set("Asia/Calcutta");
     $date = date("Y-m-d");
     $time = date("h:i:sa");
+
     $payment_method = $_SESSION['payment_method'];
     
     $paymentJSON = array(
@@ -41,10 +42,13 @@
             $json = json_encode($phpObj, JSON_PRETTY_PRINT);
             $user_ID = $user['user_id'];
 
+            
+            $deliveryDate = date("Y-m-d", strtotime($date . " +7 days"));
+
             $success = false;
             while($success == false) {
                 try {
-                    $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, status) VALUES('{$user_ID}', '{$orderID}', '{$json}', $status)";
+                    $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, delivery) VALUES('{$user_ID}', '{$orderID}', '{$json}', '{$deliveryDate}')";
                     $run = mysqli_query($conn, $updateOrder);
                     $success = true;
                 }catch(mysqli_sql_exception $e) {

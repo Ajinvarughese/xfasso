@@ -1,5 +1,4 @@
 <?php 
-    
     require_once './Orders.php';
     require_once '../../connections/productdb.php';
 
@@ -21,13 +20,13 @@
     
 
     
-    $querOrder = "SELECT * FROM orders WHERE user_id='$userID' AND status = 200";
+    $querOrder = "SELECT * FROM orders WHERE user_id='$userID'";
     $runOrder = mysqli_query($conn, $querOrder);
     $res = mysqli_fetch_assoc($runOrder);
     $orderID = $res['order_id'];
     
     
-    $get = "SELECT * FROM orders WHERE user_id = '{$userID}' AND status = 200";
+    $get = "SELECT * FROM orders WHERE user_id = '{$userID}'";
     $run = mysqli_query($conn, $get);
 
     if(mysqli_num_rows($run)>0) {
@@ -64,6 +63,7 @@
                 
                 $phpObj['products'][$i]['order_id'] = $orderID;
                 $phpObj['products'][$i]['date'] = $phpObj['payment']['date'];
+                $phpObj['products'][$i]['time'] = $phpObj['payment']['time'];
                 $i++;
             }
             

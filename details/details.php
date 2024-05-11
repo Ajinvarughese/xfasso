@@ -119,7 +119,7 @@
                         position: relative;
                     }
                     #cart_num {
-                        background: rgba(239, 50, 50, 0.811);
+                        background: rgba(239, 50, 50, 0.96);
                         padding: 3px;
                         height: 18px;
                         display: flex;
