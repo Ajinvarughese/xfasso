@@ -1,6 +1,7 @@
 <?php 
     require '../../../../connections/productdb.php';
 
+
     if(isset($_COOKIE['XassureUser'])) {
         $emailId = $_COOKIE['XassureUser'];
 
@@ -59,8 +60,11 @@
                 $orderID = $phpObj['payment']['order_id'];
                 $paymentID = $phpObj['payment']['payment_id'];
                 $userDetails = $phpObj['user'];
-                $deliveryDate = $res['delivery'];
-
+                
+                
+                $deliveryDate = date("F d", strtotime($res['delivery']));
+                $orderDate = date("F d, Y", strtotime($res['date']));
+                $orderDate2 = date("F d", strtotime($orderDate));
             }
         }else {
             echo "
@@ -94,7 +98,7 @@
 
     <style>
         *{
-            font-size: clamp(9px, 2.5vw, 18px);
+            font-size: clamp(14.7px, 2.5vw, 16.4px);
         }
         .id {
             opacity: 0.9;
@@ -158,8 +162,10 @@
     <style>
         .main {
             max-width: 940px;
-            border: 1px solid;
-        }        
+            display: block;
+            margin: 0 auto;
+        }  
+
         .prodImg {
             max-width: 120px;
             max-height: 140px;
@@ -176,32 +182,113 @@
         }
         .card {
             display: flex;
-            border: 1px solid;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 0.6rem 2%;
+        }
+        .date {
+            font-weight: 500;
+        }
+        .orderDetails {
+            display: flex;
             
+        }
+        .del, .card{
+            flex-grow: 1;
+        }
+        .date {
+            border: 1px solid;
+        }
+        .tiasd {
+            font-weight: 600;
+        }
+        .ainw {
+            margin-top: 9px;
+        }
+        .ainw >div {
+            margin-top: 6px;
+        }
+        .content span {
+            opacity: 0.8;
+            font-size: calc(1em - 1.6px);
+        }
+        .imp {
+            border-bottom: 1px solid #c2c2c2c2;
+            padding: 21px 7px 12px 7px;
+            font-weight: 300;
+        }
+        .imp p:nth-child(2) {
+            margin-top: 4px;
+        }
+        .orderID {
+            margin-top: 1.3rem;
+            padding: 0 7px;
+            font-weight: 400;
+            border-bottom: 1px solid #c2c2c2c2;
+            padding-bottom: 0.5rem;
+        }
+        .orderID span {
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        .orderID span,.orderID p {
+            font-size: calc(1em - 1.5px);
+        }
+        .orderDetails {
+            padding: 0 7px;
+        }
+        .del {
+            padding: 0.6rem 7px;
+            border: 1px solid;
+        }
+
+        @media (max-width: 762px) {
+            .orderDetails {
+                flex-direction: column;
+            }
         }
     </style>
     <div class="main">
         <div class="imp">
-            <p>order is made for AJIN VARUGHESE</p>
-            <p>ordered on 29-10-2005</p>
+            <p>order is made for <?php echo $userDetails['user_name'] ?></p>
+            <p>ordered on <?php echo $orderDate?></p>
+        </div>
+        <div class="orderID">
+            <span>order id: </span><p> &nbsp;<?php echo $orderID;?></p>
         </div>
         <div class="orderDetails">
-            <div class="orderID">
-                <span>order id:</span><p><?php echo $orderID;?></p>
-            </div>
             <div class="card">
                 <div class="content">
-                    <div class="tit">HELIX</div>
+                    <div class="tiasd">HELIX</div>
 
-                    <div class="size">size: M</div>
-                    <div class="quantity">quantity: 4</div>
-                    <div class="price">₹599</div>
+                    <div class="ainw">
+                        <div class="size"> <span>size: </span>  M</div>
+                        <div class="quantity"><span>quantity: </span>  4</div>
+                        <div class="price"><span>price: </span> ₹599</div>
+                    </div>
                     
                 </div>
                 <div class="prodImg">
-                    <img src="../../../../resources/504.jpg" alt="">
+                    <img src="../../../../download.jpeg" alt="">
+                </div> 
+            </div>
+            <div class="del">
+                <div class="date">
+                    <div class="scale">long scale</div>
+                    <div class="dateForm">
+                        <div class="orderDate">
+                            Order Confirmed
+                            <?php echo $orderDate2;?>
+                        </div>
+                        <div class="expected">
+                            Expected delivery
+                            <?php echo $deliveryDate; ?>
+                        </div>
+                    </div>
                 </div>
-                <?php echo $deliveryDate; ?>
+                <div style="font-size: 12px; opacity:0.7;" >
+                    *delivery date may vary according to the provider 
+                </div>
             </div>
         </div>
     </div>

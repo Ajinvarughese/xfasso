@@ -53,9 +53,21 @@ function orderProducts(json="", hasValue=false) {
 }
 
 
-fetch('../../../components/orders/order.php')
-    .then((result) => {
-        return result.json();
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+let userId = getCookie('XassureUser');
+
+
+fetch(`../../../components/orders/order.php?userId=${userId}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
     })
     .then((outcome) => {
         outcome.products.sort((a, b) => new Date(b.date) - new Date(a.date));  

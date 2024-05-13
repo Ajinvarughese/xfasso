@@ -1,10 +1,6 @@
 <?php 
 
-if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
-    // Show 404 error
-    header("Location: ../../errors/errors.php?errorID=404");
-    exit();
-}
+
 
 class Orders {
     private $order_id; 
