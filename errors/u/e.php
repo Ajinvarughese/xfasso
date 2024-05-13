@@ -80,11 +80,9 @@
         ");
     }
     else if($errorID == 404 && $redirect) {
-        return ("
-            <script>
-                window.location.href = '../404/';
-            </script>
-        ");
+        header("HTTP/1.0 404 Not Found");
+        include("/xampp/htdocs/xfasso/404/index.html"); // Include your custom 404 page content
+        exit();
     }
  }
 ?>
