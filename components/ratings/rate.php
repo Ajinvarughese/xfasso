@@ -29,7 +29,7 @@
     if(isset($_POST["postRating"])) {
         $starCount = filter_var($_POST['starCount'], FILTER_SANITIZE_NUMBER_INT);
         $desc = filter_var($_POST['description'], FILTER_SANITIZE_SPECIAL_CHARS); 
-        $prodId = 5;
+        $prodId = 554;
         $day = date("F d Y");
         $rating = new Ratings($prodId, $starCount, $user_id, $desc, $day);
 

@@ -85,8 +85,19 @@
 
                 //scale level
                 $scale = $res['order_status'];
-                $scaleLevel = ($scale/3)*100;
-                echo $scaleLevel;
+                switch($scale) {
+                    case 1:
+                        $scaleLevel = 7;
+                        break;
+                    case 2:
+                        $scaleLevel = 57;
+                        break;
+                    case 3:
+                        $scaleLevel = 100;
+                        break;
+                    default:
+                        $scaleLevel = 0;
+                }
             }
         }else {
             echo "
@@ -219,18 +230,17 @@
         }
         .dateForm {
             display: flex;
+            margin: 0.6rem;
             align-items: center;
+            justify-content: space-between;
             gap: 8rem;
         }
         .dateForm > div > p {
             font-size: calc(1em - 2px);
-            font-weight: 400;
+            font-weight: 600;
         }
         .del, .card{
             flex-grow: 1;
-        }
-        .date {
-            border: 1px solid;
         }
         .tiasd {
             font-weight: 600;
@@ -271,6 +281,7 @@
         .del {
             padding: 0.6rem 7px;
             border-top: 1px solid #c2c2c2c2;
+            border-bottom: 1px solid #c2c2c2c2;
         }
         
         .processing {
@@ -285,6 +296,41 @@
             max-width: 100%;
             max-height: 100%;
         }
+        .scale {
+            width: 96%;
+            margin: 0.8rem auto;
+            position: relative;
+        }
+        #scale {
+            border: 3px solid;
+            align-items: center;
+            border-radius: 9px;
+            color: #4BAE4F;
+            display: flex;     
+            justify-content: space-between;    
+            height: 0;
+            transition: 3s ease;   
+        }
+        
+        .tick {
+            width: 18px;
+            height: 18px;
+        }
+        .tick img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .tkwn {
+            position: absolute;
+            top: -50%;
+            left: 0;
+            transform: translate(0, -90%);
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            height: 100%;
+        }
 
         @media (max-width: 762px) {
             .orderDetails {
@@ -292,6 +338,39 @@
             }
             .main {
                 padding: 0 5%;
+            }
+
+            .date {
+                flex-direction: row;
+            }
+            .dateForm {
+                margin-top: 0.8rem;
+                gap: 2.7rem;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+            .scale {
+                width: 0;
+                margin: 0.3rem 0.6rem;
+                padding-top: 0.9rem;
+            }
+            #scale {
+                width: 0;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: 3s ease;   
+            }
+
+            .tkwn {
+                position: absolute;
+                top: 0;
+                left: 60%;
+                transform: translate(-35%, 0%);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+                width: fit-content;
             }
         }
     </style>
@@ -323,10 +402,23 @@
             </div>
 
 
-            <div class="del">
+            <div class="del" id="del">
                 <div class="date">
-                    <div id="scale" class="scale">
-                        long scale
+                    <div class="scale">
+                        <div id="scale">
+                        </div>
+
+                        <div class="tkwn">
+                            <div class="tick">
+                                <img id="scale1" src="">
+                            </div>
+                            <div class="tick">
+                                <img id="scale2" src="">
+                            </div>
+                            <div class="tick">
+                                <img id="scale3" src="">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="dateForm">
@@ -350,17 +442,74 @@
                         </div>
                     </div>
                 </div>
-                <div style="font-size: 12px; opacity:0.7;" >
+                <div style="margin-top: 14px; font-size: 12px; opacity:0.7;" >
                     *delivery date may vary according to the provider 
                 </div>
             </div>
 
-            
+
+            <div class="rateProduct">
+                <form action="../../../../components/ratings/rate.php" method="post">
+                    
+                </form>
+            </div>
         </div>
     </div>
 </body>
 <script>
     let scaleLevel = <?php echo $scaleLevel;?>;
+
+
+    let scale1 = document.getElementById('scale1');
+    let scale2 = document.getElementById('scale2');
+    let scale3 = document.getElementById('scale3');
+    let del =document.getElementById('del');
+
+    switch (scaleLevel) {
+        case 7:
+            scale1.setAttribute("src", '../../../../resources/accept.png');
+            scale2.setAttribute("src", '../../../../resources/acceptGrey.png');
+            scale3.setAttribute("src", '../../../../resources/acceptGrey.png');
+            break;
+        case 57:
+            scale1.setAttribute("src", '../../../../resources/accept.png');
+            scale2.setAttribute("src", '../../../../resources/accept.png');
+            scale3.setAttribute("src", '../../../../resources/acceptGrey.png');
+            break;
+        case 100:
+            scale1.setAttribute("src", '../../../../resources/accept.png');
+            scale2.setAttribute("src", '../../../../resources/accept.png');
+            scale3.setAttribute("src", '../../../../resources/accept.png');
+            break;
+        default:
+            del.innerHTML = "Order failed";
+            break;
+    }
+
+
+    let scale = document.getElementById('scale');
+        
+    if(window.innerWidth <= 762) {
+        scale.style.height = `${scaleLevel}%`;
+        if(scaleLevel === 7) {
+            scale.style.height = `${scaleLevel+3}%`;
+        }
+    }else {
+        scale.style.width = `${scaleLevel}%`;
+    }
+    window.addEventListener('resize', ()=> {
+        if(window.innerWidth <= 762) {
+            scale.style.height = `${scaleLevel}%`;
+            scale.style.width = 0;
+            if(scaleLevel === 7) {
+                scale.style.height = `${scaleLevel+3}%`;
+            }
+        }else {
+            scale.style.height = 0;
+            scale.style.width = `${scaleLevel}%`;
+        }
+    })
+
     function user(x) {
         if(x === true) { 
             window.location.href = '../../edit-profile.php';
