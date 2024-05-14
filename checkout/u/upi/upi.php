@@ -48,7 +48,7 @@
             $success = false;
             while($success == false) {
                 try {
-                    $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, delivery) VALUES('{$user_ID}', '{$orderID}', '{$json}', '{$deliveryDate}')";
+                    $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, order_status, delivery) VALUES('{$user_ID}', '{$orderID}', '{$json}', 1,'{$deliveryDate}')";
                     $run = mysqli_query($conn, $updateOrder);
                     $success = true;
                 }catch(mysqli_sql_exception $e) {

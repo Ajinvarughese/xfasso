@@ -70,8 +70,8 @@ fetch(`../../../components/orders/order.php?userId=${userId}`)
         return response.json();
     })
     .then((outcome) => {
-        outcome.products.sort((a, b) => new Date(b.date) - new Date(a.date));  
-        outcome.products.reverse();    
+        // outcome.products.sort((a, b) => new Date(b.date) - new Date(a.date));  
+        outcome.products.reverse()
         orderProducts(outcome, true);
     })
     .catch((error) => {
