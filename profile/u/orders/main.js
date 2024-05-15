@@ -1,7 +1,8 @@
 function showContent(imageData, product_name, product_size, date, orderID, prodID) {
     let orders = document.getElementById("orders");
     let imageType = "image/jpeg";
-    
+    orderID = encodeURIComponent(orderID);
+    prodID = encodeURIComponent(prodID); 
     orders.innerHTML += 
     `
         <a href='order-details/order-details.php?orderID="${orderID}"&productID="${prodID}"'>
@@ -59,8 +60,7 @@ function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
 }
-let userId = getCookie('XassureUser');
-
+let userId = encodeURIComponent(getCookie('XassureUser'));
 
 fetch(`../../../components/orders/order.php?userId=${userId}`)
     .then(response => {

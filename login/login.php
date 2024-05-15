@@ -1,13 +1,5 @@
 <?php 
     require '../connections/productdb.php';
-    if(isset($_COOKIE['XassureUser'])) {
-        
-        echo "
-            <script>
-                window.location.href = '../';
-            </script>
-        ";
-    }
 ?>
 
 
@@ -128,18 +120,25 @@
                             if(password_verify($password, $row['password'])) {
                                 $text = $email;
                                 //encrypting
-                                $ciphering = "AES-128-CTR";
-                                $iv_length = openssl_cipher_iv_length($ciphering);
-                                $options = 0;
-                                $encryption_iv = '1234567891021957';
-                                $encryption_key = "xfassoKey";
-                                $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
-                                
+                                function decrypting($text) {
+                                    $ciphering = "AES-128-CTR";
+                                    $iv_length = openssl_cipher_iv_length($ciphering);
+                                    $options = 0;
+                                    $encryption_iv = '1234567891021957';
+                                    $encryption_key = "xfassoKey";
+                                    $encrypted_id = openssl_encrypt($text, $ciphering, $encryption_key, $options, $encryption_iv);
+                                    
+                                    return $encrypted_id;
+                                }
+                                $encrypted_id = decrypting($text);
+                                $u = uniqid("PAssw");
+                                $encrypted_password = decrypting($password." {$u}");
 
                                 echo "
                                     <script>
                                         var cookieExpires = new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)).toUTCString();
                                         document.cookie = `XassureUser={$encrypted_id}; expires=`+cookieExpires+`; path=/`;
+                                        document.cookie = `X9wsWsw32={$encrypted_password}; expires=`+cookieExpires+`; path=/`;
                                         window.location.href ='../';
                                     </script>
                                  ";

@@ -4,8 +4,15 @@
     
     function product_to_cart() {
         require('../connections/productdb.php');
+        require_once '../checkexistence/checkExistence.php';
         if(isset($_COOKIE['XassureUser'])) {
-            $emailId = $_COOKIE['XassureUser'];
+           
+            $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
+            $cookiePassword = mysqli_escape_string($conn, $_COOKIE['X9wsWsw32']);
+
+            if(checkUserExistence($conn, $emailId, $cookiePassword) == false) {
+                header('Location: ../signup/signup.html');
+            }
     
             //decrypting
             $ciphering = "AES-128-CTR";

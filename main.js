@@ -110,8 +110,10 @@ if (getCookie("XassureUser")) {
 
 function logoutSignup() {
   if (getCookie("XassureUser")) {
-    document.cookie =
-      "XassureUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "XassureUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    if(getCookie("X9wsWsw32")) {
+      document.cookie = "X9wsWsw32=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
     window.location.href = "./";
   } else {
     window.location.href = "./signup/signup.html";

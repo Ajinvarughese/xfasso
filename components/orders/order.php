@@ -1,10 +1,17 @@
 <?php 
     require_once './Orders.php';
     require_once '../../connections/productdb.php';
+    require_once '../../checkexistence/checkExistence.php';
 
     //user
     if(isset($_GET['userId'])) {
         $emailId = $_GET['userId'];
+        $emailId = mysqli_escape_string($conn, $emailId);
+        $cookiePassword = mysqli_escape_string($conn, $_COOKIE['X9wsWsw32']);
+
+        if(checkUserExistence($conn, $emailId, $cookiePassword) == false) {
+            echo "Error Occured";
+        }
 
         //decryption
         $ciphering = "AES-128-CTR";
