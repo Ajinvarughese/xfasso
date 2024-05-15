@@ -28,6 +28,12 @@ body {
     padding: 0.8rem 5.7%;
     background: #12263a;
 }
+
+.logo {
+    cursor: pointer;
+}
+
+
 .user {
     width: 24px;
     height: 24px;

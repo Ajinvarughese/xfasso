@@ -1,6 +1,8 @@
 <?php 
     require '../../../../connections/productdb.php';
     require_once '../../../../checkexistence/checkExistence.php';
+    session_start();
+
 
     if(isset($_COOKIE['XassureUser'])) {
         $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
@@ -35,7 +37,7 @@
         if(isset($_GET['orderID']) && isset($_GET['productID'])) {
             $orderID = $_GET['orderID'];
             $productID = $_GET['productID'];
-            
+
             $ciphering = "AES-128-CTR"; 
             $options = 0;
             //decrypting
@@ -46,10 +48,17 @@
             $splitId = explode(' ', $decrypted_id);
 
             $decrypted_id = $splitId[1];
-
+            
+            $orderId = mysqli_escape_string($conn, $decrypted_id);
+            $decrypted_id = mysqli_escape_string($conn, $decrypted_id);
+            
             $quer = "SELECT * FROM orders WHERE order_id ={$orderID} AND user_id='{$user_id}'";
             $runQ = mysqli_query($conn, $quer);
             if(mysqli_num_rows($runQ)>0) {
+
+                $_SESSION['USER_ID_ORDERDETAILS'] = $user_id;
+                $_SESSION['PRODUCT_ID_ORDERDETAILS'] = $decrypted_id;
+
                 $res = mysqli_fetch_assoc($runQ);
                 $phpObj = json_decode($res['order_json'], true);
                 
@@ -105,11 +114,7 @@
                         $scaleLevel = 0;
                 }
             }else {
-                echo "
-                    <script>
-                        window.location.href='../';
-                    </script>
-                ";
+                header("Location: ../../../../errors/errors.php?errorID=404");
             }
         }else {
             echo "
@@ -163,7 +168,7 @@
         <div style="cursor: pointer;" onclick="user(false)" id="back" class="back">
             <img src="../../../../resources/left-arrow.png" width="32px">
         </div>
-        <div class="logo">
+        <div onclick="{window.location.href='../../../../';}" class="logo">
             <h1>XFASSO</h1>
         </div>
         <div class="prof">
@@ -343,8 +348,19 @@
             justify-content: space-between;
             height: 100%;
         }
-
+        .scaleOuter {
+            border: 3px solid #c2c2c2c2;
+            display: flex;
+            align-items: center;
+            height: 0;
+        }
         @media (max-width: 762px) {
+            .scaleOuter {
+                display: flex;
+                height: 100%;
+                align-items: flex-start;
+                justify-content: center;
+            }
             .orderDetails {
                 flex-direction: column;
             }
@@ -417,18 +433,20 @@
             <div class="del" id="del">
                 <div class="date">
                     <div class="scale">
-                        <div id="scale">
+                        <div class="scaleOuter">
+                            <div id="scale">
+                            </div>
                         </div>
 
                         <div class="tkwn">
                             <div class="tick">
-                                <img id="scale1" src="">
+                                <img id="scale1">
                             </div>
                             <div class="tick">
-                                <img id="scale2" src="">
+                                <img id="scale2">
                             </div>
                             <div class="tick">
-                                <img id="scale3" src="">
+                                <img id="scale3">
                             </div>
                         </div>
                     </div>
@@ -436,13 +454,13 @@
                     <div class="dateForm">
                         <div class="orderDate">
                            <p>
-                             order Confirmed
+                             order confirmed
                             <?php echo $orderDate2;?>
                            </p>
                         </div>
                         <div class="processing">
-                           <p>order Processing</p>
-                           <div class="timer">
+                           <p id="orderStatus">order processing</p>
+                           <div id="orderTimer" class="timer">
                                 <img src="../../../../resources/timer.gif" alt="">
                            </div>
                         </div>
@@ -459,16 +477,113 @@
                 </div>
             </div>
 
+            <style>
+                .rateProduct {
+                    min-height: 180px;
+                    padding-top: 1rem;     
+                }
+                .rateProduct h1{
+                    margin-bottom: 0.7rem;
+                    font-size: calc(1em + 3px);
+                    width: fit-content;
+                }
+                
+                .starCount input{
+                    display: none;
+                }
+                .imageStar {
+                    width: 34px;
+                    height: 34px;
+                    cursor: pointer;
+                    transition: 0.18s ease;
+                }
+                .imageStar:hover {
+                    transform: scale(1.1);
+                }
+                .imageStar img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+                .ayw {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.8rem;
+                }
+                .aiw {
+                    display: flex;
+                    gap: 0.8rem;
+                }
+                .aiw p {
+                    font-size: 12px;
+                }
+                @media (max-width: 269px) {
+                    .imageStar {
+                        width: 24px;
+                        height: 24px;
+                    }
+                    .aiw p {
+                        font-size: 8px;
+                        gap: 0.1rem;
+                    }
+                }
+            </style>
 
             <div class="rateProduct">
+                <h1>Rate this product <hr></h1>
                 <form action="../../../../components/ratings/rate.php" method="post">
-                    
+                    <div class="starCount">
+                        <div class="ayw">
+                            <input type="radio" name="stars" value="1" id="star1">
+                            <input type="radio" name="stars" value="2" id="star2">
+                            <input type="radio" name="stars" value="3" id="star3">
+                            <input type="radio" name="stars" value="4" id="star4">
+                            <input type="radio" name="stars" value="5" id="star5">
+
+                            <label for="star1">
+                                <div class="imageStar">
+                                    <img id="starImage1" src="../../../../resources/empty-star.png">
+                                </div>
+                            </label>
+                            <label for="star2">
+                                <div class="imageStar">
+                                    <img id="starImage2" src="../../../../resources/empty-star.png">
+                                </div>
+                            </label>
+                            <label for="star3">
+                                <div class="imageStar">
+                                    <img id="starImage3" src="../../../../resources/empty-star.png">
+                                </div>
+                            </label>
+                            <label for="star4">
+                                <div class="imageStar">
+                                    <img id="starImage4" src="../../../../resources/empty-star.png">
+                                </div>
+                            </label>
+                            <label for="star5">
+                                <div class="imageStar">
+                                    <img id="starImage5" src="../../../../resources/empty-star.png">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="aiw">
+                            <p>poor</p>
+                            <p>average</p>
+                            <p>good</p>
+                            <p>great</p>
+                            <p>excellent</p>
+                        </div>
+                        <input type="reset" id="reset" value="reset">
+                    </div>
+                    <input type="text" name="starCount" placeholder="star rating">
+                    <input type="text" name="description" placeholder="description">
+                    <input type="submit" name="postRating">
                 </form>
             </div>
         </div>
     </div>
 </body>
 <script>
+    
     let scaleLevel = <?php echo $scaleLevel;?>;
 
 
@@ -492,6 +607,8 @@
             scale1.setAttribute("src", '../../../../resources/accept.png');
             scale2.setAttribute("src", '../../../../resources/accept.png');
             scale3.setAttribute("src", '../../../../resources/accept.png');
+            document.getElementById('orderStatus').innerHTML = "order processed";
+            document.getElementById('orderTimer').style.display = 'none';
             break;
         default:
             del.innerHTML = "Order failed";
@@ -502,25 +619,59 @@
     let scale = document.getElementById('scale');
         
     if(window.innerWidth <= 762) {
-        scale.style.height = `${scaleLevel}%`;
-        if(scaleLevel === 7) {
-            scale.style.height = `${scaleLevel+3}%`;
+        scale.style.height = `${scaleLevel+3}%`;
+        if(scaleLevel === 100) {
+            scale.style.height = `${scaleLevel-3.4}%`;
         }
     }else {
         scale.style.width = `${scaleLevel}%`;
     }
     window.addEventListener('resize', ()=> {
         if(window.innerWidth <= 762) {
-            scale.style.height = `${scaleLevel}%`;
+            scale.style.height = `${scaleLevel+3}%`;
             scale.style.width = 0;
-            if(scaleLevel === 7) {
-                scale.style.height = `${scaleLevel+3}%`;
+            if(scaleLevel === 100) {
+                scale.style.height = `${scaleLevel-3.4}%`;
             }
         }else {
             scale.style.height = 0;
             scale.style.width = `${scaleLevel}%`;
         }
     })
+
+    let star = [];
+    
+    for (let i = 1; i <= 5; i++) {
+        let starElement = document.getElementById(`star${i}`);
+        star.push(starElement); 
+    }
+
+    for (let j = 0; j < 5; j++) {
+        let empty = '../../../../resources/empty-star.png';
+        let filled = '../../../../resources/icons8-star-50.png';
+        star[j].addEventListener('change', () => {
+            for (let i = 0; i <= j; i++) {
+                if (star[i].checked) {
+                    for(let k=0; k<=i; k++) {
+                        document.getElementById(`starImage${k + 1}`).src = filled;
+                        
+                        for(let m=4; m>=k+1; m--){
+                            document.getElementById(`starImage${m + 1}`).src =empty;
+                        }
+                    }
+                    
+                }
+            }
+        });
+    }
+
+    document.getElementById("reset").addEventListener("click", ()=> {
+        let empty = '../../../../resources/empty-star.png';
+        for (let i = 0; i < 5; i++) {
+            document.getElementById(`starImage${i + 1}`).src =empty;
+        }
+    })
+
 
     function user(x) {
         if(x === true) { 
