@@ -83,9 +83,28 @@
                 $prodQuantity = $phpObj['products'][$i]['quantity'];
                 $prodPrice = $phpObj['products'][$i]['product_price'];
                 
+                //Address page
+                $userAddress = $phpObj['user']['user_address'];
+                $fullName = $userAddress['fullName'];
+                $phone = $userAddress['phone'];
+                $altPhone = $userAddress['altPhone'];
+                if($altPhone != "") {
+                    $altPhone = ", ".$altPhone;
+                }
+                $address = $userAddress['address'];
+                $place = $userAddress['place'];
+                $landmark = $userAddress['landmark'];
+
+                $addressContent = "
+                    <p>{$fullName}</p>
+                    <p>{$address}, {$place}, {$landmark}</p>
+                    <p>{$phone}{$altPhone}</p>
+                ";
+
                 //Product Image
                 $querProduct = "SELECT * FROM products WHERE product_id = {$decrypted_id}";
                 $runProduct = mysqli_query($conn, $querProduct);
+
                 if(mysqli_num_rows($runProduct)>0) {
                     $resProduct = mysqli_fetch_assoc($runProduct);
                     $imageData = base64_encode($resProduct['product_image']);
@@ -424,6 +443,12 @@
                 width: fit-content;
             }
         }
+        .apw {
+            transition: 0.3s ease;
+        }
+        .apw:hover {
+            transform: scale(1.07);
+        }
     </style>
     <div class="main">
         <div class="imp">
@@ -431,7 +456,7 @@
             <p>ordered on <?php echo $orderDate?></p>
         </div>
         <div class="orderID">
-            <span>order id: </span><p> &nbsp;<?php echo $orderID;?></p>
+            <span>order id: </span><p style="opacity: 0.8;"> &nbsp;<?php echo $orderID;?></p>
         </div>
         <div class="orderDetails">
             <div class="card">
@@ -445,11 +470,22 @@
                     </div>
                     
                 </div>
-                <div class="prodImg">
-                    <?php echo "
-                        <img src='data:$imageType;base64,$imageData' alt='{$prodName} image'>
-                    "?>
-                </div> 
+                <?php 
+                    $productId = "productIdOfXfassoYes {$decrypted_id}"; 
+                    $ciphering = "AES-128-CTR";
+                    $iv_length = openssl_cipher_iv_length($ciphering);
+                    $options = 0;
+                    $encryption_iv = '1234567891021957';
+                    $encryption_key = "xfassoKey";
+                    $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
+                ?>
+                <a class="apw" href="<?php echo "../../../../details/details.php?productId={$encrypted_id}";?>">
+                    <div class="prodImg">
+                        <?php echo "
+                            <img src='data:$imageType;base64,$imageData' alt='{$prodName} image'>
+                        "?>
+                    </div> 
+                </a>
             </div>
 
 
@@ -502,8 +538,8 @@
 
             <style>
                 .rateProduct {
-                    min-height: 180px;
-                    padding: 1rem 0;     
+                    padding: 1rem 0.6rem;  
+                    border-bottom: 1px solid #c2c2c2c2; 
                 }
                 .rateProduct h1{
                     margin-bottom: 0.7rem;
@@ -541,11 +577,12 @@
                 }
 
                 #reset {
-                    border: none;
-                    background: none;
+                    border: 1px solid #c2c2c2c2;
+                    padding: 5px 18px;
+                    background: #c2c2c2c2;
                     cursor: pointer;
-                    text-decoration: underline;
                     font-weight: 500;
+                    border-radius: 4px;
                     transition: 0.2s ease;
                     width: fit-content;
                 }
@@ -560,7 +597,6 @@
                 }
                 .desc {
                     display: flex;
-                    flex-direction: column;
                     gap: 0.6rem;
                 }
                 .description {
@@ -607,6 +643,28 @@
                         font-size: 8px;
                         gap: 0.1rem;
                     }
+                }
+                .editImg {
+                    width: 19px;
+                    height: 19px;
+                }
+                .editImg img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    display: block;
+                }
+                #editBtn {
+                    margin-top: 0.6rem;
+                    display: flex;
+                    font-weight: 500;
+                    gap: 0.5rem;
+                    align-items: center;
+                    cursor: pointer;
+                    width: fit-content;
+                    transition: 0.3s ease;
+                }
+                #editBtn:hover {
+                    transform: scale(1.03);
                 }
             </style>
             <!-- MAKE rating form available only when product is delivered to the user. and also make reset button to decription too... good job mahnn -->
@@ -656,14 +714,121 @@
                             <p>excellent</p>
                         </div>
                     </div>
-                    <div class="inputs">
-                        <input type="reset" id="reset" value="reset">
-                        <div class="desc">
+                    <div id="editArea">
+                        <div id="inputs" class="inputs">
                             <textarea name="description" class="description" id="description" placeholder="description..."></textarea>
-                            <input type="submit" class="submit" value="submit" name="postRating">
+                            <div class="desc">
+                                <input type="reset" style="display: none;" id="resetInput" value="reset">
+                                <label for="resetInput" id="reset" onclick="reset()">reset</label>
+                                <input type="submit" class="submit" value="submit" name="postRating">
+                            </div>
+                        </div>
+                        <div id="editBtn">
+                            <p>Edit rating</p>
+                            <div class="editImg">
+                                <img src="../../../../resources/edit.png" alt="">
+                            </div>
                         </div>
                     </div>
                 </form>
+            </div>
+            
+
+            <style>
+                .Stitle {
+                    padding: 0.6rem 0.7rem;
+                    font-size: 14px;
+                    border-bottom: 1px solid #c2c2c2c2;
+                }
+                .cont {
+                    display: flex;
+                    gap: 1.4rem;
+                    padding: 0.8rem 0.7rem;
+                }
+                .cont > p {
+                    font-size: 14px;
+                }
+                .ho {
+                    max-width: 24px;
+                    max-height: 24px;
+                }
+                .ho img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    display: block;
+                }
+                .ad {
+                    max-width: 324px;
+                }
+                @media (max-width: 340px) {
+                    .ad > p {
+                        font-size: 12.3px;
+                    }
+                }
+                .address {
+                    border-bottom: 1px solid #c2c2c2c2;
+                }
+            </style>
+            <div class="address">
+                <div class="Stitle"><p style="opacity: 0.8; font-size:14px;">shipping details</p></div>
+                <div class="cont">
+                    <div class="ho">
+                        <img src="../../../../resources/icons8-home.gif" alt="home">
+                    </div>
+                    <div class="ad">
+                        <?php echo $addressContent; ?>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .list {
+                    list-style-type: none;
+                }
+                .list li {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0.8rem 0.6rem;
+                }
+                .awbERII29_2j {
+                    font-weight: 600;
+                    opacity: 0.9;
+                }
+                .asl {
+                    border-top: 1px solid #c2c2c2c2;
+                    padding: 0.5rem 0.4rem !important;
+                    border-bottom: 1px solid #c2c2c2c2;
+                }
+            </style>
+
+            <div class="payment">
+                <div class="Stitle"><p style="opacity: 0.8; font-size:14px;">price details</p></div>
+                <ul class="list">
+                    <li>
+                        <p class="awbERII29_2j">Product price</p>
+                        <p>₹899</p>
+                    </li>
+                    <li>
+                        <p class="awbERII29_2j">Delivery charge</p>
+                        <p>Free</p>
+                    </li>
+                    <li>
+                        <p class="awbERII29_2j">Payment method</p>
+                        <p>UPI</p>
+                    </li>
+                    <li class="asl">
+                        <p class="awbERII29_2j">Total amount</p>
+                        <p>₹899</p>
+                    </li>    
+                </ul>
+            </div>
+
+            <div class="more">
+
+            </div>
+
+            <div class="email">
+
             </div>
         </div>
     </div>
@@ -681,7 +846,6 @@
             ";
         }  
     ?>
-
 
     let scaleLevel = <?php echo $scaleLevel;?>;
 
@@ -714,6 +878,8 @@
             break;
     }
 
+
+    
 
     let scale = document.getElementById('scale');
         
@@ -749,6 +915,7 @@
         let empty = '../../../../resources/empty-star.png';
         let filled = '../../../../resources/icons8-star-50.png';
         star[j].addEventListener('change', () => {
+            warning.innerHTML = "";
             for (let i = 0; i <= j; i++) {
                 if (star[i].checked) {
                     for(let k=0; k<=i; k++) {
@@ -772,19 +939,40 @@
     });
 
     let description = document.getElementById('description');
+
+    function reset() {
+        description.textContent = "";
+    }
+    let editBtn = document.getElementById('editBtn');
+    let inputs = document.getElementById('inputs');
+    let starSet = false;
+    let descriptionSet = false;
     <?php 
         if(isset($starCount)) {
             echo "
                 star[{$starCount}-1].checked = true;
                 thing($starCount);
+                starSet = true;
             ";
         }
         if(isset($description)) {
             echo "
+                descriptionSet = true;
                 description.innerHTML = '{$description}';
             ";
         }
     ?>   
+
+    if(starSet && descriptionSet) {
+        inputs.style.display = 'none';
+    }else {
+        editBtn.style.display = 'none';
+    }
+
+    editBtn.addEventListener('click', ()=> {
+        inputs.style.display = 'flex';
+        editBtn.style.display = 'none';
+    })
     
     function thing(num) {
         let empty = '../../../../resources/empty-star.png';
@@ -804,27 +992,28 @@
         }
     }
 
+    function handleSubmit() {
+        let starFilled;
+        for(let i=0; i<5; i++) {
+            if(star[i].checked) {
+                starFilled = true;
+                break;
+            }
+        } 
+        if(!starFilled || description.value === "") {
+            if(!starFilled && description.value === "") {
+                return true;
+            }
+            warning.innerHTML = "please fill out all the fields";
+            warning.style.color = "red";
+            return false;
+        }
+        return true;
+    }
 
-    // function handleSubmit() {
-    //     let starFilled;
-    //     for(let i=0; i<5; i++) {
-    //         if(star[i].checked) {
-    //             starFilled = true;
-    //             break;
-    //         }else {
-    //             starFilled = false;
-    //         }
-    //     } 
-    //     if(!starFilled) {
-    //         if(description.value == "") {
-    //             warning.innerHTML = "please fill all fields";
-    //             warning.style.color = 'red';
-    //         }
-    //         return false;
-    //     }
-    //     return true;
-    // }
-
+    description.addEventListener("input", ()=> {
+        warning.innerHTML = "";
+    });
     
 </script>
 </html>
