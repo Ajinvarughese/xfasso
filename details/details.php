@@ -559,7 +559,7 @@
                                                 $day = $ratingArray[0][$i][$j]['day'];
                                                 
                                                 // get username
-                                                $getUserQ = "SELECT username FROM users WHERE user_id = $jsonUserID";
+                                                $getUserQ = "SELECT username FROM users WHERE user_id = '$jsonUserID'";
                                                 $res = mysqli_fetch_assoc(mysqli_query($conn, $getUserQ));
 
                                                 

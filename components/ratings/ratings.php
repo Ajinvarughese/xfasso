@@ -5,11 +5,11 @@
     
 
     class Ratings {
-        public $product_id;
-        public $starCount;
-        public $userId;
-        public $description;
-        public $day;
+        private $product_id;
+        private $starCount;
+        private $userId;
+        private $description;
+        private $day;
 
         public function __construct($product_id, $starcount, $userId, $description, $day) {
             $this->product_id = $product_id;

@@ -56,6 +56,7 @@
             $runQ = mysqli_query($conn, $quer);
             if(mysqli_num_rows($runQ)>0) {
 
+                //for rating product
                 $_SESSION['USER_ID_ORDERDETAILS'] = $user_id;
                 $_SESSION['PRODUCT_ID_ORDERDETAILS'] = $decrypted_id;
 
@@ -89,6 +90,9 @@
                     $resProduct = mysqli_fetch_assoc($runProduct);
                     $imageData = base64_encode($resProduct['product_image']);
                     $imageType = "image/jpeg";
+
+
+                    $orderRating = json_decode($resProduct['rating'], true);
                 }else {
                     header("Location: ../../../../errors/errors.php?errorID=1001");
                 }
@@ -113,6 +117,25 @@
                     default:
                         $scaleLevel = 0;
                 }
+                $updateStarcount = false;
+                if(isset($_SESSION['UPDATE_STARCOUNT'])) {
+                    if($_SESSION['UPDATE_STARCOUNT'] != false) {
+                        $_SESSION['UPDATE_STARCOUNT'] = false;
+                        $updateStarcount = true;
+                    }
+                }
+
+
+                if(isset($orderRating)) {
+                    for($i=0; $i<count($orderRating); $i++) {
+                        if($orderRating[$i]["userID"] == $user_id) {
+                            $starCount = $orderRating[$i]['starCount'];
+                            $description = $orderRating[$i]['description'];
+                            break;  
+                        }
+                    }
+                }
+                
             }else {
                 header("Location: ../../../../errors/errors.php?errorID=404");
             }
@@ -480,7 +503,7 @@
             <style>
                 .rateProduct {
                     min-height: 180px;
-                    padding-top: 1rem;     
+                    padding: 1rem 0;     
                 }
                 .rateProduct h1{
                     margin-bottom: 0.7rem;
@@ -516,6 +539,65 @@
                 .aiw p {
                     font-size: 12px;
                 }
+
+                #reset {
+                    border: none;
+                    background: none;
+                    cursor: pointer;
+                    text-decoration: underline;
+                    font-weight: 500;
+                    transition: 0.2s ease;
+                    width: fit-content;
+                }
+                #reset:hover {
+                    transform: scale(1.04);
+                }
+                .inputs {
+                    margin-top: 7px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.5rem;
+                }
+                .desc {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.6rem;
+                }
+                .description {
+                    max-width: 380px;
+                    min-width: 189px;
+                    height: 7.4rem;
+                    resize: none;
+                    padding: 6px;
+                    border-radius: 4px;
+                }
+                .description:hover {
+                    outline: none;
+                    border: 1px solid grey;
+                }
+                .description:focus {
+                    outline: none;
+                    border: 1px solid #12263a;
+                }
+                .description::-webkit-scrollbar {
+                    display: none;
+                }
+                .submit {
+                    width: fit-content;
+                    padding: 5px 18px;
+                    border: 1px solid #12263a;
+                    background: #12263a;
+                    color: #fff;
+                    font-weight: 500;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: 0.2s ease;
+                }
+                .submit:hover {
+                    transform: scale(1.03);
+                    background: #fff;
+                    color: #12263a;
+                }
                 @media (max-width: 269px) {
                     .imageStar {
                         width: 24px;
@@ -527,10 +609,11 @@
                     }
                 }
             </style>
-
+            <!-- MAKE rating form available only when product is delivered to the user. and also make reset button to decription too... good job mahnn -->
             <div class="rateProduct">
                 <h1>Rate this product <hr></h1>
-                <form action="../../../../components/ratings/rate.php" method="post">
+                <p id="warning" style="margin-bottom: 4px; font-size: 13px;"></p>
+                <form action="../../../../components/ratings/rate.php" onsubmit="return handleSubmit()" method="post">
                     <div class="starCount">
                         <div class="ayw">
                             <input type="radio" name="stars" value="1" id="star1">
@@ -572,18 +655,34 @@
                             <p>great</p>
                             <p>excellent</p>
                         </div>
-                        <input type="reset" id="reset" value="reset">
                     </div>
-                    <input type="text" name="starCount" placeholder="star rating">
-                    <input type="text" name="description" placeholder="description">
-                    <input type="submit" name="postRating">
+                    <div class="inputs">
+                        <input type="reset" id="reset" value="reset">
+                        <div class="desc">
+                            <textarea name="description" class="description" id="description" placeholder="description..."></textarea>
+                            <input type="submit" class="submit" value="submit" name="postRating">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </body>
 <script>
-    
+    let warning = document.getElementById('warning');
+    <?php 
+        if($updateStarcount) {
+            echo "
+                warning.innerHTML = 'rating submitted succesfully...';
+                warning.style.color= 'green';
+                setTimeout(()=> {
+                    warning.innerHTML = '';
+                },4000);
+            ";
+        }  
+    ?>
+
+
     let scaleLevel = <?php echo $scaleLevel;?>;
 
 
@@ -670,8 +769,31 @@
         for (let i = 0; i < 5; i++) {
             document.getElementById(`starImage${i + 1}`).src =empty;
         }
-    })
+    });
 
+    let description = document.getElementById('description');
+    <?php 
+        if(isset($starCount)) {
+            echo "
+                star[{$starCount}-1].checked = true;
+                thing($starCount);
+            ";
+        }
+        if(isset($description)) {
+            echo "
+                description.innerHTML = '{$description}';
+            ";
+        }
+    ?>   
+    
+    function thing(num) {
+        let empty = '../../../../resources/empty-star.png';
+        let filled = '../../../../resources/icons8-star-50.png';
+        for (let j = 0; j < num; j++) {
+            document.getElementById(`starImage${j + 1}`).src = filled;
+            
+        }
+    }
 
     function user(x) {
         if(x === true) { 
@@ -681,5 +803,28 @@
             window.history.back();
         }
     }
+
+
+    // function handleSubmit() {
+    //     let starFilled;
+    //     for(let i=0; i<5; i++) {
+    //         if(star[i].checked) {
+    //             starFilled = true;
+    //             break;
+    //         }else {
+    //             starFilled = false;
+    //         }
+    //     } 
+    //     if(!starFilled) {
+    //         if(description.value == "") {
+    //             warning.innerHTML = "please fill all fields";
+    //             warning.style.color = 'red';
+    //         }
+    //         return false;
+    //     }
+    //     return true;
+    // }
+
+    
 </script>
 </html>
