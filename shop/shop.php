@@ -1,7 +1,8 @@
 <?php 
     require('../connections/productdb.php');
     require('../components/ratings/ratingAPI.php');
-    
+    require_once '../connections/deleteOtp.php';
+
     $productSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY avg_star DESC";
     $productQueryResult = mysqli_query($conn, $productSqlQuery);
 
@@ -432,25 +433,8 @@
                                 $totalStarCount = 0;
                                 $totalElements = 0;
 
-                                // Calculate total star count and total number of elements for the current product
-                                for ($i = 0; $i < count($ratingArray[0]); $i++) {
-                                    for ($j = 0; $j < count($ratingArray[0][$i]); $j++) {
-                                        if ($ratingArray[0][$i][$j]['productID'] == $productId) {
-                                            $totalStarCount += $ratingArray[0][$i][$j]['starCount'];
-                                            $totalElements++;
-                                        }
-                                    }
-                                }
-
-                                // Calculate average star count for the current product
-                                if ($totalElements > 0) {
-                                    $averageStarCount = number_format($totalStarCount / $totalElements, 1);
-                                } else {
-                                    $averageStarCount = 0;
-                                }
-                                // set avg_star count to DB
-                                $quer = "UPDATE products SET avg_star='{$averageStarCount}' WHERE product_id = '{$productId}'";
-                                $querRUN = mysqli_query($conn, $quer);
+                            
+                                $rating = $productRow['avg_star'];
                                 
                                 //star rate pt1 end
                                 
@@ -483,24 +467,24 @@
 
                                                     <p class='secondary rate'>"; 
                                                     // Star rating code final pt
-                                                    if($averageStarCount > 0) {
-                                                        if(isInteger($averageStarCount)) {
-                                                            for($k=0; $k<$averageStarCount; $k++) {
+                                                    if($rating > 0) {
+                                                        if(isInteger($rating)) {
+                                                            for($k=0; $k<$rating; $k++) {
                                                                 echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
                                                             }
-                                                            for($k=0; $k<5-$averageStarCount; $k++) {
+                                                            for($k=0; $k<5-$rating; $k++) {
                                                                 echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                             }
                                                         }else {
-                                                            for($k=0; $k<$averageStarCount-1; $k++) {
+                                                            for($k=0; $k<$rating-1; $k++) {
                                                                 echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
                                                             }
                                                             echo "<span><img src='../resources/icons8-star-half-empty-50.png' class='star'></span>";
-                                                            for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                            for($k=0; $k<5-$rating-1; $k++) {
                                                                 echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                             }
                                                         }
-                                                        echo " {$averageStarCount}";
+                                                        echo " {$rating}";
                                                     }else {
                                                         for($k=0; $k<5; $k++) {
                                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";

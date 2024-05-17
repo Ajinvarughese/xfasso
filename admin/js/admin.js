@@ -85,7 +85,10 @@ function setName(title) {
             break;
         case 'productEdit':
             newTitle = 'Edit Product';
-            break
+            break;
+        case 'orderManage':
+            newTitle = 'Order management';
+            break;
         default:
             newTitle = 'Work';
             break;
@@ -109,7 +112,10 @@ function setComment(title) {
         break;
     case 'productEdit':
         message = 'Edit the already created product details.';
-        break
+        break;
+    case 'orderManage':
+        message = 'Update the current status of the orders.';
+        break;
     default:
         message = 'This is your new work it currently under construction.';
         break;

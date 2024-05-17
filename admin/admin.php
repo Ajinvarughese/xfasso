@@ -67,8 +67,17 @@ function getMyWork($workID) {
                 <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to edit the already created products.</p>
             ";
             break;
+        case 'orderManage':
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>Let's update order status!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Your job is to update order status for better tracking of product.</p>
+            ";
+            break;
         default:
-            $title = "We got works to do!";
+            $title = "
+                <h1 id='workTitle' style='text-align: center;'>We got works to do!</h1>
+                <p style='opacity: 0.8; text-align:center; margin-top: 10px; font-size: 17px;'>Let's do our job.</p>
+                ";
             break;
     } 
     return $title;

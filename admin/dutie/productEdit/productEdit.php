@@ -178,7 +178,7 @@
         }
     </style>
     <div class="main">
-        <h2 align="center" class="head1">Product with every details available</h2>
+        <h2 align="center" class="head1">All of our products</h2>
         <?php 
             $quer = "SELECT * FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
             $res = mysqli_query($conn, $quer);

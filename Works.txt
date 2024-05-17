@@ -5,6 +5,7 @@ Works
 * Stock management : 4295
 * blackListed users : 4296
 * edit products : 4297
+* order management: 4298
 
 Admin ID
 
@@ -13,6 +14,7 @@ Admin ID
 * Stock management: Ryzj66rw4295
 * blackListed users: Vro6GwBw4296
 * Edit products: P5PEbz1w4297
+* Order management: QdfT8G7x4298 
 
 Password
 
@@ -21,6 +23,7 @@ Password
 * Stock management : KD@yNA
 * blackListed users : CyH@aR
 * edit products : JGVrwY
+* Order management: uxf650
 
 
 password must be 6 characters
