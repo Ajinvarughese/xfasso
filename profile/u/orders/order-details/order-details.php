@@ -3,6 +3,7 @@
     require_once '../../../../checkexistence/checkExistence.php';
     session_start();
 
+    $isDelivered = false;
 
     if(isset($_COOKIE['XassureUser'])) {
         $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
@@ -72,12 +73,18 @@
                         break;
                     }
                 }
-                // top page
+
+                //Check delivery
+                if($res['order_status'] == 3) {
+                    $isDelivered = true;
+                }
+                
+                //Top page
                 $orderID = $phpObj['payment']['order_id'];
                 $paymentID = $phpObj['payment']['payment_id'];
                 $userDetails = $phpObj['user'];
                 
-                //card page
+                //Card page
                 $prodName = $phpObj['products'][$i]['product_name'];
                 $prodSize = $phpObj['products'][$i]['size'];
                 $prodQuantity = $phpObj['products'][$i]['quantity'];
@@ -92,12 +99,15 @@
                     $altPhone = ", ".$altPhone;
                 }
                 $address = $userAddress['address'];
+                $pinCode = $userAddress['pinCode'];
+                $state = $userAddress['state'];
+                $city = $userAddress['city'];
                 $place = $userAddress['place'];
                 $landmark = $userAddress['landmark'];
 
                 $addressContent = "
                     <p>{$fullName}</p>
-                    <p>{$address}, {$place}, {$landmark}</p>
+                    <p>{$address} {$place}, $city $state $pinCode {$landmark}</p>
                     <p>{$phone}{$altPhone}</p>
                 ";
 
@@ -188,22 +198,7 @@
 
     <link rel="stylesheet" href="../css/order-details.css">
 
-    <style>
-        *{
-            font-size: clamp(14.7px, 2.5vw, 16.4px);
-        }
-        .id {
-            opacity: 0.9;
-            font-size: 14px;
-            font-weight: 300;
-        }
-        .id span {
-            font-weight: 500;
-        }
-        .logo h1{
-            font-size: calc(1em + 4.2px);
-        }
-    </style>
+    
 </head>
 <body>
     <div class="nav">
@@ -254,202 +249,7 @@
             </div>
         </div>
     </div>
-    <style>
-        .main {
-            max-width: 940px;
-            display: block;
-            margin: 0 auto;
-            padding: 0;
-        }  
-
-        .prodImg {
-            max-width: 120px;
-            max-height: 140px;
-        }
-        .prodImg img {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-        .orderID {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .card {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            padding: 0.6rem 2%;
-        }
-        .date {
-            font-weight: 500;
-            display: flex;
-            flex-direction: column-reverse;
-        }
-        .dateForm {
-            display: flex;
-            margin: 0.6rem;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8rem;
-        }
-        .dateForm > div > p {
-            font-size: calc(1em - 2px);
-            font-weight: 600;
-        }
-        .del, .card{
-            flex-grow: 1;
-        }
-        .tiasd {
-            font-weight: 600;
-        }
-        .ainw {
-            margin-top: 9px;
-        }
-        .ainw >div {
-            margin-top: 6px;
-        }
-        .content span {
-            opacity: 0.8;
-            font-size: calc(1em - 1.6px);
-        }
-        .imp {
-            border-bottom: 1px solid #c2c2c2c2;
-            padding: 21px 7px 12px 7px;
-            font-weight: 300;
-        }
-        .imp p:nth-child(2) {
-            margin-top: 4px;
-        }
-        .orderID {
-            margin-top: 1.3rem;
-            padding: 0 7px;
-            font-weight: 400;
-            border-bottom: 1px solid #c2c2c2c2;
-            padding-bottom: 0.5rem;
-        }
-        .orderID span {
-            opacity: 0.8;
-            font-weight: 500;
-        }
-        .orderID span,.orderID p {
-            font-size: calc(1em - 1.5px);
-        }
-
-        .del {
-            padding: 0.6rem 7px;
-            border-top: 1px solid #c2c2c2c2;
-            border-bottom: 1px solid #c2c2c2c2;
-        }
-        
-        .processing {
-            display: flex;
-            align-items: center;
-        }
-        .timer {
-            height: 16px;
-            width: 16px;
-        }
-        .timer img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        .scale {
-            width: 96%;
-            margin: 0.8rem auto;
-            position: relative;
-        }
-        #scale {
-            border: 3px solid;
-            align-items: center;
-            border-radius: 9px;
-            color: #4BAE4F;
-            display: flex;     
-            justify-content: space-between;    
-            height: 0;
-            transition: 3s ease;   
-        }
-        
-        .tick {
-            width: 18px;
-            height: 18px;
-        }
-        .tick img {
-            max-width: 100%;
-            max-height: 100%;
-            display: block;
-        }
-        .tkwn {
-            position: absolute;
-            top: -50%;
-            left: 0;
-            transform: translate(0, -90%);
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            height: 100%;
-        }
-        .scaleOuter {
-            border: 3px solid #c2c2c2c2;
-            display: flex;
-            align-items: center;
-            height: 0;
-        }
-        @media (max-width: 762px) {
-            .scaleOuter {
-                display: flex;
-                height: 100%;
-                align-items: flex-start;
-                justify-content: center;
-            }
-            .orderDetails {
-                flex-direction: column;
-            }
-            .main {
-                padding: 0 5%;
-            }
-
-            .date {
-                flex-direction: row;
-            }
-            .dateForm {
-                margin-top: 0.8rem;
-                gap: 2.7rem;
-                align-items: flex-start;
-                flex-direction: column;
-            }
-            .scale {
-                width: 0;
-                margin: 0.3rem 0.6rem;
-                padding-top: 0.9rem;
-            }
-            #scale {
-                width: 0;
-                flex-direction: column;
-                justify-content: space-between;
-                transition: 3s ease;   
-            }
-
-            .tkwn {
-                position: absolute;
-                top: 0;
-                left: 60%;
-                transform: translate(-35%, 0%);
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                height: 100%;
-                width: fit-content;
-            }
-        }
-        .apw {
-            transition: 0.3s ease;
-        }
-        .apw:hover {
-            transform: scale(1.07);
-        }
-    </style>
+    
     <div class="main">
         <div class="imp">
             <p>order is made for <?php echo $userDetails['user_name'] ?></p>
@@ -535,240 +335,80 @@
                     *delivery date may vary according to the provider 
                 </div>
             </div>
+            
+            <?php 
+                if($isDelivered) {
+                    echo "
+                        <div class='rateProduct'>
+                            <h1>Rate this product <hr></h1>
+                            <p id='warning' style='margin-bottom: 4px; font-size: 13px;'></p>
+                            <form action='../../../../components/ratings/rate.php' onsubmit='return handleSubmit()' method='post'>
+                                <div class='starCount'>
+                                    <div class='ayw'>
+                                        <input type='radio' name='stars' value='1' id='star1'>
+                                        <input type='radio' name='stars' value='2' id='star2'>
+                                        <input type='radio' name='stars' value='3' id='star3'>
+                                        <input type='radio' name='stars' value='4' id='star4'>
+                                        <input type='radio' name='stars' value='5' id='star5'>
 
-            <style>
-                .rateProduct {
-                    padding: 1rem 0.6rem;  
-                    border-bottom: 1px solid #c2c2c2c2; 
-                }
-                .rateProduct h1{
-                    margin-bottom: 0.7rem;
-                    font-size: calc(1em + 3px);
-                    width: fit-content;
+                                        <label for='star1'>
+                                            <div class='imageStar'>
+                                                <img id='starImage1' src='../../../../resources/empty-star.png'>
+                                            </div>
+                                        </label>
+                                        <label for='star2'>
+                                            <div class='imageStar'>
+                                                <img id='starImage2' src='../../../../resources/empty-star.png'>
+                                            </div>
+                                        </label>
+                                        <label for='star3'>
+                                            <div class='imageStar'>
+                                                <img id='starImage3' src='../../../../resources/empty-star.png'>
+                                            </div>
+                                        </label>
+                                        <label for='star4'>
+                                            <div class='imageStar'>
+                                                <img id='starImage4' src='../../../../resources/empty-star.png'>
+                                            </div>
+                                        </label>
+                                        <label for='star5'>
+                                            <div class='imageStar'>
+                                                <img id='starImage5' src='../../../../resources/empty-star.png'>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class='aiw'>
+                                        <p>poor</p>
+                                        <p>average</p>
+                                        <p>good</p>
+                                        <p>great</p>
+                                        <p>excellent</p>
+                                    </div>
+                                </div>
+                                <div id='editArea'>
+                                    <div id='inputs' class='inputs'>
+                                        <textarea name='description' class='description' id='description' placeholder='description...'></textarea>
+                                        <div class='desc'>
+                                            <input type='reset' style='display: none;' id='resetInput' value='reset'>
+                                            <label for='resetInput' id='reset' onclick='reset()'>reset</label>
+                                            <input type='submit' class='submit' value='submit' name='postRating'>
+                                        </div>
+                                    </div>
+                                    <div id='editBtn'>
+                                        <p>Edit rating</p>
+                                        <div class='editImg'>
+                                            <img src='../../../../resources/edit.png' alt=''>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    ";
                 }
                 
-                .starCount input{
-                    display: none;
-                }
-                .imageStar {
-                    width: 34px;
-                    height: 34px;
-                    cursor: pointer;
-                    transition: 0.18s ease;
-                }
-                .imageStar:hover {
-                    transform: scale(1.1);
-                }
-                .imageStar img {
-                    max-width: 100%;
-                    max-height: 100%;
-                }
-                .ayw {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.8rem;
-                }
-                .aiw {
-                    display: flex;
-                    gap: 0.8rem;
-                }
-                .aiw p {
-                    font-size: 12px;
-                }
-
-                #reset {
-                    border: 1px solid #c2c2c2c2;
-                    padding: 5px 18px;
-                    background: #c2c2c2c2;
-                    cursor: pointer;
-                    font-weight: 500;
-                    border-radius: 4px;
-                    transition: 0.2s ease;
-                    width: fit-content;
-                }
-                #reset:hover {
-                    transform: scale(1.04);
-                }
-                .inputs {
-                    margin-top: 7px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.5rem;
-                }
-                .desc {
-                    display: flex;
-                    gap: 0.6rem;
-                }
-                .description {
-                    max-width: 380px;
-                    min-width: 189px;
-                    height: 7.4rem;
-                    resize: none;
-                    padding: 6px;
-                    border-radius: 4px;
-                }
-                .description:hover {
-                    outline: none;
-                    border: 1px solid grey;
-                }
-                .description:focus {
-                    outline: none;
-                    border: 1px solid #12263a;
-                }
-                .description::-webkit-scrollbar {
-                    display: none;
-                }
-                .submit {
-                    width: fit-content;
-                    padding: 5px 18px;
-                    border: 1px solid #12263a;
-                    background: #12263a;
-                    color: #fff;
-                    font-weight: 500;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: 0.2s ease;
-                }
-                .submit:hover {
-                    transform: scale(1.03);
-                    background: #fff;
-                    color: #12263a;
-                }
-                @media (max-width: 269px) {
-                    .imageStar {
-                        width: 24px;
-                        height: 24px;
-                    }
-                    .aiw p {
-                        font-size: 8px;
-                        gap: 0.1rem;
-                    }
-                }
-                .editImg {
-                    width: 19px;
-                    height: 19px;
-                }
-                .editImg img {
-                    max-width: 100%;
-                    max-height: 100%;
-                    display: block;
-                }
-                #editBtn {
-                    margin-top: 0.6rem;
-                    display: flex;
-                    font-weight: 500;
-                    gap: 0.5rem;
-                    align-items: center;
-                    cursor: pointer;
-                    width: fit-content;
-                    transition: 0.3s ease;
-                }
-                #editBtn:hover {
-                    transform: scale(1.03);
-                }
-            </style>
-            <!-- MAKE rating form available only when product is delivered to the user. and also make reset button to decription too... good job mahnn -->
-            <div class="rateProduct">
-                <h1>Rate this product <hr></h1>
-                <p id="warning" style="margin-bottom: 4px; font-size: 13px;"></p>
-                <form action="../../../../components/ratings/rate.php" onsubmit="return handleSubmit()" method="post">
-                    <div class="starCount">
-                        <div class="ayw">
-                            <input type="radio" name="stars" value="1" id="star1">
-                            <input type="radio" name="stars" value="2" id="star2">
-                            <input type="radio" name="stars" value="3" id="star3">
-                            <input type="radio" name="stars" value="4" id="star4">
-                            <input type="radio" name="stars" value="5" id="star5">
-
-                            <label for="star1">
-                                <div class="imageStar">
-                                    <img id="starImage1" src="../../../../resources/empty-star.png">
-                                </div>
-                            </label>
-                            <label for="star2">
-                                <div class="imageStar">
-                                    <img id="starImage2" src="../../../../resources/empty-star.png">
-                                </div>
-                            </label>
-                            <label for="star3">
-                                <div class="imageStar">
-                                    <img id="starImage3" src="../../../../resources/empty-star.png">
-                                </div>
-                            </label>
-                            <label for="star4">
-                                <div class="imageStar">
-                                    <img id="starImage4" src="../../../../resources/empty-star.png">
-                                </div>
-                            </label>
-                            <label for="star5">
-                                <div class="imageStar">
-                                    <img id="starImage5" src="../../../../resources/empty-star.png">
-                                </div>
-                            </label>
-                        </div>
-                        <div class="aiw">
-                            <p>poor</p>
-                            <p>average</p>
-                            <p>good</p>
-                            <p>great</p>
-                            <p>excellent</p>
-                        </div>
-                    </div>
-                    <div id="editArea">
-                        <div id="inputs" class="inputs">
-                            <textarea name="description" class="description" id="description" placeholder="description..."></textarea>
-                            <div class="desc">
-                                <input type="reset" style="display: none;" id="resetInput" value="reset">
-                                <label for="resetInput" id="reset" onclick="reset()">reset</label>
-                                <input type="submit" class="submit" value="submit" name="postRating">
-                            </div>
-                        </div>
-                        <div id="editBtn">
-                            <p>Edit rating</p>
-                            <div class="editImg">
-                                <img src="../../../../resources/edit.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            ?>
             
 
-            <style>
-                .Stitle {
-                    padding: 0.6rem 0.7rem;
-                    font-size: 14px;
-                    border-bottom: 1px solid #c2c2c2c2;
-                }
-                .cont {
-                    display: flex;
-                    gap: 1.4rem;
-                    padding: 0.8rem 0.7rem;
-                }
-                .cont > p {
-                    font-size: 14px;
-                }
-                .ho {
-                    max-width: 24px;
-                    max-height: 24px;
-                }
-                .ho img {
-                    max-width: 100%;
-                    max-height: 100%;
-                    display: block;
-                }
-                .ad {
-                    max-width: 324px;
-                }
-                @media (max-width: 340px) {
-                    .ad > p {
-                        font-size: 12.3px;
-                    }
-                }
-                .address {
-                    border-bottom: 1px solid #c2c2c2c2;
-                }
-            </style>
             <div class="address">
                 <div class="Stitle"><p style="opacity: 0.8; font-size:14px;">shipping details</p></div>
                 <div class="cont">
@@ -781,36 +421,20 @@
                 </div>
             </div>
 
-            <style>
-                .list {
-                    list-style-type: none;
-                }
-                .list li {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 0.8rem 0.6rem;
-                }
-                .awbERII29_2j {
-                    font-weight: 600;
-                    opacity: 0.9;
-                }
-                .asl {
-                    border-top: 1px solid #c2c2c2c2;
-                    padding: 0.5rem 0.4rem !important;
-                    border-bottom: 1px solid #c2c2c2c2;
-                }
-            </style>
-
             <div class="payment">
                 <div class="Stitle"><p style="opacity: 0.8; font-size:14px;">price details</p></div>
                 <ul class="list">
                     <li>
                         <p class="awbERII29_2j">Product price</p>
-                        <p>₹899</p>
+                        <p>₹<?php echo $prodPrice/$prodQuantity." ($prodQuantity)"?></p>
+                    </li>
+                    <li>
+                        <p class="awbERII29_2j">Size</p>
+                        <p><?php echo $prodSize;?></p>
                     </li>
                     <li>
                         <p class="awbERII29_2j">Delivery charge</p>
-                        <p>Free</p>
+                        <p style="color: #4BAE4F; font-weight: 500;">Free</p>
                     </li>
                     <li>
                         <p class="awbERII29_2j">Payment method</p>
@@ -818,17 +442,87 @@
                     </li>
                     <li class="asl">
                         <p class="awbERII29_2j">Total amount</p>
-                        <p>₹899</p>
+                        <p>₹<?php echo $prodPrice;?></p>
                     </li>    
                 </ul>
             </div>
 
-            <div class="more">
+            <div class="moreYouLike">
+            <div class="_p1">
+                <h2 style="color: #12263a;">More you would like</h2>
+                <br>
+                <div class="more">
 
-            </div>
+                    <?php 
+                        $moreSqlQuery = "SELECT * FROM products WHERE stock_status = 1 ORDER BY RAND()";
+                        $moreSqlResult = mysqli_query($conn, $moreSqlQuery);
 
-            <div class="email">
+                        if(mysqli_num_rows($moreSqlResult)>0) {
+                            function isInteger($value) {
+                                return is_numeric($value) && intval($value) == $value;
+                            }
+                            while($more = mysqli_fetch_assoc($moreSqlResult)) {
+                                $averageStarCount = $more['avg_star'];
+                                $productId = "productIdOfXfassoYes {$more['product_id']}";
 
+                                if($more['stock_status']) {
+
+                                    //encryption 
+                                    $ciphering = "AES-128-CTR";
+                                    $iv_length = openssl_cipher_iv_length($ciphering);
+                                    $options = 0;
+                                    $encryption_iv = '1234567891021957';
+                                    $encryption_key = "xfassoKey";
+                                    $encrypted_id = openssl_encrypt($productId, $ciphering, $encryption_key, $options, $encryption_iv);
+
+
+                                    $imageMore = base64_encode($more['product_image']);
+                                    $imageTypeMore = "image/jpeg";
+                                    echo "
+                                        <a href='../../../../details/details.php?productId={$encrypted_id}' style='color: inherit; text-decoration: none;'>
+                                            <div class='card-more'>
+                                                <div class='img-more'>
+                                                    <img src='data:$imageTypeMore;base64,$imageMore' alt='>
+                                                </div>
+                                                <div class='content-more'>
+                                                    <div style='padding: 5px 10px;' class='title'>{$more['product_name']}</div>
+                                                    <div style='padding: 0px 10px;'>
+                                                        <p class='secondary rate'>"; 
+                                                        if($averageStarCount > 0) {
+                                                            if(isInteger($averageStarCount)) {
+                                                                for($k=0; $k<$averageStarCount; $k++) {
+                                                                    echo "<span><img src='../../../../resources/icons8-star-50.png' class='star'></span>";
+                                                                }
+                                                                for($k=0; $k<5-$averageStarCount; $k++) {
+                                                                    echo "<span><img src='../../../../resources/empty-star.png' class='star'></span>";
+                                                                }
+                                                            }else {
+                                                                for($k=0; $k<$averageStarCount-1; $k++) {
+                                                                    echo "<span><img src='../../../../resources/icons8-star-50.png' class='star'></span>";
+                                                                }
+                                                                echo "<span><img src='../../../../resources/icons8-star-half-empty-50.png' class='star'></span>";
+                                                                for($k=0; $k<5-$averageStarCount-1; $k++) {
+                                                                    echo "<span><img src='../../../../resources/empty-star.png' class='star'></span>";
+                                                                }
+                                                            }
+                                                            echo "&nbsp;{$averageStarCount}";
+                                                        }else {
+                                                            for($k=0; $k<5; $k++) {
+                                                                echo "<span><img src='../../../../resources/empty-star.png' class='star'></span>";
+                                                            }
+                                                        }
+                                                        echo "</p> 
+                                                    </div>
+                                                    <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    ";
+                                }
+                            }
+                        }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
