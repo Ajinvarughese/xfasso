@@ -18,12 +18,12 @@ Admin ID
 
 Password
 
-* Deleting inappropriate comments : 9jQfcy
-* Adding products : xB2pxK
-* Stock management : KD@yNA
-* blackListed users : CyH@aR
-* edit products : JGVrwY
-* Order management: uxf650
+* Deleting inappropriate comments : MvK25jWP
+* Adding products : 9JSvT0y4
+* Stock management : IqVC4NIR
+* blackListed users : bHXuEM2K
+* edit products : zQ3jHQfO
+* Order management: Eu9CAJST
 
 
 password must be 6 characters
