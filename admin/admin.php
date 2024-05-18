@@ -7,6 +7,7 @@ require_once '../connections/productdb.php';
 
 if(isset($_SESSION['XQCLANG'])){
     if($_SESSION['XQCLANG'] != false) {
+        $_SESSION['myWork'] = "my work";
         setWorkToJSON();
         $id = $_SESSION['XQCLANG'];
         $quer = "SELECT work FROM admin WHERE admin_id = '$id'";
@@ -35,6 +36,7 @@ function getMyWork($workID) {
             break;
         }
     }
+    $_SESSION['myWork'] = $workObject[$i]['workID'];
     switch($workObject[$i]['workName']) {
         case 'comments':
             $title = "
@@ -115,7 +117,7 @@ function getMyWork($workID) {
                     <hr>
                     <p><span>ID:</span> <?php echo $_SESSION['XQCLANG'];?></p>
                     <hr>
-                    <p><span>Work: </span> <?php echo "myWork";?></p>
+                    <p><span>Work: </span> <?php echo $_SESSION['myWork'];?></p>
                     <hr>
                     <button id="logOut">Logout</button>
                 </div>
