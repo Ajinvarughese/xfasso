@@ -1,6 +1,7 @@
 <?php 
     require_once '../../../connections/productdb.php';
     require_once '../../../UUID/UUID.php';
+    include_once '../../../connections/sendMail.php';
     session_start();
 
     //data from payment page so these are temporary variables and values:
@@ -50,6 +51,46 @@
                 try {
                     $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, order_status, delivery) VALUES('{$user_ID}', '{$orderID}', '{$json}', 1,'{$deliveryDate}')";
                     $run = mysqli_query($conn, $updateOrder);
+                    
+
+                    $orderUsername = $user['user_name'];
+                    $sender = "xfassofashion@gmail.com";
+                    $reciver = "xfassofashion@gmail.com";
+                    $message = 
+                    "
+                        <head>
+                            <style>
+                                *{
+                                    margin: 0;
+                                    padding: 0;
+                                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                                }
+                            </style>
+                        </head>
+
+                        <div style='background: #fff; color: #000; padding: 3% 4%;' class='mail-main'>
+                            <div class='_u2' style='border: 1px solid; padding: 10% 5%;'>
+                                <div class='username'><h4>User: {$orderUsername}</h4></div>
+                                <hr>
+                                <br>
+                                <div class='time'><h4>Date: {$date}</h4></div>
+                                <hr>
+                                <br>
+                                <div class='subject'>
+                                    <h4>Subject:new order from {$orderUsername} </h4>
+                                    <br>
+                                    <p style='color: rgba(28, 26, 26, 0.753);'>thingss</p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    ";
+                    $subject = "New order from {$orderUsername}";
+                    $path = "../../../";
+
+                    sendMail($sender, $reciver, $message, $subject, $path);
+
+                    
                     $success = true;
                 }catch(mysqli_sql_exception $e) {
                     echo $e;
