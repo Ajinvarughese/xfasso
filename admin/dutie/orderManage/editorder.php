@@ -1,29 +1,34 @@
 <?php 
-    session_start();
-    require_once '../../../connections/productdb.php';
-    if(empty($_SESSION['XQCLANG'])){
-        header('Location: ../../admin-login/');
-    }else {
-        if(isset($_GET['product_id']) && isset($_GET['order_id']) && isset($_GET['user_id'])) {
-            $prod_id = mysqli_escape_string($conn, $_GET['product_id']);
-            $order_id = mysqli_escape_string($conn, $_GET['order_id']);
-            $user_id = mysqli_escape_string($conn, $_GET['user_id']);
+session_start();
+require_once '../../../connections/productdb.php';
 
-            echo "$prod_id <br> $order_id <br> $user_id";
-        }
+
+if(empty($_SESSION['XQCLANG'])){
+    header('Location: ../../admin-login/');
+}
+
+if(isset($_POST['submit'])) {
+    
+    $order_id = mysqli_escape_string($conn, $_POST['order_id']);
+    $user_id = mysqli_escape_string($conn, $_POST['user_id']);
+    $product_id = mysqli_escape_string($conn, $_POST['product_id']);
+    $order_status = mysqli_escape_string($conn, $_POST['order_status']);
+
+    $quer = "UPDATE orders SET order_status = '$order_status' WHERE order_id='$order_id' AND user_id = '$user_id'";
+    
+    try {
+        $run = mysqli_query($conn, $quer);
+        $_SESSION['showSuccess'] = "happened";
+    }
+    catch(mysqli_sql_exception) {
+        $_SESSION['showSuccess'] = "notHappend";
     }
 
+    if($_SESSION['showSuccess']) {
+        header('Location: orderManage.php');
+    }
+
+}else {
+    header("Location: ../../admin.php");
+}
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>edit order details</title>
-</head>
-<body>
-    
-</body>
-</html>
