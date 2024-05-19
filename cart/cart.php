@@ -265,13 +265,16 @@
 
         <div class="moreYouLike" style="margin-top: 2rem;">
             <style>
+                ._p1 {
+                    padding: 1rem;
+                }
                 .more {
-                display: flex;
-                overflow: auto hidden;
-                align-items: center;
-                gap: 1.2rem;
-                padding-bottom: 1rem;
-                justify-content: flex-start;
+                    display: flex;
+                    overflow: auto hidden;
+                    align-items: center;
+                    gap: 1.2rem;
+                    padding-bottom: 1rem;
+                    justify-content: flex-start;
                 
                 }
                 .card-more {
