@@ -66,7 +66,6 @@
 
 
 
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My cart</title>
@@ -365,7 +364,7 @@
                                                         }
                                                         echo "</p> 
                                                     </div>
-                                                    <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}</div>
+                                                    <div style='padding:0 10px 5px 10px; font-size: 14px;' class='price'>₹{$more['product_price']}</div>
                                                 </div>
                                             </div>
                                         </a>

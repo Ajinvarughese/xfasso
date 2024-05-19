@@ -741,7 +741,7 @@
                                                     }
                                                     echo "</p> 
                                                 </div>
-                                                <div style='padding:0 10px 5px 10px;' class='price'>\${$more['product_price']}
+                                                <div style='padding:0 10px 5px 10px;' class='price'>₹{$more['product_price']}
                                                 
                                                 </div>
                                             </div>

@@ -1,26 +1,31 @@
 <head>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
 </head>
 
-<div style='background: #fff; color: #000; padding: 3% 4%;' class='mail-main'>
-    <div class='_u2' style='border: 1px solid; padding: 10% 5%;'>
-        <div class='username'><h4>User: Ajin</h4></div>
-        <hr>
-        <br>
-        <div class='time'><h4>Date: {$date}</h4></div>
-        <hr>
-        <br>
-        <div class='subject'>
-            <h4>Subject: </h4>
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', sans-serif;">
+    <div style="background: #fff; color: #000; padding: 3% 4%;">
+        <div style="border: 1px solid; padding: 0% 4%;">
+            <div><h4 style="font-weight: 600;">User: {$orderUsername}</h4></div>
+            <hr style="border: none; border-top: 1px solid #000;">
             <br>
-            <p style='color: rgba(28, 26, 26, 0.753);'>{$user_message}</p>
-            <hr>
+            <div><h4 style="font-weight: 600;">Date: {$date}</h4></div>
+            <hr style="border: none; border-top: 1px solid #000;">
+            <br>
+            <div>
+                <h4 style="font-weight: 600;">Subject: new order from {$orderUsername}</h4>
+                <br>
+                <div style="border: 1px solid #c2c2c2; padding: 6px; margin-bottom: 1.7rem;">
+                    <p style="font-size: clamp(13px, 3vw, 14px);">Order details:</p>
+                    <hr style="width: 90%; border: none; border-top: 1px solid #c2c2c2;">
+                    <pre style="word-wrap: break-word; white-space: pre-wrap; font-size: clamp(13px, 3vw, 14px); font-family: 'Montserrat', sans-serif;">
+[
+
+]
+                    </pre>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</body>
