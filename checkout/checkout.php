@@ -541,7 +541,7 @@
                     </div>
 
                 </div>
-                <form class="content" method="post" action="../connections/paymentGate.php" style="margin-top: 10px;">
+                <form class="content" method="post" onsubmit="showLoad()" action="../connections/paymentGate.php" style="margin-top: 10px;">
                     <input type="radio" checked name="UPIpay" id="aojwu2">
                     <input type="radio" name="NETpay" id="aob3wu">
 
@@ -685,5 +685,53 @@
             </div>
         </div>
     </div>
+    <style>
+            .loadingA {
+                position: fixed;
+                top: 0;
+                background: #fff;
+                height: 100vh;
+                width: 100%;
+                z-index: 1;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .loadingImg {
+                position: relative;
+                max-width: 194px;
+                max-height: 194px;
+            }
+            .contentLoading {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                width: 100%;
+                transform: translate(-50%, -71%);
+            }
+            .loadingImg img {
+                max-width: 100%;
+                max-height: 100%;
+                display: block;
+            }
+        </style>
+
+        <div id="loading" class="loadingA">
+            <div class="loadingImg">
+                <img src="../resources/delivery-truck.gif" alt="loading..." loading="lazy">
+                <div class="contentLoading">
+                    <p style="text-align: center;">processing your order request...</p>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            function showLoad() {
+                let load = document.getElementById("loading");
+                load.style.display = 'flex';
+            }
+        </script>
 </body>
 </html>

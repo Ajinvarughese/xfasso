@@ -426,7 +426,7 @@
                 <ul class="list">
                     <li>
                         <p class="awbERII29_2j">Product price</p>
-                        <p>₹<?php echo $prodPrice/$prodQuantity." ($prodQuantity)"?></p>
+                        <p>₹<?php echo $prodPrice." ($prodQuantity)"?></p>
                     </li>
                     <li>
                         <p class="awbERII29_2j">Size</p>
@@ -442,7 +442,7 @@
                     </li>
                     <li class="asl">
                         <p class="awbERII29_2j">Total amount</p>
-                        <p>₹<?php echo $prodPrice;?></p>
+                        <p>₹<?php echo $prodPrice*$prodQuantity;?></p>
                     </li>    
                 </ul>
             </div>

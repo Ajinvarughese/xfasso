@@ -98,6 +98,7 @@
                             </div>
                         </body>
                     ";
+
                     sendMail($sender, $reciver, $message, $subject);
                     
                     $orderDate = date("F j, Y");
