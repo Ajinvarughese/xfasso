@@ -536,7 +536,7 @@
                 <div style="margin-bottom: 1.6rem;" class="formHead">
                     <div class="hq">
                         <div class="hqi">
-                            <div class="h"><span>4</span>PAYMENT</div>
+                            <div class="h"><span>4</span>&nbsp;&nbsp; PAYMENT</div>
                         </div>
                     </div>
 

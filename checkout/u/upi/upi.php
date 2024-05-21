@@ -186,7 +186,7 @@
         for($i=0; $i<count($productDetails); $i++) {
             $prodName = $productDetails[$i]['product_name'];
             $quant = $productDetails[$i]['quantity'];
-            $price = $productDetails[$i]['product_price']*$quant;
+            $price = $productDetails[$i]['product_price'];
 
             $message .= "
                 <tr>

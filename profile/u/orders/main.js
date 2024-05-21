@@ -49,11 +49,24 @@ function orderProducts(json="", hasValue=false) {
         }
     }
     else {
-        console.log("NoValue");
+        showNothing();
     }
 }
 
 
+function showNothing() {
+    let orders = document.getElementById("orders");
+    orders.style.maxWidth = 'unset';
+    orders.innerHTML = 
+    `
+        <div class='asj3'>
+            <div class='asj4'>
+                <img src='../../../resources/noProduct.png'> 
+                <p>Nothing to show here.</p>
+            </div>      
+        </div>
+    `;
+}
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
