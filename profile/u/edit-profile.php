@@ -85,7 +85,24 @@
             })
         </script>
     </div>
-    <div class="main">
+
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
+
+    <div id="main" class="main">
         <div class="userDP" id="userDP">
             <div style="cursor: pointer;" id="yu2">
                 <div id="male" class="userImg" style="cursor: pointer;">

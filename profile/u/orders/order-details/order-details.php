@@ -197,7 +197,7 @@
 
 
     <link rel="stylesheet" href="../css/order-details.css">
-
+    <link rel="stylesheet" href="../../../../css/loading.css">
     
 </head>
 <body>
@@ -249,8 +249,24 @@
             </div>
         </div>
     </div>
+
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../../../../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
     
-    <div class="main">
+    <div id="main" class="main">
         <div class="imp">
             <p>order is made for <?php echo $userDetails['user_name'] ?></p>
             <p>ordered on <?php echo $orderDate?></p>

@@ -11,9 +11,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Sign in</title>
     <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="../css/loading.css">
 </head>
 <body>
-    <div class="container">
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
+    <div id="main" class="container">
         <div class="card-right">
             <img src="../resources/4957136_4957136.jpg" alt="signup">
         </div>
@@ -31,7 +47,7 @@
                         <p id='noOtp' style='color: red; font-size: 13px;'></p>
                     </div>
                     <div class='getOtp'>
-                        <input type='submit' name='conOtp' value='Submit'>
+                        <input type='submit' name='conOtp' onclick="showLoad(validateForm())" value='Submit'>
                     </div>
                     <br>
                 </form>
@@ -41,6 +57,7 @@
             </div>
         </div>
     <script>
+        
         var first =document.getElementById('i22');
         var second =document.getElementById('i23');
         first.style.display = 'none';
@@ -169,6 +186,19 @@
     ?>
 
     <script>
+        function showLoad(res) {
+            if(res) {
+                let load = document.getElementById('loading');
+                load.style.display = 'flex';
+                let main = document.getElementById('main');
+                main.style.display = 'none';
+            }else {
+                let load = document.getElementById('loading');
+                load.style.display = 'none';
+                let main = document.getElementById('main');
+                main.style.display = 'block';
+            }
+        }
         var otpField = document.getElementById('otp');
         var noOtpWarning = document.getElementById('noOtp');
         function validateForm() {

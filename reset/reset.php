@@ -11,12 +11,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
     
-    
+    <link rel="stylesheet" href="../css/loading.css">
     <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
     
-    <div class="container">
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
+    <div id="main" class="container">
         <div class="card-right">
             <img src="../resources/4957136_4957136.jpg" alt="signup">
         </div>
@@ -30,11 +45,11 @@
                 <form id="em" method="post" onsubmit="return validateForm()">
                     <h2 style="font-size: 21px;">Enter your email</h2>
                     <div class="email">
-                        <input type="email" name='email' id="email" placeholder="Email address" value="">
+                        <input type="text" name='email' id="email" placeholder="Email address" value="">
                         <p id="noEmail" style="color: red; font-size: 13px;"></p>
                     </div>
                     <div class="getOtp">
-                        <input id="getOtp" onclick="return validateForm()"  type="submit" name="getOtp" value="Get OTP">
+                        <input id="getOtp" onclick="showLoad(validateForm())"  type="submit" name="getOtp" value="Get OTP">
                     </div>
                     <div class="login">
                         <a href="../login/login.php">Don't want to change password?</a>
@@ -153,7 +168,7 @@
                                             <p id='noOtp' style='color: red; font-size: 13px;'></p>
                                         </div>
                                         <div style='margin-bottom: 1.2rem;' class='getOtp'>
-                                            <input id='getOtp' onclick='return validateForm2()'  type='submit' name='subOtp' value='submit'>
+                                            <input id='getOtp' onclick='showLoad(validateForm2())'  type='submit' name='subOtp' value='submit'>
                                         </div>
                                     </form>
                                     <script>
@@ -201,7 +216,7 @@
                                     <p id='noPass2' style='color: red; font-size: 13px;'></p>
                                 </div>
                                 <div style='margin-bottom: 1.2rem;' class='getOtp'>
-                                    <input id='confirmPass' onclick='return validateForm3()'  type='submit' name='subPass' value='submit'>
+                                    <input id='confirmPass' onclick='showLoad(validateForm3())'  type='submit' name='subPass' value='submit'>
                                 </div>
                             </form>
                             <script>
@@ -230,7 +245,19 @@
             </div>
 
             <script>
-
+                function showLoad(res) {
+                    if(res) {
+                        let load = document.getElementById('loading');
+                        load.style.display = 'flex';
+                        let main = document.getElementById('main');
+                        main.style.display = 'none';
+                    }else {
+                        let load = document.getElementById('loading');
+                        load.style.display = 'none';
+                        let main = document.getElementById('main');
+                        main.style.display = 'block';
+                    }
+                }
                 function validateForm3() {
                     
                     var passField =document.getElementById('password');

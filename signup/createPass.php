@@ -12,9 +12,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="../css/loading.css">
 </head>
 <body>
-    <div class="container">
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
+    <div id="main" class="container">
         <div class="card-right">
             <img src="../resources/4957136_4957136.jpg" alt="signup">
         </div>
@@ -101,14 +117,20 @@
                         otpField.style.border ='1px solid #0f203076';
                     })
                 </script>";
-            }else if($password == 'password' && $conPass == 'password'){
+            }
+            else if
+                (
+                    $password == 'password' || $conPass == 'password' ||
+                    $password == 'again later' || $conPass == 'again later'
+                ) 
+            {
                 
                 echo "
                     <script>
                         var conPassField =document.getElementById('conPass');
                         var noConPassWarning =document.getElementById('noConPass');
                 
-                        noConPassWarning.innerHTML = 'the password cannot be \"passoword\".';
+                        noConPassWarning.innerHTML = 'this password cannot be used.';
                         conPassField.style.border ='1.4px solid red';
                         
                         conPassField.addEventListener('input', ()=> {
@@ -207,6 +229,8 @@
 
         var conPassField =document.getElementById("conPass");
         var noConPassWarning =document.getElementById('noConPass');
+
+        
 
         function validateForm() {
             var otp = otpField.value.trim(); 

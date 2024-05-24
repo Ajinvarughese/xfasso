@@ -76,7 +76,7 @@
     
     
     <link rel="stylesheet" href="../css/checkout.css">
-
+    <link rel="stylesheet" href="../css/loading.css">
 
 </head>
 <body>
@@ -88,7 +88,8 @@
             window.location.href = '../cart/cart.php';
         })
     </script>
-    <div class="_askjd">
+    
+    <div id="checkoutMain" class="_askjd">
         <div class="mainOrder">
 
             

@@ -70,7 +70,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
-
+    
+    <link rel="stylesheet" href="../../css/loading.css">
 
     <style>
         *{
@@ -176,7 +177,24 @@
             <img src="../../resources/user.png" alt="profile">
         </a>
     </div>
-    <div class="main">
+
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('main');
+            main.style.display = 'block';
+        })
+    </script>
+
+    <div id="main" class="main">
         <h1 class='qo3ob'>Create address</h1>
         <form method="post" onsubmit="return validateForm()">
             <div class="nameNnum">
@@ -215,11 +233,24 @@
                 </div>
                 <input type="text" id="landmark" name="landmark" value="<?php echo $landmark?>" placeholder="Land mark (Optional)">
             </div>
-            <input id="submit" name="save" onclick="return validateForm()" type="submit" value="Save Address">
-            <input id="dlt" style="margin-top: 0.5rem; background:none; color: inherit; font-weight: 600; border: 1px solid #12263a;"  type="submit" name="dltAdd" value="Delete Address">
+            <input id="submit" name="save" onclick="showLoad(validateForm())" type="submit" value="Save Address">
+            <input id="dlt" onclick="showLoad(validateForm())" style="margin-top: 0.5rem; background:none; color: inherit; font-weight: 600; border: 1px solid #12263a;"  type="submit" name="dltAdd" value="Delete Address">
         </form>
 
         <script>
+            function showLoad(res) {
+                if(res) {
+                    let load = document.getElementById('loading');
+                    load.style.display = 'flex';
+                    let main = document.getElementById('main');
+                    main.style.display = 'none';
+                }else {
+                    let load = document.getElementById('loading');
+                    load.style.display = 'none';
+                    let main = document.getElementById('main');
+                    main.style.display = 'block';
+                }
+            }
             function validateForm() {
                 // Name 
                 var nameField = document.getElementById('username');

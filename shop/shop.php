@@ -35,7 +35,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
-
+    <link rel="stylesheet" href="../css/loading.css">
     <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-filter-16.png">
     
     <link rel="stylesheet" href="../css/style.css">
@@ -166,6 +166,22 @@
             </ul>
         </div>
     </div>
+   
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('shopmain');
+            main.style.display = 'block';
+        })
+    </script>
     <div class="shopmain" id="shopmain">
         <h1 class="primary" style="font-weight:600;">Products</h1>
 

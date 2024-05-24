@@ -57,6 +57,8 @@
     <link rel="stylesheet" href="../css/cart.css">
     <link rel="stylesheet" href="../css/details.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/loading.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,7 +85,24 @@
             </script>
         </div>
     </div>
-    <div class="mainCart">
+
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('mainCart');
+            main.style.display = 'block';
+        })
+    </script>
+
+    <div id="mainCart" class="mainCart">
         
         <div class="cards-container-cart">
             <?php 
@@ -394,7 +413,7 @@
                 <p class="_c45 secondary">&copy; xfasso 2024</p>
             </div>
         </div>
-    </div>
+    </divi>
     <script>
         var emailSending = document.getElementById('emailSending');
         function emailSubmit() {

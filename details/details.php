@@ -84,6 +84,7 @@
 
     <link rel="stylesheet" href="../css/details.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/loading.css">
     <style>
         .nav {
             border-bottom: 1px solid #d2d5d9;
@@ -173,7 +174,24 @@
         </div>
     </div>
 
-    <div class="main">
+    <div id="loading" class="loadingA">
+        <div class="loadingImg">
+            <img src="../resources/loadingMain.gif" alt="loading...">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", ()=> {
+            let load = document.getElementById("loading");
+            load.style.display = 'none';
+            let main = document.getElementById('detailsMain');
+            main.style.display = 'block';
+        })
+    </script>
+
+
+    <div id="detailsMain" class="main">
         <div class = "card-wrapper">
             <div class = "card">
                 <div class = "product-imgs">
@@ -539,14 +557,15 @@
                             <li>Shipping Fee: <span>Free Shipping</span></li>
                         </ul>
 
-                        <h1 class='rnr'>Rating & Reviews</h1>
-                        <div class="ratings">
 
 
 
                             <?php 
-                                if($ratingArray != NULL) {
-                                    
+                                if($ratingArray[0] != NULL && $ratingArray != NULL) {
+                                    echo "
+                                        <h1 class='rnr'>Rating & Reviews</h1>
+                                        <div class='ratings'>
+                                    ";
                                     for($i=0; $i<count($ratingArray[0]); $i++) {
                                         for($j=0; $j<count($ratingArray[0][$i]); $j++) {
                                             if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
