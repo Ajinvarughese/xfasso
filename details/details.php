@@ -98,7 +98,9 @@
             width: 100%;
             background: rgb(255, 255, 255);
         }
-        
+        .so {
+            align-items: center;
+        }
     </style>
 
 </head>
@@ -244,7 +246,7 @@
 
                     <div class = "product-price">
                         <h2 class = "new-price">₹<?php echo $details['product_price'] ?><span> &nbsp;SALE</span></h2>
-                        <div class="rate">
+                        <div class="rate so">
                             <?php 
                                 function isInteger($value) {
                                     return is_numeric($value) && intval($value) == $value;
@@ -267,7 +269,17 @@
                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                         }
                                     }
-                                    echo "<p class='secondary'>&nbsp;{$averageStarCount} rating</p>";
+                                    
+                                    $numOfRatings = 0;
+                                    for($i=0; $i<count($ratingArray[0]); $i++) {
+                                        for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                            
+                                            if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
+                                                $numOfRatings++;
+                                            }
+                                        }
+                                    }
+                                    echo "<p class='secondary'>&nbsp; ({$numOfRatings}) ratings</p>";
                                 }else {
                                     for($k=0; $k<5; $k++) {
                                         echo "<span><img src='../resources/empty-star.png' class='star'></span>";
@@ -561,6 +573,7 @@
 
 
                             <?php 
+                
                                 if($ratingArray[0] != NULL && $ratingArray != NULL) {
                                     echo "
                                         <h1 class='rnr'>Rating & Reviews</h1>
@@ -568,6 +581,7 @@
                                     ";
                                     for($i=0; $i<count($ratingArray[0]); $i++) {
                                         for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                            
                                             if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
 
                                                 //detalis
@@ -580,7 +594,7 @@
                                                 // get username
                                                 $getUserQ = "SELECT username FROM users WHERE user_id = '$jsonUserID'";
                                                 $res = mysqli_fetch_assoc(mysqli_query($conn, $getUserQ));
-
+                                                $jsonUserName = $res['username'];
                                                 
                                                 echo "
                                                     <div class='person'>
@@ -589,7 +603,7 @@
                                                                 <img src='../resources/account.png' alt='user'>
                                                             </div>
                                                             <div class='na'>
-                                                                {$res['username']}
+                                                                {$jsonUserName}
                                                             </div>
                                                         </div>
                                                         <div class='rdsa' >";
@@ -635,9 +649,7 @@
                                             }
                                         }
                                     }
-
-
-                                } 
+                                }
                             ?>
                             <style>
                                 .ratings {
@@ -734,8 +746,19 @@
                                             <div class='content-more'>
                                                 <div style='padding: 5px 10px 0 10px;' class='title'>{$more['product_name']}</div>
                                                 <div style='padding: 0px 10px;'>
-                                                    <p class='secondary rate'>"; 
+                                                    <p class='secondary rate so'>"; 
+
                                                     if($averageStarCount > 0) {
+                                                        $numOfRatings = 0;
+                                                        for($i=0; $i<count($ratingArray[0]); $i++) {
+                                                            for($j=0; $j<count($ratingArray[0][$i]); $j++) {
+                                                                
+                                                                if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
+                                                                    $numOfRatings++;
+                                                                }
+                                                            }
+                                                        }
+
                                                         if(isInteger($averageStarCount)) {
                                                             for($k=0; $k<$averageStarCount; $k++) {
                                                                 echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
@@ -752,7 +775,7 @@
                                                                 echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                             }
                                                         }
-                                                        echo "&nbsp;{$averageStarCount}";
+                                                        echo "&nbsp;({$numOfRatings})";
                                                     }else {
                                                         for($k=0; $k<5; $k++) {
                                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";
