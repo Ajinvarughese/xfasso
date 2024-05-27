@@ -174,7 +174,7 @@
                                                 <div class='content-more'>
                                                     <div style='padding: 5px 10px;' class='title'>{$more['product_name']}</div>
                                                     <div style='padding: 0px 10px;'>
-                                                        <p class='secondary rate'>"; 
+                                                        <p class='secondary rate' style='align-items: center;'>"; 
                                                         if($averageStarCount > 0) {
                                                             if(isInteger($averageStarCount)) {
                                                                 for($k=0; $k<$averageStarCount; $k++) {

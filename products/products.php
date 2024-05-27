@@ -276,7 +276,7 @@
                                         <div class='content-product'>
                                             <h2 id='primary' class='inw'>{$productRow['product_name']}</h2>
 
-                                            <p  style='display:flex; align-items:center;' class='inw secondary rate'>"; 
+                                            <p  style='display:flex; align-items:center;' class='inw secondary rate' style='align-items: center;'>"; 
                                                     if($averageStarCount > 0) {
                                                         if(isInteger($averageStarCount)) {
                                                             for($k=0; $k<$averageStarCount; $k++) {

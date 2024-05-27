@@ -481,7 +481,7 @@
                                                 
 
 
-                                                    <p class='secondary rate'>"; 
+                                                    <p class='secondary rate' style='align-items: center;'>"; 
                                                     // Star rating code final pt
                                                     if($rating > 0) {
                                                         if(isInteger($rating)) {

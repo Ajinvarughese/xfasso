@@ -749,16 +749,7 @@
                                                     <p class='secondary rate so'>"; 
 
                                                     if($averageStarCount > 0) {
-                                                        $numOfRatings = 0;
-                                                        for($i=0; $i<count($ratingArray[0]); $i++) {
-                                                            for($j=0; $j<count($ratingArray[0][$i]); $j++) {
-                                                                
-                                                                if($ratingArray[0][$i][$j]['productID'] == $decrypted_id) {
-                                                                    $numOfRatings++;
-                                                                }
-                                                            }
-                                                        }
-
+                                                        
                                                         if(isInteger($averageStarCount)) {
                                                             for($k=0; $k<$averageStarCount; $k++) {
                                                                 echo "<span><img src='../resources/icons8-star-50.png' class='star'></span>";
@@ -775,7 +766,7 @@
                                                                 echo "<span><img src='../resources/empty-star.png' class='star'></span>";
                                                             }
                                                         }
-                                                        echo "&nbsp;({$numOfRatings})";
+                                                        echo "&nbsp;({$averageStarCount})";
                                                     }else {
                                                         for($k=0; $k<5; $k++) {
                                                             echo "<span><img src='../resources/empty-star.png' class='star'></span>";
