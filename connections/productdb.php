@@ -1,13 +1,13 @@
 <?php 
 
-    $server = 'localhost';
-    $user = 'root';
-    $password = '';
-    $db = 'xfasso';
+    $DBSERVER = 'localhost';
+    $DBUSER = 'root';
+    $DBPASSWORD = '';
+    $DB = 'xfasso';
 
     
     try {
-        $conn = new mysqli($server, $user, $password, $db);
+        $conn = new mysqli($DBSERVER, $DBUSER, $DBPASSWORD, $DB);
     }catch(mysqli_sql_exception) {
         echo "
             <script>
