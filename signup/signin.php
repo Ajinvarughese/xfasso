@@ -25,8 +25,6 @@
         document.addEventListener("DOMContentLoaded", ()=> {
             let load = document.getElementById("loading");
             load.style.display = 'none';
-            let main = document.getElementById('main');
-            main.style.display = 'block';
         })
     </script>
     <div id="main" class="container">
@@ -99,7 +97,7 @@
                     
                     $digits = 6;
                     $otpCode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-                    $hashedOTP = password_hash("$otpCode", PASSWORD_DEFAULT);
+                    $hashedOTP = password_hash($otpCode, PASSWORD_DEFAULT);
                     
                     $deleteTable = "DELETE FROM otp WHERE email ='$email'";
 

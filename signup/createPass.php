@@ -26,8 +26,6 @@
         document.addEventListener("DOMContentLoaded", ()=> {
             let load = document.getElementById("loading");
             load.style.display = 'none';
-            let main = document.getElementById('main');
-            main.style.display = 'block';
         })
     </script>
     <div id="main" class="container">

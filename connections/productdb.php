@@ -3,7 +3,7 @@
     $DBSERVER = 'localhost';
     $DBUSER = 'root';
     $DBPASSWORD = '';
-    $DB = 'xfasso';
+    $DB = 'xfassotest';
 
     
     try {
