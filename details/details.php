@@ -710,7 +710,7 @@
             }
         </style>
     
-        <div class="_p1">
+        <div class="_p1" style="padding: 2px 2%;">
             <hr>
             <h2 style="color: #12263a;">More you would like</h2>
             <br>
