@@ -74,6 +74,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
     
+    <!-- JQUERY AND RAZORPAY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
     <link rel="stylesheet" href="../css/checkout.css">
     <link rel="stylesheet" href="../css/loading.css">
@@ -542,7 +545,7 @@
                     </div>
 
                 </div>
-                <form class="content" method="post" onsubmit="showLoad()" action="../connections/paymentGate.php" style="margin-top: 10px;">
+                <div class="content" onsubmit="" action="../" method="post" style="margin-top: 10px;">
                     <input type="radio" checked name="UPIpay" id="aojwu2">
                     <input type="radio" name="NETpay" id="aob3wu">
 
@@ -559,7 +562,7 @@
                             <p id="warn" style="color: red; font-size: 12px;"></p>
                         </label>
                     </div>
-                    <input type="submit" id="conPa" value="Continue" class="changeUser" style="margin-top: 0.8rem;">
+                    <input type="submit" id="PayNow" value="Continue" class="changeUser" style="margin-top: 0.8rem;">
                     <script>
                         var aojwu2 =document.getElementById('aojwu2');
                         var aob3wu =document.getElementById('aob3wu');
@@ -567,7 +570,106 @@
                         var upi = document.getElementById('awjb');
                         var netbank =document.getElementById('aiwn');
 
-                        var confirmPa =document.getElementById('conPa');
+                        var confirmPa =document.getElementById('PayNow');
+
+                        //Payment
+                        jQuery('#PayNow').click(function(e){
+
+                            var paymentOption=' ';
+                            let billing_name = ' ';
+                            let billing_mobile = '8089949054';
+                            let billing_email = ' ';
+                            var shipping_name = ' ';
+                            var shipping_mobile = '8089949054';
+                            var shipping_email = ' ';
+                            var paymentOption= "netbanking";
+                            var payAmount = '100';
+                                        
+                            var request_url="submitpayment.php";
+                                    var formData = {
+                                        billing_name:billing_name,
+                                        billing_mobile:billing_mobile,
+                                        billing_email:billing_email,
+                                        shipping_name:shipping_name,
+                                        shipping_mobile:shipping_mobile,
+                                        shipping_email:shipping_email,
+                                        paymentOption:paymentOption,
+                                        payAmount:payAmount,
+                                        action:'payOrder'
+                                    }
+                                    
+                                    $.ajax({
+                                        type: 'POST',
+                                        url:request_url,
+                                        data:formData,
+                                        dataType: 'json',
+                                        encode:true,
+                                    }).done(function(data){
+                                    
+                                    if(data.res=='success'){
+                                        var orderID=data.order_number;
+                                        var orderNumber=data.order_number;
+                                        var options = {
+                                                "key": data.razorpay_key, // Enter the Key ID generated from the Dashboard
+                                                "amount": data.userData.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                                                "currency": "INR",
+                                                "name": "Xfasso", //your business name
+                                                "description": data.userData.description,
+                                                "image": "../reso",
+                                                "order_id": data.userData.rpay_order_id, //This is a sample Order ID. Pass 
+                                                "handler": function (response){
+                                                    
+                                                    window.location.replace("payment-success.php?oid="+orderID+"&rp_payment_id="+response.razorpay_payment_id+"&rp_signature="+response.razorpay_signature);
+
+                                                },
+                                                "modal": {
+                                                "ondismiss": function(){
+                                                    window.location.replace("payment-success.php?oid="+orderID);
+                                                }
+                                            },
+                                            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+                                                "name": data.userData.name, //your customer's name
+                                                "email": data.userData.email,
+                                                "contact": data.userData.mobile //Provide the customer's phone number for better conversion rates 
+                                            },
+                                            "notes": {
+                                                "address": "xfasso"
+                                            },
+                                            "config": {
+                                            "display": {
+                                            "blocks": {
+                                                "banks": {
+                                                "name": 'Pay using '+paymentOption,
+                                                "instruments": [
+                                                
+                                                    {
+                                                        "method": paymentOption
+                                                    },
+                                                    ],
+                                                },
+                                            },
+                                            "sequence": ['block.banks'],
+                                            "preferences": {
+                                                "show_default_blocks": true,
+                                            },
+                                            },
+                                        },
+                                        "theme": {
+                                            "color": "#3399cc"
+                                        }
+                            };
+                            var rzp1 = new Razorpay(options);
+                            rzp1.on('payment.failed', function (response){
+
+                                window.location.replace("payment-failed.php?oid="+orderID+"&reason="+response.error.description+"&paymentid="+response.error.metadata.payment_id);
+
+                                    });
+                                rzp1.open();
+                                e.preventDefault(); 
+                            }
+                            
+                            });
+                        });
 
                         aojwu2.addEventListener('click', ()=> {
                             if(aojwu2.checked) {
@@ -614,7 +716,7 @@
                             }
                         })
                     </script>                    
-                </form>
+                </div>
                 <?php 
                     if(isset($_POST['isOrder'])) {
                         $totalPrice = $_SESSION['price'];

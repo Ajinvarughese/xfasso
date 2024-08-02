@@ -65,7 +65,7 @@
             var shipping_name = $('#billing_name').val();
                 var shipping_mobile = $('#billing_mobile').val();
                 var shipping_email = $('#billing_email').val();
-            var paymentOption= "netbanking";
+            var paymentOption= "upi";
             var payAmount = $('#payAmount').val();
                         
             var request_url="submitpayment.php";

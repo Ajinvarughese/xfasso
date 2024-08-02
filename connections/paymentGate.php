@@ -3,7 +3,7 @@
     if(isset($_POST['UPIpay'])) {
         $_SESSION['payment_method'] = 'UPI';
         $_SESSION['ordered'] = true;
-        header('Location: ../checkout/u/upi/upi.php');
+        
     }else if(isset($_POST['NETpay'])) {
         // $_SESSION['payment_method'] = 'netbanking';
         // header('Location: ../checkout/u/netbanking/netbanking.php');
