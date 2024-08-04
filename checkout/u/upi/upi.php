@@ -11,34 +11,42 @@
 
     //data from payment page so these are temporary variables and values:
    
-    $status = 200;
-    $UUID = new UUID();
-    $payment_id = $UUID->paymentID($conn, "PN", 18);
-    $orderID = $UUID->orderID($conn, "OD", 18); 
+    $status = $_SESSION['status'];
+    $_SESSION['status'] = '';
 
-
-    $user = $_SESSION['user'];
-
-    date_default_timezone_set("Asia/Calcutta");
-    $date = date("Y-m-d");
-    $time = date("h:i:sa");
-
-    $payment_method = $_SESSION['payment_method'];
     
-    $paymentJSON = array(
-        "status" => $status,
-        "payment_id" => $payment_id,
-        "order_id" => $orderID,
-        "date" => $date,
-        "time" => $time,
-        "payment_method" => $payment_method
-    );
-
-    $productsJSON = $_SESSION['products'];
 
 
     if($_SESSION['ordered'] == true) {
+        
         if($status == 200) {
+
+            $UUID = new UUID();
+            $orderID = $UUID->orderID($conn, "ODR", 18); 
+
+
+            $user = $_SESSION['user'];
+
+            date_default_timezone_set("Asia/Calcutta");
+            $date = date("Y-m-d");
+            $time = date("h:i:sa");
+
+            $payment_method = $_SESSION['payment_method'];
+            $payment_id = $_SESSION['payment_id'];
+
+            $paymentJSON = array(
+                "status" => $status,
+                "payment_id" => $payment_id,
+                "order_id" => $orderID,
+                "date" => $date,
+                "time" => $time,
+                "payment_method" => $payment_method
+            );
+            
+
+            $productsJSON = $_SESSION['products'];
+
+
             $phpObj = array(
                 "products" => $productsJSON, 
                 "user" => $user, 

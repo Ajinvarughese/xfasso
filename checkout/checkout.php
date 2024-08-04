@@ -545,7 +545,7 @@
                     </div>
 
                 </div>
-                <div class="content" onsubmit="" action="../" method="post" style="margin-top: 10px;">
+                <div class="content" style="margin-top: 10px;">
                     <input type="radio" checked name="UPIpay" id="aojwu2">
                     <input type="radio" name="NETpay" id="aob3wu">
 
@@ -574,16 +574,18 @@
 
                         //Payment
                         jQuery('#PayNow').click(function(e){
-
                             var paymentOption=' ';
                             let billing_name = ' ';
-                            let billing_mobile = '8089949054';
-                            let billing_email = ' ';
+                            let billing_mobile = '<?php echo $mob?>';
+                            let billing_email = '<?php echo $email ?> ';
                             var shipping_name = ' ';
-                            var shipping_mobile = '8089949054';
-                            var shipping_email = ' ';
+                            var shipping_mobile = '<?php echo $mob?>';
+                            var shipping_email = '<?php echo $email?> ';
                             var paymentOption= "netbanking";
-                            var payAmount = '100';
+                            var payAmount = '<?php 
+                                $total = $_SESSION['price'];
+                                echo $total;
+                            ?>';
                                         
                             var request_url="submitpayment.php";
                                     var formData = {
@@ -619,13 +621,13 @@
                                                 "order_id": data.userData.rpay_order_id, //This is a sample Order ID. Pass 
                                                 "handler": function (response){
                                                     
-                                                    window.location.replace("payment-success.php?oid="+orderID+"&rp_payment_id="+response.razorpay_payment_id+"&rp_signature="+response.razorpay_signature);
+                                                    // showLoad();
+                                                    window.location.replace("./u/confirm/confirming.php");
+                                                   
 
                                                 },
                                                 "modal": {
-                                                "ondismiss": function(){
-                                                    window.location.replace("payment-success.php?oid="+orderID);
-                                                }
+                                                "ondismiss": function(){}
                                             },
                                             "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
                                                 "name": data.userData.name, //your customer's name
@@ -633,7 +635,7 @@
                                                 "contact": data.userData.mobile //Provide the customer's phone number for better conversion rates 
                                             },
                                             "notes": {
-                                                "address": "xfasso"
+                                                "address": "Xfasso"
                                             },
                                             "config": {
                                             "display": {
@@ -825,6 +827,7 @@
                 <img src="../resources/delivery-truck.gif" alt="loading..." loading="lazy">
                 <div class="contentLoading">
                     <p style="text-align: center;">processing your order request...</p>
+                    <p style="margin-top: 8px;font-size: 13px; text-align: center;">please do not go back!</p>
                 </div>
             </div>
         </div>
