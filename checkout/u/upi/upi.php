@@ -112,14 +112,14 @@
                         </body>
                     ";
 
-                    // sendMail($sender, $reciver, $message, $subject);
+                    sendMail($sender, $reciver, $message, $subject);
                     
                     $orderDate = date("F j, Y");
 
                     $messageForUser = forUser($orderID, $orderDate, $phpObj['products'], $orderUsername);
                     $userMail = $phpObj['user']['email'];
                     $subjForUser = "Hey {$orderUsername}, your order is confirmed!";
-                    // sendMail($sender, $userMail, $messageForUser, $subjForUser);
+                    sendMail($sender, $userMail, $messageForUser, $subjForUser);
 
                     $success = true;
                 }catch(mysqli_sql_exception) {
