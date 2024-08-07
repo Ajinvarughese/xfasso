@@ -6,8 +6,9 @@ header('Content-Type: application/json');
 header('Accept: application/json');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Access-Control-Allow-Methods, Content-Type');
 
-$_SESSION['created'] = false;
+
 if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
+    $_SESSION['created'] = true;
     $razorpay_mode = 'test'; // Mode
 
     $razorpay_test_key = 'rzp_test_ijyRypKXGF4v9w'; // Your Test Key
@@ -72,7 +73,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
     curl_close($curl);
     $orderRes = json_decode($response);
 
-    $_SESSION['created'] = true;
     if (isset($orderRes->id)) {
         
         $rpay_order_id = $orderRes->id;
@@ -96,7 +96,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
         echo json_encode(['res' => 'error', 'order_id' => $order_id, 'info' => 'Error with payment']);
     }
 } else {
-    $_SESSION['created'] = true;
     echo json_encode(['res' => 'error']);
     exit;
 }

@@ -21,16 +21,16 @@
 
             $UUID = new UUID();
             $orderID = $UUID->orderID($conn, "ODR", 18); 
-
+            $payment_id = $UUID->paymentId($conn, "PAY", 18);
 
             $user = $_SESSION['user'];
 
             date_default_timezone_set("Asia/Calcutta");
             $date = date("Y-m-d");
             $time = date("h:i:sa");
+            $dateTime = $date.' '.$time;
 
-            $payment_method = $_SESSION['payment_method'];
-            $payment_id = $_SESSION['payment_id'];
+            
 
             $paymentJSON = array(
                 "status" => $status,
@@ -38,7 +38,6 @@
                 "order_id" => $orderID,
                 "date" => $date,
                 "time" => $time,
-                "payment_method" => $payment_method
             );
             
 
@@ -56,11 +55,19 @@
             
             $deliveryDate = date("Y-m-d", strtotime($date . " +7 days"));
 
+            $razorpayID = $_SESSION['razorpay_id'];
+            $products = json_encode($phpObj['products'], JSON_PRETTY_PRINT);
+            
+
             $success = false;
             while($success == false) {
                 try {
-                    $updateOrder = "INSERT INTO orders(user_id, order_id, order_json, order_status, delivery) VALUES('{$user_ID}', '{$orderID}', '{$json}', 1,'{$deliveryDate}')";
-                    $run = mysqli_query($conn, $updateOrder);
+                    $quer = "INSERT INTO payments (payment_id, razorpay_payment_id, user_id, products, date, status) 
+                        VALUES('$payment_id', '$razorpayID', '$user_ID', '$products', '$dateTime', $status)";   
+                    $runQ = mysqli_query($conn, $quer);
+
+                    $updateOrder = "INSERT INTO orders(user_id, order_id, payment_id, order_json, order_status, delivery) VALUES('{$user_ID}', '{$orderID}', '{$payment_id}', '{$json}', 1,'{$deliveryDate}')";
+                        $run = mysqli_query($conn, $updateOrder);
                     
                     $orderUsername = $user['user_name'];
                     $sender = "xfassofashion@gmail.com";
@@ -105,23 +112,26 @@
                         </body>
                     ";
 
-                    sendMail($sender, $reciver, $message, $subject);
+                    // sendMail($sender, $reciver, $message, $subject);
                     
                     $orderDate = date("F j, Y");
 
                     $messageForUser = forUser($orderID, $orderDate, $phpObj['products'], $orderUsername);
                     $userMail = $phpObj['user']['email'];
                     $subjForUser = "Hey {$orderUsername}, your order is confirmed!";
-                    sendMail($sender, $userMail, $messageForUser, $subjForUser);
+                    // sendMail($sender, $userMail, $messageForUser, $subjForUser);
 
                     $success = true;
                 }catch(mysqli_sql_exception) {
                     $orderID = $UUID->orderID($conn, "OD", 18); 
                     $success = false;
                 }
+            
                 $_SESSION['ordered'] = false;
+             
             }
             if($success == true) {
+                session_destroy();
                 echo "
                     <script>
                         window.location.href = '../../../profile/u/orders/';            

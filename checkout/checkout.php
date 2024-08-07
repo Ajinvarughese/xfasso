@@ -663,7 +663,7 @@
                             var rzp1 = new Razorpay(options);
                             rzp1.on('payment.failed', function (response){
 
-                                window.location.replace("payment-failed.php");
+                                window.location.replace("u/confirm/confirming.php");
 
                                     });
                                 rzp1.open();

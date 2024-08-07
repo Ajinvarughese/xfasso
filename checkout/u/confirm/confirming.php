@@ -3,6 +3,7 @@
     session_start();
 
     if(isset($_SESSION['created']) && $_SESSION['created'] == true) {
+        // $_SESSION['created'] = false;
         $razorpay_test_key = 'rzp_test_ijyRypKXGF4v9w'; // Your Test Key
         $razorpay_test_secret_key = 'fVZwEgLv9nULPte4hVHAwITc'; // Your Test Secret Key
 
@@ -32,12 +33,14 @@
             echo json_encode(['res' => 'error']);
         } else {
             $responseData = json_decode($response, true);
-            $_SESSION['response'] = $responseData;
             curl_close($ch);
-            print_r($responseData);
+    
+            $_SESSION['razorpay_id'] = $responseData['id'];
+
             if ($responseData['status'] == 'paid') {
                 $_SESSION['status'] = 200;
                 $_SESSION['ordered'] = true;
+
                 header('Location: ../upi/upi.php');
 
             } else {
@@ -49,6 +52,6 @@
     }else {
         $_SESSION['status'] = 400;
         $_SESSION['ordered'] = false;
-        header('Location: ../../payment-failed.php');
+        header('Location: ../errors.php?errorID=404');
     }
 ?>
