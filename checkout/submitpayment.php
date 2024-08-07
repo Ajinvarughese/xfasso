@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 header('Accept: application/json');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Access-Control-Allow-Methods, Content-Type');
 
+$_SESSION['created'] = false;
 if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
     $razorpay_mode = 'test'; // Mode
 
@@ -23,7 +24,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
         $authAPIkey = "Basic " . base64_encode($razorpay_live_key . ":" . $razorpay_live_secret_key);
     }
 
-    $_SESSION['created'] = false;
 
     // Set transaction details
     $order_id = uniqid();
@@ -72,6 +72,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
     curl_close($curl);
     $orderRes = json_decode($response);
 
+    $_SESSION['created'] = true;
     if (isset($orderRes->id)) {
         
         $rpay_order_id = $orderRes->id;
@@ -88,7 +89,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
         // Check payment status
         $paymentId = $rpay_order_id; 
         
-        $_SESSION['created'] = true;
         $_SESSION['payment_id'] = $rpay_order_id;
         echo json_encode(['res' => 'success', 'order_number' => $order_id, 'userData' => $dataArr, 'razorpay_key' => $razorpay_key]);
         
@@ -96,6 +96,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'payOrder') {
         echo json_encode(['res' => 'error', 'order_id' => $order_id, 'info' => 'Error with payment']);
     }
 } else {
+    $_SESSION['created'] = true;
     echo json_encode(['res' => 'error']);
     exit;
 }

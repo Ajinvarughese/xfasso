@@ -25,16 +25,17 @@
             $row = mysqli_fetch_array($res);
             $user_id = $row["user_id"];
             $username = $row["username"];
-
-
-            if(isset($_SESSION['status']) && $_SESSION['status'] == 400) {
+            
+            if(isset($_SESSION['status']) && ($_SESSION['status'] == 400)) {
+                $_SESSION['status'] = '';
                 /* 
                     TODO:
                         - Send data to DB with status 400
                         - create column razorpay_orderId in DB and add orderId(s).
                 */
             }else {
-                header('Location: ../');
+                echo "BUG PART";
+                // header('Location: ../');
             }
         }else {
             header('Location: ../signup/signup.html');

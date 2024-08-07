@@ -1,6 +1,7 @@
 <?php 
 
     session_start();
+
     if(isset($_SESSION['created']) && $_SESSION['created'] == true) {
         $razorpay_test_key = 'rzp_test_ijyRypKXGF4v9w'; // Your Test Key
         $razorpay_test_secret_key = 'fVZwEgLv9nULPte4hVHAwITc'; // Your Test Secret Key
@@ -37,7 +38,7 @@
             if ($responseData['status'] == 'paid') {
                 $_SESSION['status'] = 200;
                 $_SESSION['ordered'] = true;
-                header('Location: ../../.php');
+                header('Location: ../upi/upi.php');
 
             } else {
                 $_SESSION['status'] = 400;
@@ -45,6 +46,9 @@
                 header('Location: ../../payment-failed.php');
             }
         }
-
+    }else {
+        $_SESSION['status'] = 400;
+        $_SESSION['ordered'] = false;
+        header('Location: ../../payment-failed.php');
     }
 ?>

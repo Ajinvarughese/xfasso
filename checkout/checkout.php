@@ -621,8 +621,8 @@
                                                 "order_id": data.userData.rpay_order_id, //This is a sample Order ID. Pass 
                                                 "handler": function (response){
                                                     
-                                                    // showLoad();
-                                                    window.location.replace("./u/confirm/confirming.php");
+                                                    showLoad();
+                                                    window.location.replace("u/confirm/confirming.php");
                                                    
 
                                                 },
@@ -663,7 +663,7 @@
                             var rzp1 = new Razorpay(options);
                             rzp1.on('payment.failed', function (response){
 
-                                window.location.replace("payment-failed.php?oid="+orderID+"&reason="+response.error.description+"&paymentid="+response.error.metadata.payment_id);
+                                window.location.replace("payment-failed.php");
 
                                     });
                                 rzp1.open();

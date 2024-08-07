@@ -14,11 +14,9 @@
     $status = $_SESSION['status'];
     $_SESSION['status'] = '';
 
-    
-
 
     if($_SESSION['ordered'] == true) {
-        
+        $_SESSION['ordered'] = false;
         if($status == 200) {
 
             $UUID = new UUID();
@@ -130,8 +128,14 @@
                     </script>
                 ";        
             }
-            
-        } 
+        }else {
+            $_SESSION['status'] = 400;
+            echo "
+                <script>
+                    window.location.href = '../../payment-failed.php';            
+                </script>
+            ";
+        }
     }else {
         echo "
             <script>
