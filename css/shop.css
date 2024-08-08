@@ -51,8 +51,14 @@ html {
 
 
 .products {
-    min-height: 64vh;
+    height: 100%;
+    display: flex;
+    padding: 0 2rem;
+    margin: 0 auto;
     padding-top: 0;
+}
+.products::-webkit-scrollbar {
+    display: none;
 }
 
 .shop-main
@@ -136,12 +142,7 @@ html {
 
 
 
-.products {
-    min-height: 64vh;
-    padding-top: 0;
-    width: fit-content;
-    margin: 0 auto;
-}
+
 .card-container {
     margin-top: 2rem;
     display: grid;

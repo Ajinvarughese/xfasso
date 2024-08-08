@@ -365,7 +365,7 @@
             }
         </script>
 
-        <div id="products" class='products'>
+        <div id="products" style="border:1px solid;" class='products'>
             <div class='card-container'>
 
                 <?php
