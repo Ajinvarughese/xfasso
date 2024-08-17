@@ -365,7 +365,7 @@
             }
         </script>
 
-        <div id="products" style="border:1px solid;" class='products'>
+        <div id="products" class='products'>
             <div class='card-container'>
 
                 <?php
@@ -548,7 +548,7 @@
                     <script>
                         let products = document.getElementById('products');
                         products.style = 'display: flex; align-items: center; justify-content: center;';
-                        const img = `<div class='iaej'><img src='../resources/noProduct.png'> <p>There is nothing to show here...</p></div>`;
+                        const img = `<div class='iaej' style='margin: 3rem 0'><img src='../resources/noProduct.png'> <p>There is nothing to show here...</p></div>`;
                         products.innerHTML = img;
                     </script>
                 ";

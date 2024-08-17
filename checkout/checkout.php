@@ -78,6 +78,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="../css/checkout.css">
     <link rel="stylesheet" href="../css/loading.css">
 
@@ -549,7 +552,7 @@
                     <input type="radio" checked name="UPIpay" id="aojwu2">
                     <input type="radio" name="NETpay" id="aob3wu">
 
-                    <div class="aisbw">
+                    <div class="aisbw" style="margin-bottom: 1.2rem;" >
                         <label for="aojwu2">
                             <div id="awjb" class="awjb">
                                 <img src="../resources/upi.png" id="aoj" alt="upi" width="34px"><h3>UPI</h3>
@@ -562,7 +565,13 @@
                             <p id="warn" style="color: red; font-size: 12px;"></p>
                         </label>
                     </div>
-                    <input type="submit" id="PayNow" value="Continue" class="changeUser" style="margin-top: 0.8rem;">
+                    <input type="submit" id="PayNow" value="Continue" class="changeUser" style="display: none;">
+                    <label for="PayNow" disabled="false" id="Paw" class="changeUser iiw">
+                        Continue
+                    </label>
+                    <style>
+                        
+                    </style>
                     <script>
                         var aojwu2 =document.getElementById('aojwu2');
                         var aob3wu =document.getElementById('aob3wu');
@@ -574,6 +583,9 @@
 
                         //Payment
                         jQuery('#PayNow').click(function(e){
+                            e.preventDefault();
+                            $('#Paw').html('<i style="padding: 4px 27px; color: #fff; font-size: 15px" class="fa fa-circle-o-notch fa-spin"></i>');
+                            $('#Paw').css("pointer-events", "none");
                             var paymentOption=' ';
                             let billing_name = ' ';
                             let billing_mobile = '<?php echo $mob?>';
@@ -627,7 +639,10 @@
 
                                                 },
                                                 "modal": {
-                                                "ondismiss": function(){}
+                                                "ondismiss": function(){
+                                                    $('#Paw').css("pointer-events", "auto");
+                                                    $('#Paw').html('Continue')
+                                                }
                                             },
                                             "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
                                                 "name": data.userData.name, //your customer's name

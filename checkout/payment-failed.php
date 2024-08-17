@@ -1,63 +1,63 @@
 <?php 
-    // session_start();
-    // require('../connections/productdb.php');
-    // require_once '../UUID/UUID.php';
-    // require_once '../checkexistence/checkExistence.php';
+    session_start();
+    require('../connections/productdb.php');
+    require_once '../UUID/UUID.php';
+    require_once '../checkexistence/checkExistence.php';
 
-    // if(isset($_COOKIE['XassureUser'])) {
-    //     $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
-    //     $cookiePassword = mysqli_escape_string($conn, $_COOKIE['X9wsWsw32']);
+    if(isset($_COOKIE['XassureUser'])) {
+        $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
+        $cookiePassword = mysqli_escape_string($conn, $_COOKIE['X9wsWsw32']);
 
-    //     if(checkUserExistence($conn, $emailId, $cookiePassword) == false) {
-    //         header('Location: ../signup/signup.html');
-    //     }
+        if(checkUserExistence($conn, $emailId, $cookiePassword) == false) {
+            header('Location: ../signup/signup.html');
+        }
 
-    //     //decrypting
-    //     $ciphering = "AES-128-CTR";
-    //     $options = 0;
-    //     $decryption_iv = '1234567891021957';
-    //     $decryption_key = "xfassoKey";
-    //     $decrypted_id = openssl_decrypt($emailId, $ciphering, $decryption_key, $options, $decryption_iv);
-    //     $email = $decrypted_id;
+        //decrypting
+        $ciphering = "AES-128-CTR";
+        $options = 0;
+        $decryption_iv = '1234567891021957';
+        $decryption_key = "xfassoKey";
+        $decrypted_id = openssl_decrypt($emailId, $ciphering, $decryption_key, $options, $decryption_iv);
+        $email = $decrypted_id;
 
-    //     $qTitle = "SELECT * FROM users WHERE email='$email'";
-    //     $res = mysqli_query($conn, $qTitle);
-    //     if(mysqli_num_rows($res) > 0) {
-    //         $row = mysqli_fetch_array($res);
-    //         $userId = $row["user_id"];
-    //         $username = $row["username"];
+        $qTitle = "SELECT * FROM users WHERE email='$email'";
+        $res = mysqli_query($conn, $qTitle);
+        if(mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_array($res);
+            $userId = $row["user_id"];
+            $username = $row["username"];
 
-    //         date_default_timezone_set("Asia/Calcutta");
-    //         $date = date("Y-m-d");
-    //         $time = date("h:i:sa");
+            date_default_timezone_set("Asia/Calcutta");
+            $date = date("Y-m-d");
+            $time = date("h:i:sa");
 
-    //         $dateTime = $date.' '.$time;
-    //         $status = $_SESSION['status'];
+            $dateTime = $date.' '.$time;
+            $status = $_SESSION['status'];
 
-    //         $uuid = new UUID();
-    //         $paymentId = $uuid->paymentId($conn, "PAY", 18);
+            $uuid = new UUID();
+            $paymentId = $uuid->paymentId($conn, "PAY", 18);
 
-    //         $razorpayID = $_SESSION['razorpay_id'];
-    //         $productsPHPObjects = $_SESSION['products'];
-    //         $products = json_encode($productsPHPObjects, JSON_PRETTY_PRINT);
+            $razorpayID = $_SESSION['razorpay_id'];
+            $productsPHPObjects = $_SESSION['products'];
+            $products = json_encode($productsPHPObjects, JSON_PRETTY_PRINT);
             
-    //         session_destroy();
+            session_destroy();
 
-    //         if(isset($status) && ($status == 400)) {
-    //             $quer = "INSERT INTO payments (payment_id, razorpay_payment_id, user_id, products, date, status) 
-    //                     VALUES('$paymentId', '$razorpayID', '$userId', '$products', '$dateTime', $status)"; 
-    //             $runQ = mysqli_query($conn, $quer);
+            if(isset($status) && ($status == 400)) {
+                $quer = "INSERT INTO payments (payment_id, razorpay_payment_id, user_id, products, date, status) 
+                        VALUES('$paymentId', '$razorpayID', '$userId', '$products', '$dateTime', $status)"; 
+                $runQ = mysqli_query($conn, $quer);
 
-    //         }else {
-    //             header('Location: ../errors/error.php?errorId=');
-    //         }
-    //     }else {
-    //         header('Location: ../signup/signup.html');
-    //     }
+            }else {
+                header('Location: ../errors/error.php?errorId=');
+            }
+        }else {
+            header('Location: ../signup/signup.html');
+        }
 
-    // }else {
-    //     header('Location: ../signup/signup.html');
-    // }
+    }else {
+        header('Location: ../signup/signup.html');
+    }
 ?>
 
 
@@ -72,11 +72,94 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">       
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <title>Payment Failed</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            color: #12263a;
+        }
+        .failedMain {
+            min-height: 560px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #dd3938;
+        }
+        .card {
+            border-radius: 8px;
+            border: 1px solid #fff;
+            max-width: 490px;
+            background: #fff;
+            padding: 3.4rem 2rem;
+        }
+        .imgIcon {
+            width: 62px;
+            height: 62px;
+        }
+        .imgIcon img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .failedMain p {
+            font-weight: 500;
+            font-size: 15px;   
+        }
+        .failedMain button {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            margin: 1rem 0;
+            box-shadow: 0 5px 14px -6px #12263a;
+            padding: 14px 27px;
+            background: #12263a;
+            outline: none;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .failedMain button:hover {
+            transform: scale(1.03);
+        }
+        .supp {
+            display: flex;
+            gap: 0.3rem;
+        }
+        .supp p, .supp span{
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .supp span {
+            color: #4c72e0;
+            cursor: pointer;
+        }
+        .footer, .email-us {
+            background: #fff;
+        }
+    </style>
 </head>
 <body>
-    <h1>Payment Failed!</h1>
-
+    <div class="failedMain">
+        <div class="card">
+            <div class="imgIcon">
+                <img src="../resources/warning-signal.png" alt="warning">
+            </div>
+            <h1>Payment Failed</h1>
+            <br>
+            <p>🥺Hey there. We are sadly informing you that your purchase has been cancelled ❌ due to failure in payment. It may have occured due to any invalid inputs, unauthorized inputs or other technical issues 💻. </p>
+            <button onclick="window.location.replace('../')">Go back to home</button>
+            <div class="supp">
+                <p>Have a question?</p><span onclick="window.location.replace('../contact/')">contact support</span>
+            </div>
+        </div>
+    </div>
 
     <hr class="_y72">
         <div class="footer">

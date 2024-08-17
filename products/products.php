@@ -57,58 +57,18 @@
         html {
             scroll-behavior: smooth;
         }
-        ._S43p {
-            min-height: 90vh;
-        }
-        .filter-sort p:hover{
-            text-decoration: underline;
-        }
-        .filter-sort {
-            width: fit-content;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -ms-user-select: none; 
-            user-select: none;
-        }
-        ._i92 {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
+        
 
-        .rate {
-            font-size: 14.2px;
-            margin-top: 4px;
-        }
-        .star {
-            width: 14.2px;
-        }
-                        
-
-        .emailSending {
-            display: block;
-        }
-
-        .filter-menu {
-            border: 1px solid;
-            margin-top: 12px;
-            position: absolute;
-            transition: 0.5s ease;
-            left: -110%;
-            z-index: 1;
-            background: #fff;
-            padding: 1rem 1rem;
-
-        }
-
-        #_1menu-filter {
-            display: none;
-        }
-
-
-        .products {
-            min-height: 64vh;
-            padding-top: 0;
+        .card-container {
+            margin-top: 0;
+            float: left;
+            margin: 0 auto;
+            min-height: 100vh;
+            height: unset;
+            max-height: unset;
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            gap: 2rem;
         }
 
         .button-products {
@@ -120,71 +80,54 @@
             padding: 5px 20px;
             color: #12263a;
         }
-        .button-products:hover {
-            background: #12263a;
-            color: #fff;
-        }
-
-        .reset {
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px 10px;
-            text-decoration: underline;
-        }
-
-        .button-menu {
-            background: #12263a;
-            border: none;
-            color: #fff;
-            padding: 7px 28px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s ease;
-        }
-
-        .button-menu:hover {
-            transform: scale(1.1);
-        }
-
-        .shop-main {
-            padding: 0 !important;
-        }
-
-        .body-Content {
         
-            min-height: 100vh;
-            height: unset;
-            max-height: unset;
-        }
-        .products {
-           
-            min-height: 100vh;
-            height: unset;
-            max-height: unset;
-            display: flex;
-            justify-content: center;
-        }
-        .card-container {
-            margin-top: 0;
-            float: left;
-            min-height: 100vh;
-            height: unset;
-            max-height: unset;
-            display: grid;
-            grid-template-columns: auto auto auto auto;
-            gap: 2rem;
-        }
         .card {
             max-width: 290px;
             transition: 0.2s ease;
-            max-height: 329px;
         }
+        .content-product h2 {
+            font-size: 19.4px;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+        .content-product {
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-direction: column;   
+        }
+        .price-button {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .products {
+            display: flex;
+        }
+        
         .product-img img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .rate {
+            font-size: 14.2px;
+            margin-top: 4px;
+        }
+        .star {
+            width: 14.2px;
+        }
+        .iaej {
+            text-align: center;
+            width: 180px;
+            height: 78px;
+        }
+        .iaej img {
+            margin: 0 auto;
             max-width: 100%;
             max-height: 100%;
             display: block;
         }
+           
         @media (max-width: 940px) {
             .card-container {
                 grid-template-columns: auto auto auto;
@@ -199,50 +142,14 @@
                 grid-template-columns: auto auto;
             }
         }
-
-        .content-product {
-            margin-top: -5px;
-            padding: 0.5rem 1rem;
-            height: 18%;
-            display: flex;
-            flex-direction: column;
-            
-        }
-
-        .price-button {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .content-product h2 {
-            font-size: 19.4px;
-        }
-        .card:hover {
-            transform: scale(1.03);
-        }
-
-        @media (max-width: 912px) {
-            body {
-                padding: 0;
-            }
-        }
-        @media (max-width: 440px) {
-            .card-container {
-                gap: 2rem 14px;
-            }
-        }
-
-        @media (max-width: 300px) {
-            .card-container {
-                grid-template-columns: auto;
-            }
-        }
+        
     </style>
 </head>
 <body class="body-Content">
-    <div class="products">
-        <div class="card-container">
+    <div class="products" id="products" style>
+        <div id="card-container" style class="card-container">
             <?php 
+                $i=0;
                  if(mysqli_num_rows($productQueryResult)>0) {
                     function isInteger($value) {
                             return is_numeric($value) && intval($value) == $value;
@@ -309,10 +216,30 @@
                                     </a>
                                 </div>
                             ";
+                            $i++;
                         }
                     }
-                    
+                }else {
+
+                    if($i <= 0) {
+                        setcookie('noProduct', uniqid('NOa3gJvJ'), time()+3600, '/');
+                        echo 
+                        "
+                            <script>
+                                let products = document.getElementById('products');
+                                products.style = 'display: flex; align-items: center; justify-content: center';
+                                const img = `<div class='iaej' style='margin: 3rem 0'><img src='../resources/noProduct.png'> <p>There is nothing to show here...</p></div>`;
+                                products.innerHTML = img;
+                                document.getElementById('card-container').style = 'min-height: 120px';
+                            </script>
+                        ";
+
+                    }
+
+                     
                 }
+               
+                
             ?>
         </div>
     </div>
