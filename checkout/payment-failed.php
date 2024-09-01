@@ -49,7 +49,7 @@
                 $runQ = mysqli_query($conn, $quer);
 
             }else {
-                header('Location: ../errors/error.php?errorId=');
+                header('Location: ../errors/error.php?errorId=404');
             }
         }else {
             header('Location: ../signup/signup.html');

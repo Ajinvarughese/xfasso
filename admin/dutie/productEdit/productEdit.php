@@ -116,11 +116,21 @@
 
 
         .head1 {
-            border-bottom: 1px solid;
             width: fit-content;
             margin: 0 auto;
             margin-bottom: 1.7rem;
             padding: 10px 2rem;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 6px 10px rgba(0,0,0,0.14);
+            transform: scale(0.7);
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .active {
+            background: #12263a;
+            color: #fff;
+            transform: scale(0.9);
         }
         .cardContents span {
             opacity: 0.7;
@@ -176,85 +186,96 @@
         .cardContents > div {
             margin-bottom: 7.2px;
         }
+        .header {
+            display: flex;
+        }
+        .prod {
+            display: none;
+        }
+
     </style>
     <div class="main">
-        <h2 align="center" class="head1">All of our products</h2>
-        <?php 
-            $quer = "SELECT * FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
-            $res = mysqli_query($conn, $quer);
-            if(mysqli_num_rows($res)>0) {
-                $i=0;
-                while($row=mysqli_fetch_assoc($res)) {
-                    $id = $row['product_id'];
-                    $prodName = $row['product_name'];
-                    $price = $row['product_price'];
-                    $gender = $row['product_gender'];
+        <div class="header">
+            <h2 align="center" id="editH" class="active head1">Edit products</h2>
+            <h2 align="center" id="deleteH" class=" head1">Delete Product</h2>
+        </div>
+        <div id="edit">
+            <?php 
+                $quer = "SELECT * FROM products INNER JOIN product_images ON products.product_id = product_images.product_id ORDER BY products.product_date DESC";
+                $res = mysqli_query($conn, $quer);
+                if(mysqli_num_rows($res)>0) {
+                    $i=0;
+                    while($row=mysqli_fetch_assoc($res)) {
+                        $id = $row['product_id'];
+                        $prodName = $row['product_name'];
+                        $price = $row['product_price'];
+                        $gender = $row['product_gender'];
 
-                    $imageData = base64_encode($row['product_image']);
-                    $imageType = "image/jpeg";
-                    echo "
-                        <form class='form' action='./edit.php' method='post' enctype='multipart/form-data'>
-                            <input type='password' name='product_id{$i}' value ='{$id}'>
-                            <input type='submit' name='submit{$i}' id='submit{$i}'>
-                            <label for='submit{$i}'>
-                                <div class='a'>
-                                    <div class='cardImg'>
-                                        <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                        $imageData = base64_encode($row['product_image']);
+                        $imageType = "image/jpeg";
+                        echo "
+                            <form class='form' action='./edit.php' method='post' enctype='multipart/form-data'>
+                                <input type='password' name='product_id{$i}' value ='{$id}'>
+                                <input type='submit' name='submit{$i}' id='submit{$i}'>
+                                <label for='submit{$i}'>
+                                    <div class='a'>
+                                        <div class='cardImg'>
+                                            <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                                        </div>
+                                        <hr>
+                                        <div class='cardContents'>
+                                            <div class='id'><span>product ID:</span> {$id}</div>
+                                            <div class='name'><span>name:</span> {$prodName}</div>
+                                            <div class='price'><span>price:</span> {$price}</div>
+                                            <div class='gender'><span>gender:</span> {$gender}</div>
+                                        </div>
                                     </div>
-                                    <hr>
-                                    <div class='cardContents'>
-                                        <div class='id'><span>product ID:</span> {$id}</div>
-                                        <div class='name'><span>name:</span> {$prodName}</div>
-                                        <div class='price'><span>price:</span> {$price}</div>
-                                        <div class='gender'><span>gender:</span> {$gender}</div>
-                                    </div>
-                                </div>
-                            </label>
-                        </form>
-                    "; 
-                    $i++;
+                                </label>
+                            </form>
+                        "; 
+                        $i++;
+                    }
                 }
-            }
-        ?>
+            ?>
+        </div>
+        <div id="delete" class="prod">
+            <?php 
+                $quer = "SELECT * FROM products ORDER BY RAND()";
+                $res = mysqli_query($conn, $quer);
+                if(mysqli_num_rows($res)>0) {
+                    while($row=mysqli_fetch_assoc($res)) {
+                        $id = $row['product_id'];
+                        $prodName = $row['product_name'];
+                        $price = $row['product_price'];
+                        $gender = $row['product_gender'];
 
-
-        <h2 style="margin-top: 3rem;" align="center" class="head1">Delete Product</h2>
-        <?php 
-            $quer = "SELECT * FROM products ORDER BY product_date DESC";
-            $res = mysqli_query($conn, $quer);
-            if(mysqli_num_rows($res)>0) {
-                while($row=mysqli_fetch_assoc($res)) {
-                    $id = $row['product_id'];
-                    $prodName = $row['product_name'];
-                    $price = $row['product_price'];
-                    $gender = $row['product_gender'];
-
-                    $imageData = base64_encode($row['product_image']);
-                    $imageType = "image/jpeg";
-                    echo "
-                        <form class='form' action='./delete/delete.php' method='post' enctype='multipart/form-data'>
-                            <input type='password' name='product_id{$i}' value ={$id}>
-                            <input type='submit' name='submit{$i}' id='submit{$i}'>
-                            <label for='submit{$i}'>
-                                <div class='a'>
-                                    <div class='cardImg'>
-                                        <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                        $imageData = base64_encode($row['product_image']);
+                        $imageType = "image/jpeg";
+                        echo "
+                            <form class='form' action='./delete/delete.php' method='post' enctype='multipart/form-data'>
+                                <input type='password' name='product_id{$i}' value ={$id}>
+                                <input type='submit' name='submit{$i}' id='submit{$i}'>
+                                <label for='submit{$i}'>
+                                    <div class='a'>
+                                        <div class='cardImg'>
+                                            <img src='data:$imageType;base64,$imageData' alt='image of {$prodName}'>
+                                        </div>
+                                        <hr>
+                                        <div class='cardContents'>
+                                            <div class='id'><span>product ID:</span> {$id}</div>
+                                            <div class='name'><span>name:</span> {$prodName}</div>
+                                            <div class='price'><span>price:</span> {$price}</div>
+                                            <div class='gender'><span>gender:</span> {$gender}</div>
+                                        </div>
                                     </div>
-                                    <hr>
-                                    <div class='cardContents'>
-                                        <div class='id'><span>product ID:</span> {$id}</div>
-                                        <div class='name'><span>name:</span> {$prodName}</div>
-                                        <div class='price'><span>price:</span> {$price}</div>
-                                        <div class='gender'><span>gender:</span> {$gender}</div>
-                                    </div>
-                                </div>
-                            </label>
-                        </form>
-                    "; 
-                    $i++;
+                                </label>
+                            </form>
+                        "; 
+                        $i++;
+                    }
                 }
-            }
-        ?>
+            ?>
+        </div>
         
     </div>
     
@@ -265,6 +286,32 @@
         let success = document.getElementById('success');
         success.style.display = 'none';
     })
+
+    let pageType = 'edit';
+
+    const editPage = document.getElementById('edit');
+    const deletePage = document.getElementById('delete');
+
+    const editH = document.getElementById('editH');
+    const deleteH =document.getElementById('deleteH');
+
+    editH.addEventListener('click', ()=> {
+        editPage.style.display = 'block';
+        deletePage.style.display = 'none';
+
+        editH.classList.add('active');
+        deleteH.classList.remove('active');
+    });
+
+    deleteH.addEventListener('click', () => {
+        deletePage.style.display = 'block';
+        editPage.style.display = 'none';
+
+        deleteH.classList.add('active');
+        editH.classList.remove('active');
+    });
+
+    
 </script>
 <?php 
     if(isset($_SESSION['dltSuccess'])) {

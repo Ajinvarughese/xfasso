@@ -62,9 +62,6 @@
                     <input class="in i" name="prod_name" type="text" placeholder="Name">
                 </div>
                 <div class="pew">
-                    <input class="in i" name="prod_id" type="text" placeholder="Product ID">
-                </div>
-                <div class="pew">
                     <input class="in i" name="prod_price" type="text" placeholder="Price">
                 </div>
                 

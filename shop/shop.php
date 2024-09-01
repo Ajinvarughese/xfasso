@@ -140,8 +140,8 @@
     <div id="new-nav-menu" class="new-nav-menu">
         <div class="another">
             <ul class="new-nav-links">
-                <li class="secondary"><a class="_u2c" href="../index.html">Home</a></li>
-                <li class="secondary"><a class="_u2c" href="../about/about.html">About</a></li>
+                <li class="secondary"><a class="_u2c" href="../">Home</a></li>
+                <li class="secondary"><a class="_u2c" href="../about/">About</a></li>
             </ul>
             <br>
             <br>

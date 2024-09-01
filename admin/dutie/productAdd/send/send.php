@@ -7,7 +7,11 @@
         $prod_price = mysqli_real_escape_string($conn, $_POST['prod_price']);
         $desc = mysqli_real_escape_string($conn, $_POST['description']);
         $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-        $prodID = mysqli_real_escape_string($conn, $_POST['prod_id']);
+
+        $sw = "SELECT product_id FROM products ORDER BY product_id DESC";
+        $res = mysqli_query($conn, $sw);
+        $row = mysqli_fetch_assoc($res);
+        $prodID = $row['product_id'] + 1;
 
         try {
             if (!isset($_FILES['img1']['error']) ||
