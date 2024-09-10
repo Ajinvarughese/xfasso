@@ -1,7 +1,9 @@
 <?php 
     
     require_once('../../connections/productdb.php');
+    require '../../checkexistence/checkExistence.php';
     session_start();
+
 
     function countSpy() {
         if(empty($_SESSION['tryCount'])) {
@@ -24,6 +26,39 @@
         $_SESSION['tryCount'] = 0;
         setcookie('timerEnd', NULL, time()-3600, '/');
         header('location: ./');
+    }
+
+    if(isset($_COOKIE['XassureUser'])) {
+        $emailId = mysqli_escape_string($conn, $_COOKIE['XassureUser']);
+        $cookiePassword = mysqli_escape_string($conn, $_COOKIE['X9wsWsw32']);
+
+        if(checkUserExistence($conn, $emailId, $cookiePassword) == false) {
+            header('Location: ../errors/errors.php?errorID=404');
+        }
+
+        //decrypting
+        $ciphering = "AES-128-CTR";
+        $options = 0;
+        $decryption_iv = '1234567891021957';
+        $decryption_key = "xfassoKey";
+        $decrypted_id = openssl_decrypt($emailId, $ciphering, $decryption_key, $options, $decryption_iv);
+        $email = $decrypted_id;
+
+        $qTitle = "SELECT email FROM admin WHERE email='$email'";
+        echo $qTitle;
+        $res = mysqli_query($conn, $qTitle);
+        if(mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_array($res);
+            $username = $row['username'];
+        }else {
+            echo "
+                <script>
+                    window.location.href = '../errors/errors.php?errorID=404';
+                </script>
+            ";
+        }
+    }else {
+        header('Location: ../errors/errors.php?errorID=404');
     }
 
     if(isset($_POST['submit'])) {
