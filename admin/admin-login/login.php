@@ -45,7 +45,6 @@
         $email = $decrypted_id;
 
         $qTitle = "SELECT email FROM admin WHERE email='$email'";
-        echo $qTitle;
         $res = mysqli_query($conn, $qTitle);
         if(mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_array($res);
