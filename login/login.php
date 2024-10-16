@@ -30,7 +30,7 @@
         <div class="card-left">
             <div class="title">Welcome Back<span>.</span></div>
             <div class="p32k">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam corrupti beatae ex modi at?
+                Welcome back to XFASSO! Sign in to access your account, check your order history, and continue where you left off.
             </div>
 
             <div class="card" id='i22'>

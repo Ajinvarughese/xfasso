@@ -34,7 +34,7 @@
         <div class="card-left">
             <div class="title">Sign Up<span>.</span></div>
             <div class="p32k">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam corrupti beatae ex modi at?
+               Join XFASSO to explore the latest fashion trends and enjoy a seamless shopping experience. Create an account to track orders, save favorites, and receive exclusive offers.
             </div>
 
             <div class='card' id='i23'>
