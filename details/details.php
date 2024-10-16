@@ -565,7 +565,7 @@
                         
                         <ul>
                             <li>Available: <span>in stock</span></li>
-                            <li>Category: <span><?php echo $details['product_gender'] ?></span></li>
+                            <li>Category: <span><?php echo $details['product_gender'] == 'men' ? 'Streetwear' : 'Old Money' ?></span></li>
                             <li>Shipping Fee: <span>Free Shipping</span></li>
                         </ul>
 
@@ -797,8 +797,8 @@
                 <div class="quick-link">
                     <h4 class="primary footer-head">Quick links</h4>
                     <ul>
-                        <li><a onclick="menCookie()" href="../shop/shop.php">Men</a></li>
-                        <li><a onclick="womenCookie()" href="../shop/shop.php">Women</a></li>
+                        <li><a onclick="menCookie()" href="../shop/shop.php">Streetwear</a></li>
+                        <li><a onclick="womenCookie()" href="../shop/shop.php">Old Money</a></li>
                         <li><a href="../shop/shop.php">Shop All</a></li>
                     </ul>
                 </div>
@@ -814,7 +814,9 @@
                 </div>
                 <div class="our-mission">
                     <h4 class="primary footer-head">Our mission</h4>
-                    <p class="secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quibusdam alias excepturi corporis fuga aut beatae amet repudiandae. Commodi, placeat earum</p>
+                    <p class="secondary">
+                        At XFASSO, our mission is to offer high-quality, stylish fashion that empowers individuals to express their unique selves. We are committed to providing sustainable, trendy, and comfortable clothing that blends fashion with confidence.
+                    </p>
                 </div>
             </div>
             <div id="email-us" class="email-us">

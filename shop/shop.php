@@ -220,11 +220,11 @@
                     <p>filter</p>
                     <div class="_m7y">
                         <input type="checkbox" id="men-products">
-                        <label for="men-products">Men</label>
+                        <label for="men-products">Streetwear</label>
                     </div>
                     <div class="_w7y">
                         <input type="checkbox" id="women-products">
-                        <label for="women-products">Women</label>
+                        <label for="women-products">Old Money</label>
                     </div>
                 </div>
                 <div class="sort-options">
@@ -561,8 +561,8 @@
             <div class="quick-link">
                 <h4 class="primary footer-head">Quick links</h4>
                 <ul>
-                    <li><a onclick="menCookie()" href="./shop.php">Men</a></li>
-                    <li><a onclick="womenCookie()" href="./shop.php">Women</a></li>
+                    <li><a onclick="menCookie()" href="./shop.php">Streetwear</a></li>
+                    <li><a onclick="womenCookie()" href="./shop.php">Old Money</a></li>
                     <li><a onclick="window.location.reload()" style="cursor: pointer;">Shop All</a></li>
                 </ul>
             </div>
@@ -578,7 +578,9 @@
             </div>
             <div class="our-mission">
                 <h4 class="primary footer-head">Our mission</h4>
-                <p class="secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum quibusdam alias excepturi corporis fuga aut beatae amet repudiandae. Commodi, placeat earum</p>
+                <p class="secondary">
+                    At XFASSO, our mission is to offer high-quality, stylish fashion that empowers individuals to express their unique selves. We are committed to providing sustainable, trendy, and comfortable clothing that blends fashion with confidence.
+                </p>
             </div>
         </div>
         <div class="email-us">
