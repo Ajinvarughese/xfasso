@@ -235,7 +235,7 @@
                             
                     <script>
                         function aAdd() {
-                            window.location.href = '../profile/u/myaddress.php';
+                            window.location.href = '../profile/u/myaddress.php?checkout=true';
                         }
                     </script>
 

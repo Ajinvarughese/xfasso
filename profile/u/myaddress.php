@@ -196,7 +196,13 @@
 
     <div id="main" class="main">
         <h1 class='qo3ob'>Create address</h1>
-        <form method="post" onsubmit="return validateForm()">
+        <form method="post" action="<?php echo 
+            isset($_GET['checkout']) ?
+                "./myaddress.php?checkout=true"
+            : 
+                "./myaddress.php"
+        ?>" 
+        onsubmit="return validateForm()">
             <div class="nameNnum">
                 <div class="n">
                     <input type="text" id="username" name='name' value="<?php echo $fullName?>" placeholder="Full name (Required)*">
@@ -443,16 +449,30 @@
         }' WHERE email = '$email';";
         
         $res = mysqli_query($conn, $addQ);        
-        echo "<script>window.location.href='./myaddress.php'</script>";
+        echo isset($_GET['checkout']) ?
+                "<script>
+                    window.location.replace('../../checkout/checkout.php');
+                </script>"
+            :
+                "<script>
+                    window.location.replace('./myaddress.php');
+                </script>"
+            ;
     }
 
     if(isset($_POST['dltAdd'])) {
         $dltAddQ = "UPDATE users SET address = NULL WHERE email='$email';";
         try {
             mysqli_query($conn, $dltAddQ);
-            echo "<script>
-                window.location.href = './myaddress.php';
-            </script>";
+            echo isset($_GET['checkout']) ?
+                "<script>
+                    window.location.replace('./myaddress.php?checkout=true');
+                </script>"
+            :
+                "<script>
+                    window.location.replace('./myaddress.php');
+                </script>"
+            ;
         }catch(mysqli_sql_exception) {
 
         }
