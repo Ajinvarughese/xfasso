@@ -1,4 +1,4 @@
-function showContent(imageData, product_name, product_size, date, orderID, prodID) {
+function showContent(imageData, product_name, product_size, date, orderID, prodID, quantity) {
     let orders = document.getElementById("orders");
     let imageType = "image/jpeg";
     orderID = encodeURIComponent(orderID);
@@ -21,7 +21,7 @@ function showContent(imageData, product_name, product_size, date, orderID, prodI
                         size: ${product_size}
                     </div>
                     <div class="client">
-                        ordered for Ajin Varughese
+                        quantity: ${quantity}
                     </div>
                 </div>
             </div>
@@ -32,8 +32,6 @@ function showContent(imageData, product_name, product_size, date, orderID, prodI
 
 function orderProducts(json="", hasValue=false) {
     if(hasValue && json) {
-        console.log(json);
-        let img = document.getElementById('img');
         for(let i=0; i<json['products'].length; i++) {
             let product_name = json['products'][i]['product_name'];
             let imageData = json['products'][i]['product_image'];
@@ -45,7 +43,9 @@ function orderProducts(json="", hasValue=false) {
             let product_size = json['products'][i]['size'];
             let prodID = json['products'][i]['product_id'];
             let orderID = json['products'][i]['order_id'];
-            showContent(imageData, product_name, product_size, date, orderID, prodID);
+            let quantity = json['products'][i]['quantity']; 
+
+            showContent(imageData, product_name, product_size, date, orderID, prodID, quantity);
         }
     }
     else {
